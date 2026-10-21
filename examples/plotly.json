@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":800,"height":450,"spec":{"data":[{"type":"scatter","mode":"lines+markers","x":[1,2,3],"y":[10,20,15]}],"layout":{"title":{"text":"Vendas"}}}}

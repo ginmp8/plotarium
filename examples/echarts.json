@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"png","width":800,"height":450,"spec":{"title":{"text":"Vendas"},"xAxis":{"type":"category","data":["Jan","Fev","Mar"]},"yAxis":{"type":"value"},"series":[{"type":"bar","data":[10,20,15]}]}}

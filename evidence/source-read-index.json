@@ -1,0 +1,498 @@
+[
+  {
+    "project": "echarts-export-server",
+    "archive": "echarts-node-export-server-master.zip",
+    "member": "echarts-node-export-server-master/export-server/server.js",
+    "sha256": "270ee46f6f5c8240f3cc86b7da9e58fa6ec58eb11db8fe0e10488465331ff74d",
+    "lines": 128,
+    "excerpt": "docs/research/excerpts/echarts-export-server--export-server__server.js.md"
+  },
+  {
+    "project": "echarts-export-server",
+    "archive": "echarts-node-export-server-master.zip",
+    "member": "echarts-node-export-server-master/export-server/ssr.js",
+    "sha256": "6fcd79a98e172da650f19567d271f65a765f7c3bf5a6b7d74e763d5f798216f0",
+    "lines": 137,
+    "excerpt": "docs/research/excerpts/echarts-export-server--export-server__ssr.js.md"
+  },
+  {
+    "project": "echarts-export-server",
+    "archive": "echarts-node-export-server-master.zip",
+    "member": "echarts-node-export-server-master/export-server/package.json",
+    "sha256": "65bfc27057249b81a76d5c9cb107031e22f7b8cb7fc8e3cc26e2007aa59fd7ae",
+    "lines": 30,
+    "excerpt": "docs/research/excerpts/echarts-export-server--export-server__package.json.md"
+  },
+  {
+    "project": "echarts-export-server",
+    "archive": "echarts-node-export-server-master.zip",
+    "member": "echarts-node-export-server-master/readme.md",
+    "sha256": "23d04b94be011eb5a525d6ddab369e442ccae37a1dd8b1f31ebb4625a03fb739",
+    "lines": 198,
+    "excerpt": "docs/research/excerpts/echarts-export-server--readme.md.md"
+  },
+  {
+    "project": "echarts-export-server",
+    "archive": "echarts-node-export-server-master.zip",
+    "member": "echarts-node-export-server-master/export-server/tests/server.test.js",
+    "sha256": "1104548a3c1a3d1f6f48c69c0a9768a111e3655143787574b983878d554c398e",
+    "lines": 389,
+    "excerpt": "docs/research/excerpts/echarts-export-server--export-server__tests__server.test.js.md"
+  },
+  {
+    "project": "quickchart",
+    "archive": "quickchart-master(1).zip",
+    "member": "quickchart-master/index.js",
+    "sha256": "a9eb89639804ca8073ed2ff408f71eb33f575874f37ae12cf56297431fba336f",
+    "lines": 492,
+    "excerpt": "docs/research/excerpts/quickchart--index.js.md"
+  },
+  {
+    "project": "quickchart",
+    "archive": "quickchart-master(1).zip",
+    "member": "quickchart-master/lib/charts.js",
+    "sha256": "c94219b2418a8b05c73f1e12098b4395ca28f025a3a62a40cebf0cd3758c00fd",
+    "lines": 438,
+    "excerpt": "docs/research/excerpts/quickchart--lib__charts.js.md"
+  },
+  {
+    "project": "quickchart",
+    "archive": "quickchart-master(1).zip",
+    "member": "quickchart-master/lib/svg.js",
+    "sha256": "ab7d3a0ebf3c5d1e190d539d000468cf5f0c1c6948a370280e0e9ad65ca58b2a",
+    "lines": 20,
+    "excerpt": "docs/research/excerpts/quickchart--lib__svg.js.md"
+  },
+  {
+    "project": "quickchart",
+    "archive": "quickchart-master(1).zip",
+    "member": "quickchart-master/lib/pdf.js",
+    "sha256": "41aa037367111832af3403f6985a82e1be2567fbaadce712bf00e53bfb6e9644",
+    "lines": 63,
+    "excerpt": "docs/research/excerpts/quickchart--lib__pdf.js.md"
+  },
+  {
+    "project": "quickchart",
+    "archive": "quickchart-master(1).zip",
+    "member": "quickchart-master/README.md",
+    "sha256": "766161e50834a70cce29d7d7e7e1df600776ee60b4e0d80394bca2245b802e5d",
+    "lines": 145,
+    "excerpt": "docs/research/excerpts/quickchart--README.md.md"
+  },
+  {
+    "project": "quickchart",
+    "archive": "quickchart-master(1).zip",
+    "member": "quickchart-master/test/ci/app.js",
+    "sha256": "8811eb0ac16faca3d318bf71bc8ebc2fe312e34460954019b37be5188a70bedf",
+    "lines": 263,
+    "excerpt": "docs/research/excerpts/quickchart--test__ci__app.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/app.js",
+    "sha256": "459c9b0df116d39d180a14598cd1523d0faf034b7582b0c37b7be3e97ce3b74e",
+    "lines": 184,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__app.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/helpers/renderImgOrSvg.js",
+    "sha256": "f847ce973116b18d6b8e5532cea2c3d8790c8d5a267afea64ee50ed0a32ff28c",
+    "lines": 109,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__helpers__renderImgOrSvg.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/helpers/renderSVG.js",
+    "sha256": "b7f3824b52f97b63d315991682b93ba72b3b2caed25cf65b8ab1e814f3061773",
+    "lines": 24,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__helpers__renderSVG.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/helpers/openMermaidPage.js",
+    "sha256": "93b5757b9eaefaf477dfcfa558971afbd78d4a77447850566a3d88109ab1075a",
+    "lines": 16,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__helpers__openMermaidPage.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/helpers/utils.js",
+    "sha256": "4214b2cc1ce8b2827de21b5877d1b8578cc955906533cb90d438e6b74cf87965",
+    "lines": 297,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__helpers__utils.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/helpers/createCacheKey.js",
+    "sha256": "ba83b0057519c9e1b91164c2608d617bb37d1c4c8b1db83b2847149ac30064ba",
+    "lines": 79,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__helpers__createCacheKey.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/helpers/getOptionsFromCode.js",
+    "sha256": "fcf721966310cc72172f2d839091a6a85d370f6496611e2bb2690217326166d9",
+    "lines": 101,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__helpers__getOptionsFromCode.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/static/mermaid.mjs",
+    "sha256": "b8294eed74b657f444b8c703918f8f5ee9be7b3613a52b02de8fef824dd3af94",
+    "lines": 81,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__static__mermaid.mjs.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/views/img.js",
+    "sha256": "f996a52d0457bf0184c34d0acbe55bf507551d39915ce8621155c7423d1a5aaa",
+    "lines": 72,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__views__img.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/views/svg.js",
+    "sha256": "863d1dc3f700ec7e8a93d13c68a07ebf47659eb43e4e51e375f912f8949c4499",
+    "lines": 98,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__views__svg.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/src/views/pdf.js",
+    "sha256": "07ac5e62423907266ed4f67c86b25180406f63a4b8c3bfe0be5610bc5584a2c2",
+    "lines": 93,
+    "excerpt": "docs/research/excerpts/mermaid-ink--src__views__pdf.js.md"
+  },
+  {
+    "project": "mermaid-ink",
+    "archive": "mermaid.ink-main.zip",
+    "member": "mermaid.ink-main/README.md",
+    "sha256": "ee9e2923e33e3bf50740d3d1ed5b34024d622e2524c0dfb82f3ad4834389134d",
+    "lines": 97,
+    "excerpt": "docs/research/excerpts/mermaid-ink--README.md.md"
+  },
+  {
+    "project": "instachart",
+    "archive": "instachart-master.zip",
+    "member": "instachart-master/main.go",
+    "sha256": "e888a8e5eab44af1db7e92021605b3c929f8f52f1462764cf6669de4cc45181d",
+    "lines": 65,
+    "excerpt": "docs/research/excerpts/instachart--main.go.md"
+  },
+  {
+    "project": "instachart",
+    "archive": "instachart-master.zip",
+    "member": "instachart-master/pkg/chart.go",
+    "sha256": "4086fe17f6c3595b720703ac0cdde5646eb6741105a25150ff2d64fb1a55dd7a",
+    "lines": 153,
+    "excerpt": "docs/research/excerpts/instachart--pkg__chart.go.md"
+  },
+  {
+    "project": "instachart",
+    "archive": "instachart-master.zip",
+    "member": "instachart-master/pkg/routes.go",
+    "sha256": "74742e48c0afc30be8c741185e50c4051dda901743e1a7c26612b8f1f1187d06",
+    "lines": 123,
+    "excerpt": "docs/research/excerpts/instachart--pkg__routes.go.md"
+  },
+  {
+    "project": "instachart",
+    "archive": "instachart-master.zip",
+    "member": "instachart-master/pkg/bar_chart_handler.go",
+    "sha256": "e5a8c12b623f1a3bd3344555961bd04d5bbd8fa2d468694b6d9a001d87f5ce51",
+    "lines": 93,
+    "excerpt": "docs/research/excerpts/instachart--pkg__bar_chart_handler.go.md"
+  },
+  {
+    "project": "instachart",
+    "archive": "instachart-master.zip",
+    "member": "instachart-master/pkg/util.go",
+    "sha256": "e313ec7aa6dd98566324f1def68b7d9076d35be581093b9fcf1f505796c3041a",
+    "lines": 80,
+    "excerpt": "docs/research/excerpts/instachart--pkg__util.go.md"
+  },
+  {
+    "project": "instachart",
+    "archive": "instachart-master.zip",
+    "member": "instachart-master/pkg/validator.go",
+    "sha256": "f02d3c3c18b3471526954382ba378a977688f3b56ba990ff3c2311c7e1d19e11",
+    "lines": 42,
+    "excerpt": "docs/research/excerpts/instachart--pkg__validator.go.md"
+  },
+  {
+    "project": "instachart",
+    "archive": "instachart-master.zip",
+    "member": "instachart-master/pkg/bar_chart_handler_test.go",
+    "sha256": "d6372487174e354eaca3b22fcd5869bef77892e8d5327f2a016423488e0f4fd5",
+    "lines": 62,
+    "excerpt": "docs/research/excerpts/instachart--pkg__bar_chart_handler_test.go.md"
+  },
+  {
+    "project": "instachart",
+    "archive": "instachart-master.zip",
+    "member": "instachart-master/README.md",
+    "sha256": "f137beea4229623b4d39438abbbda177f15fdf6074459c4ea279fcd23f0c1d24",
+    "lines": 241,
+    "excerpt": "docs/research/excerpts/instachart--README.md.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/README.adoc",
+    "sha256": "93bd01bb23434ef3c2606cbb802e486029c31ee80f7d936b8848010aad453210",
+    "lines": 225,
+    "excerpt": "docs/research/excerpts/kroki--README.adoc.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/mermaid/src/index.js",
+    "sha256": "16642b8a7f315509d4eb4238e7a9ce3e5fcc81053ecb9cb3548073ceb3e1081c",
+    "lines": 100,
+    "excerpt": "docs/research/excerpts/kroki--mermaid__src__index.js.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/mermaid/package.json",
+    "sha256": "bc719028dbb4228e4b8a03685666d76ea3d67ecee5dc849620e8f482c367da7d",
+    "lines": 38,
+    "excerpt": "docs/research/excerpts/kroki--mermaid__package.json.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/mermaid/assets/index.html",
+    "sha256": "08782b3be8fd52310c7a640de61f59f23d4aa35b35b3a379909045fb6c5fac17",
+    "lines": 20,
+    "excerpt": "docs/research/excerpts/kroki--mermaid__assets__index.html.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/server/src/main/java/io/kroki/server/Server.java",
+    "sha256": "afe586f23ef69f6c6535a01d551c26d7e0f6f91d49b7e2d5eb257575d5c647ee",
+    "lines": 357,
+    "excerpt": "docs/research/excerpts/kroki--server__src__main__java__io__kroki__server__Server.java.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/server/src/main/java/io/kroki/server/service/Mermaid.java",
+    "sha256": "e048c6d8bdd8d7cad2340fff942002f5930b3069bd36084323e5755f9d17d46b",
+    "lines": 69,
+    "excerpt": "docs/research/excerpts/kroki--server__src__main__java__io__kroki__server__service__Mermaid.java.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/server/src/main/java/io/kroki/server/service/Vega.java",
+    "sha256": "f4393a911426ea542d72da7ef9adb910655a7cc972e3675a9aa77a451264b299",
+    "lines": 81,
+    "excerpt": "docs/research/excerpts/kroki--server__src__main__java__io__kroki__server__service__Vega.java.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/vega/src/convert.js",
+    "sha256": "a006526d49001e68b7658542e0391ff3c06615d469f02a4183a9dd159d72d003",
+    "lines": 144,
+    "excerpt": "docs/research/excerpts/kroki--vega__src__convert.js.md"
+  },
+  {
+    "project": "echarts",
+    "archive": "echarts-master.zip",
+    "member": "echarts-master/README.md",
+    "sha256": "8cc8864325843d975f082cba0fd4cf208093feffb03568f48f164725dab8ebf9",
+    "lines": 98,
+    "excerpt": "docs/research/excerpts/echarts--README.md.md"
+  },
+  {
+    "project": "echarts",
+    "archive": "echarts-master.zip",
+    "member": "echarts-master/src/core/echarts.ts",
+    "sha256": "330d96079db4b29e6a58be35d651c8933c5646621ecee162b932c6661d88a907",
+    "lines": 3434,
+    "excerpt": "docs/research/excerpts/echarts--src__core__echarts.ts.md"
+  },
+  {
+    "project": "echarts",
+    "archive": "echarts-master.zip",
+    "member": "echarts-master/src/core/lifecycle.ts",
+    "sha256": "1f587ba1b2716935db653e365f9a3bd1bc4c878a8b354967eb2d19e491de9de9",
+    "lines": 74,
+    "excerpt": "docs/research/excerpts/echarts--src__core__lifecycle.ts.md"
+  },
+  {
+    "project": "echarts",
+    "archive": "echarts-master.zip",
+    "member": "echarts-master/src/model/Global.ts",
+    "sha256": "461f9cfad58d62cdec107373cc65c6d6811f6c9db6c184d029a6bf0a543a36fb",
+    "lines": 1100,
+    "excerpt": "docs/research/excerpts/echarts--src__model__Global.ts.md"
+  },
+  {
+    "project": "echarts",
+    "archive": "echarts-master.zip",
+    "member": "echarts-master/src/export/core.ts",
+    "sha256": "89851304a0614f113ff4c6a2728290378ecaa59ca25577579a57992a8f04f18c",
+    "lines": 134,
+    "excerpt": "docs/research/excerpts/echarts--src__export__core.ts.md"
+  },
+  {
+    "project": "echarts",
+    "archive": "echarts-master.zip",
+    "member": "echarts-master/package.json",
+    "sha256": "3b5f84e135d641960271dd2d7d63b5486896a471fee8e0e841f822fa3846bb28",
+    "lines": 244,
+    "excerpt": "docs/research/excerpts/echarts--package.json.md"
+  },
+  {
+    "project": "echarts",
+    "archive": "echarts-master.zip",
+    "member": "echarts-master/NOTICE",
+    "sha256": "d491d358344f842685c1b1585970999db65fe30ecf7ef3867af8814f4016c016",
+    "lines": 5,
+    "excerpt": "docs/research/excerpts/echarts--NOTICE.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/README.md",
+    "sha256": "fea6ce7917d644bad473e21be6828c07877aa5e76a9b7bdcfbe70b3ab917e4e5",
+    "lines": 199,
+    "excerpt": "docs/research/excerpts/plotly--README.md.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/src/plot_api/to_image.js",
+    "sha256": "76710fadccd9c30282a63daa5a370a37e41e5c62c8029782c76cd97a59eb235c",
+    "lines": 177,
+    "excerpt": "docs/research/excerpts/plotly--src__plot_api__to_image.js.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/src/plot_api/to_image_attributes.ts",
+    "sha256": "ba7f43df99080ee6c15224dd6a2bd7c97a8d2dde5d509d9e66528ac308eba8da",
+    "lines": 66,
+    "excerpt": "docs/research/excerpts/plotly--src__plot_api__to_image_attributes.ts.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/src/plot_api/plot_config.js",
+    "sha256": "2f45b5306853ad79717b7fa29fa9c0f936b31be77c3ae31f39d1250566df0d57",
+    "lines": 462,
+    "excerpt": "docs/research/excerpts/plotly--src__plot_api__plot_config.js.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/src/snapshot/tosvg.js",
+    "sha256": "e8e349eec917adf76a368a4bdbf8ebaa49cd92ffea268918bf52e43625198a97",
+    "lines": 183,
+    "excerpt": "docs/research/excerpts/plotly--src__snapshot__tosvg.js.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/src/snapshot/cloneplot.js",
+    "sha256": "d7f75562b681d87800d5af372a86069d0f66ae1aaa9f1cfbee654f8650e5f48c",
+    "lines": 155,
+    "excerpt": "docs/research/excerpts/plotly--src__snapshot__cloneplot.js.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/src/plot_api/validate.js",
+    "sha256": "8da403a052e7c9a25dd42b5140b3144825f243875e44d18e8936774a7e683c28",
+    "lines": 389,
+    "excerpt": "docs/research/excerpts/plotly--src__plot_api__validate.js.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/dist/README.md",
+    "sha256": "3043e6a66549bc74f90a059bad980ad12b350e3051a5e46bda7936f5a89f557a",
+    "lines": 271,
+    "excerpt": "docs/research/excerpts/plotly--dist__README.md.md"
+  },
+  {
+    "project": "plotly",
+    "archive": "plotly.js-main.zip",
+    "member": "plotly.js-main/package.json",
+    "sha256": "6b987c5ae366ded1513ac05c1d934e0ffc51dcb8f393f9fbf309149eab0bff2f",
+    "lines": 184,
+    "excerpt": "docs/research/excerpts/plotly--package.json.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/mermaid/src/worker.js",
+    "sha256": "43b25048e849a5650cf283b0c31dfb26cde5bec7262f2c295cdfa2d0be9e12eb",
+    "lines": 221,
+    "excerpt": "docs/research/excerpts/kroki--mermaid__src__worker.js.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/mermaid/src/task.js",
+    "sha256": "8bdb0c0b3e7581c7cc4f49e8e349a125208be4c788be22d497f354044de5a630",
+    "lines": 41,
+    "excerpt": "docs/research/excerpts/kroki--mermaid__src__task.js.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/mermaid/src/config.js",
+    "sha256": "592ac689a8d10444ba39ba3dbbe0f9c8f35f9552818ff0db64f52dca0d666515",
+    "lines": 67,
+    "excerpt": "docs/research/excerpts/kroki--mermaid__src__config.js.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/mermaid/src/browser-instance.js",
+    "sha256": "c43fc959bcdca163a817633ba2eb99751f95bed4f10a79076e6ce2439c3d9ec7",
+    "lines": 10,
+    "excerpt": "docs/research/excerpts/kroki--mermaid__src__browser-instance.js.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/lib/browser-instance/index.js",
+    "sha256": "f0113e2c0cf9b335a2525f623f19b984759cc1f61a835e52c552dc945431e6f9",
+    "lines": 212,
+    "excerpt": "docs/research/excerpts/kroki--lib__browser-instance__index.js.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/server/src/main/java/io/kroki/server/service/DiagramRegistry.java",
+    "sha256": "36bc23b062187eabdec0736a6246494ef1c8f5cbc6c24212244692ca6c661ab3",
+    "lines": 119,
+    "excerpt": "docs/research/excerpts/kroki--server__src__main__java__io__kroki__server__service__DiagramRegistry.java.md"
+  },
+  {
+    "project": "kroki",
+    "archive": "kroki-main.zip",
+    "member": "kroki-main/server/src/main/java/io/kroki/server/service/DiagramRest.java",
+    "sha256": "b83e739c9b52384abfec3496eab7b4e1b4c5cd548d7f7a2e294156127b016415",
+    "lines": 62,
+    "excerpt": "docs/research/excerpts/kroki--server__src__main__java__io__kroki__server__service__DiagramRest.java.md"
+  }
+]

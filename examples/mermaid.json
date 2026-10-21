@@ -1,0 +1,1 @@
+{"engine":"mermaid","format":"png","width":800,"height":450,"source":"flowchart LR\nA[Receber pedido] --> B{Valido?}\nB -->|Sim| C[Renderizar]\nB -->|Nao| D[Rejeitar]"}

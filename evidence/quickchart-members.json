@@ -1,0 +1,260 @@
+[
+  {
+    "path": "quickchart-master/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "quickchart-master/.dockerignore",
+    "bytes": 13,
+    "compressed_bytes": 13,
+    "crc32": 2497965810
+  },
+  {
+    "path": "quickchart-master/.github/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "quickchart-master/.github/FUNDING.yml",
+    "bytes": 14,
+    "compressed_bytes": 14,
+    "crc32": 2631682922
+  },
+  {
+    "path": "quickchart-master/.gitignore",
+    "bytes": 1723,
+    "compressed_bytes": 977,
+    "crc32": 1110422174
+  },
+  {
+    "path": "quickchart-master/.nvmrc",
+    "bytes": 9,
+    "compressed_bytes": 9,
+    "crc32": 3468488749
+  },
+  {
+    "path": "quickchart-master/.prettierrc.yaml",
+    "bytes": 55,
+    "compressed_bytes": 55,
+    "crc32": 3942712135
+  },
+  {
+    "path": "quickchart-master/.travis.yml",
+    "bytes": 47,
+    "compressed_bytes": 42,
+    "crc32": 878022394
+  },
+  {
+    "path": "quickchart-master/Dockerfile",
+    "bytes": 928,
+    "compressed_bytes": 487,
+    "crc32": 2679673204
+  },
+  {
+    "path": "quickchart-master/LICENSE",
+    "bytes": 34520,
+    "compressed_bytes": 11759,
+    "crc32": 1734995007
+  },
+  {
+    "path": "quickchart-master/README.md",
+    "bytes": 8660,
+    "compressed_bytes": 3397,
+    "crc32": 2080230277
+  },
+  {
+    "path": "quickchart-master/index.js",
+    "bytes": 13152,
+    "compressed_bytes": 4002,
+    "crc32": 1341123392
+  },
+  {
+    "path": "quickchart-master/lefthook.yml",
+    "bytes": 191,
+    "compressed_bytes": 135,
+    "crc32": 1524211921
+  },
+  {
+    "path": "quickchart-master/lib/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "quickchart-master/lib/charts.js",
+    "bytes": 12909,
+    "compressed_bytes": 3692,
+    "crc32": 2939802214
+  },
+  {
+    "path": "quickchart-master/lib/google_image_charts.js",
+    "bytes": 26554,
+    "compressed_bytes": 6551,
+    "crc32": 152908477
+  },
+  {
+    "path": "quickchart-master/lib/graphviz.js",
+    "bytes": 844,
+    "compressed_bytes": 424,
+    "crc32": 1490556996
+  },
+  {
+    "path": "quickchart-master/lib/pdf.js",
+    "bytes": 1442,
+    "compressed_bytes": 500,
+    "crc32": 3239643085
+  },
+  {
+    "path": "quickchart-master/lib/qr.js",
+    "bytes": 1323,
+    "compressed_bytes": 553,
+    "crc32": 3130165618
+  },
+  {
+    "path": "quickchart-master/lib/svg.js",
+    "bytes": 575,
+    "compressed_bytes": 363,
+    "crc32": 1913801890
+  },
+  {
+    "path": "quickchart-master/lib/util.js",
+    "bytes": 529,
+    "compressed_bytes": 292,
+    "crc32": 4176767099
+  },
+  {
+    "path": "quickchart-master/logging.js",
+    "bytes": 202,
+    "compressed_bytes": 152,
+    "crc32": 3098055656
+  },
+  {
+    "path": "quickchart-master/package.json",
+    "bytes": 2274,
+    "compressed_bytes": 942,
+    "crc32": 22020591
+  },
+  {
+    "path": "quickchart-master/scripts/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "quickchart-master/scripts/update_docker.sh",
+    "bytes": 377,
+    "compressed_bytes": 214,
+    "crc32": 2892206506
+  },
+  {
+    "path": "quickchart-master/telemetry.js",
+    "bytes": 1766,
+    "compressed_bytes": 714,
+    "crc32": 2576276312
+  },
+  {
+    "path": "quickchart-master/test/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "quickchart-master/test/ci/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "quickchart-master/test/ci/app.js",
+    "bytes": 8043,
+    "compressed_bytes": 1348,
+    "crc32": 1094761772
+  },
+  {
+    "path": "quickchart-master/test/ci/chart_helpers.js",
+    "bytes": 5151,
+    "compressed_bytes": 1394,
+    "crc32": 1192646946
+  },
+  {
+    "path": "quickchart-master/test/ci/charts.js",
+    "bytes": 3963,
+    "compressed_bytes": 795,
+    "crc32": 601343137
+  },
+  {
+    "path": "quickchart-master/test/ci/color_helpers.js",
+    "bytes": 1884,
+    "compressed_bytes": 769,
+    "crc32": 1205111428
+  },
+  {
+    "path": "quickchart-master/test/ci/google_image_charts.js",
+    "bytes": 1796,
+    "compressed_bytes": 539,
+    "crc32": 3321662604
+  },
+  {
+    "path": "quickchart-master/test/ci/graphviz.js",
+    "bytes": 1988,
+    "compressed_bytes": 521,
+    "crc32": 1287434842
+  },
+  {
+    "path": "quickchart-master/test/ci/qr.js",
+    "bytes": 744,
+    "compressed_bytes": 347,
+    "crc32": 2537580364
+  },
+  {
+    "path": "quickchart-master/test/ci/qr_helpers.js",
+    "bytes": 485,
+    "compressed_bytes": 241,
+    "crc32": 2427058074
+  },
+  {
+    "path": "quickchart-master/test/monit/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "quickchart-master/test/monit/install.sh",
+    "bytes": 135,
+    "compressed_bytes": 110,
+    "crc32": 3614004065
+  },
+  {
+    "path": "quickchart-master/test/monit/quickchart_monit.cfg",
+    "bytes": 510,
+    "compressed_bytes": 239,
+    "crc32": 2066467701
+  },
+  {
+    "path": "quickchart-master/test/perf/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "quickchart-master/test/perf/basic.yml",
+    "bytes": 159,
+    "compressed_bytes": 120,
+    "crc32": 1250692879
+  },
+  {
+    "path": "quickchart-master/test/perf/run.sh",
+    "bytes": 125,
+    "compressed_bytes": 101,
+    "crc32": 3326589819
+  },
+  {
+    "path": "quickchart-master/yarn.lock",
+    "bytes": 255565,
+    "compressed_bytes": 105950,
+    "crc32": 637252390
+  }
+]

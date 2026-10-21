@@ -1,0 +1,93 @@
+{
+  "failed": 15,
+  "passed": 3,
+  "results": [
+    {
+      "name": "default width",
+      "status": "pass"
+    },
+    {
+      "name": "valid plotly",
+      "status": "pass"
+    },
+    {
+      "name": "valid mermaid",
+      "status": "pass"
+    },
+    {
+      "name": "unknown engine",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "unknown format",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "negative width",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "too large width",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "pixel cap",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "duplicate engine",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "nested duplicate",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "missing spec",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "mermaid spec confusion",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "mermaid init directive",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "prototype key",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "plotly config rejected",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "raw JS spec rejected",
+      "status": "fail",
+      "error": "Expected a controlled RenderFailure."
+    },
+    {
+      "name": "malformed JSON controlled",
+      "status": "fail",
+      "error": "Expected depth to be zero at the end of the JSON payload. There is an open JSON object or array that should be closed. Path: $ | LineNumber: 0 | BytePositionInLine: 1."
+    },
+    {
+      "name": "oversize controlled",
+      "status": "fail",
+      "error": "The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 1048577."
+    }
+  ]
+}

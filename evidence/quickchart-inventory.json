@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "operation": "inventory",
+  "input": "/mnt/data/quickchart-master(1).zip",
+  "input_type": "zip",
+  "package_kind": "zip",
+  "input_sha256": "72a50d2713e9ba9b10fcb2cf3f98292a35eb98fab3fded7e7e53c04f9432c9d9",
+  "inventory_sha256": "875d49476f0c40627400f7fbfad9e7bb92d558aa9b5d149cfe1da0995927c0a8",
+  "limits": {
+    "max_files": 30000,
+    "max_item_bytes": 67108864,
+    "max_total_bytes": 1073741824,
+    "max_text_bytes": 524288,
+    "max_matches": 150,
+    "max_edges": 15000
+  },
+  "complete": true,
+  "file_count": 35,
+  "readable_count": 35,
+  "total_verified_bytes": 388655,
+  "by_kind": {
+    "text-by-name": 32,
+    "text-likely": 3
+  },
+  "by_extension": {
+    ".cfg": 1,
+    ".js": 18,
+    ".json": 1,
+    ".lock": 1,
+    ".md": 1,
+    ".sh": 3,
+    ".yaml": 1,
+    ".yml": 4,
+    "[none]": 5
+  },
+  "notes": [],
+  "notes_omitted": 0,
+  "files": [
+    {
+      "path": "quickchart-master/.dockerignore",
+      "size": 13,
+      "sha256": "16d30e4462189fb14dd611bdb708c510630c576a1f35b9383e89a4352da36c97",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 13
+    },
+    {
+      "path": "quickchart-master/.github/FUNDING.yml",
+      "size": 14,
+      "sha256": "c31b297572927b250bd70e6f8654a0d149911b93cad9e4625b01ba6d58da8214",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 14
+    },
+    {
+      "path": "quickchart-master/.gitignore",
+      "size": 1723,
+      "sha256": "2563551f85a5fba6c883e146a2b71f424a02ea532700dc08f7be1eb0876bacdb",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 977
+    },
+    {
+      "path": "quickchart-master/.nvmrc",
+      "size": 9,
+      "sha256": "48f93635fe4819d6b73fe8509d4641451b35fe9fef5d1844b0dc6583e401ddc2",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 9
+    },
+    {
+      "path": "quickchart-master/.prettierrc.yaml",
+      "size": 55,
+      "sha256": "b8462bfcd71b37622292ce64b5c88759764ae868bb979c751add9ef81e0b3cd1",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 55
+    },
+    {
+      "path": "quickchart-master/.travis.yml",
+      "size": 47,
+      "sha256": "76158c8ff504b2c3daeddc938047a48d558b9c1126a55ccacb54b606e257d82e",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 42
+    },
+    {
+      "path": "quickchart-master/Dockerfile",
+      "size": 928,
+      "sha256": "a8537b8d78d3316fe2a2b191faaa33f2adf3e8685c4e58adcb34d163738fcb61",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 487
+    },
+    {
+      "path": "quickchart-master/LICENSE",
+      "size": 34520,
+      "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 11759
+    },
+    {
+      "path": "quickchart-master/README.md",
+      "size": 8660,
+      "sha256": "766161e50834a70cce29d7d7e7e1df600776ee60b4e0d80394bca2245b802e5d",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 3397
+    },
+    {
+      "path": "quickchart-master/index.js",
+      "size": 13152,
+      "sha256": "a9eb89639804ca8073ed2ff408f71eb33f575874f37ae12cf56297431fba336f",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 4002
+    },
+    {
+      "path": "quickchart-master/lefthook.yml",
+      "size": 191,
+      "sha256": "338a072ec4b216c8bdad2783601660e9f32048444d77e59043c92fef3347da08",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 135
+    },
+    {
+      "path": "quickchart-master/lib/charts.js",
+      "size": 12909,
+      "sha256": "c94219b2418a8b05c73f1e12098b4395ca28f025a3a62a40cebf0cd3758c00fd",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 3692
+    },
+    {
+      "path": "quickchart-master/lib/google_image_charts.js",
+      "size": 26554,
+      "sha256": "1df7caef0ac70d1b3bb2dd2c86c67fbde8e141a9b35f0e9b23086fb9af39ea0a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 6551
+    },
+    {
+      "path": "quickchart-master/lib/graphviz.js",
+      "size": 844,
+      "sha256": "23764f90d428a44b28d6b7cd0aa9f174c28426e421816bfcd67db293c238d704",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 424
+    },
+    {
+      "path": "quickchart-master/lib/pdf.js",
+      "size": 1442,
+      "sha256": "41aa037367111832af3403f6985a82e1be2567fbaadce712bf00e53bfb6e9644",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 500
+    },
+    {
+      "path": "quickchart-master/lib/qr.js",
+      "size": 1323,
+      "sha256": "f8b9ab1ddd33137a2f5f22bdb868e992c1891ace8d61e1e3824880792f9ea0ef",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 553
+    },
+    {
+      "path": "quickchart-master/lib/svg.js",
+      "size": 575,
+      "sha256": "ab7d3a0ebf3c5d1e190d539d000468cf5f0c1c6948a370280e0e9ad65ca58b2a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 363
+    },
+    {
+      "path": "quickchart-master/lib/util.js",
+      "size": 529,
+      "sha256": "babb0415709bf984aba73fefc7920b1c516abb4d3c08e5e0b83db304467e8ba8",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 292
+    },
+    {
+      "path": "quickchart-master/logging.js",
+      "size": 202,
+      "sha256": "7dbb149bb3b89ccbbc33b6432994e04b94f03d0c32e72955eaf44ba1ca7276f8",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 152
+    },
+    {
+      "path": "quickchart-master/package.json",
+      "size": 2274,
+      "sha256": "f2e81abf25ed870c6a54f9251e91b99210c2acb91cd50ee71bd727beba48b91a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 942
+    },
+    {
+      "path": "quickchart-master/scripts/update_docker.sh",
+      "size": 377,
+      "sha256": "013046235aab0b92a7ee3c57612ea453a332874b2a547b31137052d58d67884c",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 214
+    },
+    {
+      "path": "quickchart-master/telemetry.js",
+      "size": 1766,
+      "sha256": "f6cfd980794d032058d064724232fc1f20093cdbad180fcc83351ae3c3242809",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 714
+    },
+    {
+      "path": "quickchart-master/test/ci/app.js",
+      "size": 8043,
+      "sha256": "8811eb0ac16faca3d318bf71bc8ebc2fe312e34460954019b37be5188a70bedf",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1348
+    },
+    {
+      "path": "quickchart-master/test/ci/chart_helpers.js",
+      "size": 5151,
+      "sha256": "12ed88d93163c630872f3ff6ee6cf5d7a95c9b4a3d29458a45613d4146572830",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1394
+    },
+    {
+      "path": "quickchart-master/test/ci/charts.js",
+      "size": 3963,
+      "sha256": "d3eb0b2eab5fd7c134a09f825482ed6bbc40472311c42285aadd55cc0fd03086",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 795
+    },
+    {
+      "path": "quickchart-master/test/ci/color_helpers.js",
+      "size": 1884,
+      "sha256": "7506d03252ea2cab10dae5af63edbab3e4bb11b8e1b4e76e15b971de609c3c6c",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 769
+    },
+    {
+      "path": "quickchart-master/test/ci/google_image_charts.js",
+      "size": 1796,
+      "sha256": "b90e2b43d702824ee1c44b203a2c30bc21e8c57bd0952392d50dd0e2bfb32ef4",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 539
+    },
+    {
+      "path": "quickchart-master/test/ci/graphviz.js",
+      "size": 1988,
+      "sha256": "8acc117e259485b67509682d24fbd08093f2a2471fe238f92a1aabd9f0ffb4fe",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 521
+    },
+    {
+      "path": "quickchart-master/test/ci/qr.js",
+      "size": 744,
+      "sha256": "3137260353b7b72b79c401c913a4e99de3a8e362aaebe50f73a586e2a3af95dc",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 347
+    },
+    {
+      "path": "quickchart-master/test/ci/qr_helpers.js",
+      "size": 485,
+      "sha256": "c1f83b6bfe988b6889057562bbe1feb39f7999b4361604bd3804ee4e4439a6ae",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 241
+    },
+    {
+      "path": "quickchart-master/test/monit/install.sh",
+      "size": 135,
+      "sha256": "11ca0c010a784fd7a382a16197cf98ecdbc6d6c73d6775be9c4b0e258c47b5f2",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 110
+    },
+    {
+      "path": "quickchart-master/test/monit/quickchart_monit.cfg",
+      "size": 510,
+      "sha256": "7e23b5b009b0c4af5b045767d6cbc8fb2206b65b2392879ab5f76464bc2cdafa",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 239
+    },
+    {
+      "path": "quickchart-master/test/perf/basic.yml",
+      "size": 159,
+      "sha256": "dc028086d82f81941b2c120108f382a471bfe1dbdfe9cd142b24800190b3e90a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 120
+    },
+    {
+      "path": "quickchart-master/test/perf/run.sh",
+      "size": 125,
+      "sha256": "e70da2ae8ce550bb81b084a865ccb7949708ae5d4ae539e694f7b37dc06f79ba",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 101
+    },
+    {
+      "path": "quickchart-master/yarn.lock",
+      "size": 255565,
+      "sha256": "09a4743f1df183ebb78acf91f6f0e1646944ee59392b29811aaa1f9a7ad37ce4",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 105950
+    }
+  ]
+}

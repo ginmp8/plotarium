@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk.Web"><ItemGroup><ProjectReference Include="../../infrastructure/Plotarium.Infrastructure/Plotarium.Infrastructure.csproj" /></ItemGroup><ItemGroup><Content Include="../../../assets/**/*" Link="assets/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup></Project>

@@ -1,0 +1,284 @@
+[
+  {
+    "path": "echarts-node-export-server-master/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "echarts-node-export-server-master/.dockerignore",
+    "bytes": 165,
+    "compressed_bytes": 130,
+    "crc32": 1620946125
+  },
+  {
+    "path": "echarts-node-export-server-master/.github/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "echarts-node-export-server-master/.github/CODEOWNERS",
+    "bytes": 65,
+    "compressed_bytes": 65,
+    "crc32": 2982944030
+  },
+  {
+    "path": "echarts-node-export-server-master/.github/dependabot.yml",
+    "bytes": 441,
+    "compressed_bytes": 235,
+    "crc32": 1412341290
+  },
+  {
+    "path": "echarts-node-export-server-master/.github/workflows/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "echarts-node-export-server-master/.github/workflows/alpine.yml",
+    "bytes": 562,
+    "compressed_bytes": 274,
+    "crc32": 2208800259
+  },
+  {
+    "path": "echarts-node-export-server-master/.github/workflows/audit.yml",
+    "bytes": 509,
+    "compressed_bytes": 239,
+    "crc32": 471604018
+  },
+  {
+    "path": "echarts-node-export-server-master/.github/workflows/docker.yml",
+    "bytes": 2172,
+    "compressed_bytes": 954,
+    "crc32": 3021723649
+  },
+  {
+    "path": "echarts-node-export-server-master/.github/workflows/node.js.yml",
+    "bytes": 765,
+    "compressed_bytes": 366,
+    "crc32": 297385259
+  },
+  {
+    "path": "echarts-node-export-server-master/.gitignore",
+    "bytes": 89,
+    "compressed_bytes": 59,
+    "crc32": 2550746135
+  },
+  {
+    "path": "echarts-node-export-server-master/.gitlab-ci.yml",
+    "bytes": 1464,
+    "compressed_bytes": 230,
+    "crc32": 4129072768
+  },
+  {
+    "path": "echarts-node-export-server-master/CONTRIBUTING.md",
+    "bytes": 2466,
+    "compressed_bytes": 1239,
+    "crc32": 3415198093
+  },
+  {
+    "path": "echarts-node-export-server-master/Dockerfile",
+    "bytes": 2153,
+    "compressed_bytes": 955,
+    "crc32": 1309916928
+  },
+  {
+    "path": "echarts-node-export-server-master/LICENSE",
+    "bytes": 35147,
+    "compressed_bytes": 12119,
+    "crc32": 1719137660
+  },
+  {
+    "path": "echarts-node-export-server-master/changelog.md",
+    "bytes": 20255,
+    "compressed_bytes": 5018,
+    "crc32": 2300895380
+  },
+  {
+    "path": "echarts-node-export-server-master/docker-helper.sh",
+    "bytes": 728,
+    "compressed_bytes": 351,
+    "crc32": 3807119188
+  },
+  {
+    "path": "echarts-node-export-server-master/documentation/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "echarts-node-export-server-master/documentation/docker.md",
+    "bytes": 2000,
+    "compressed_bytes": 977,
+    "crc32": 1082517258
+  },
+  {
+    "path": "echarts-node-export-server-master/documentation/graph-2eae6ee3-cb0c-464d-8997-7c2476e8d69d.png",
+    "bytes": 12714,
+    "compressed_bytes": 10043,
+    "crc32": 1098971752
+  },
+  {
+    "path": "echarts-node-export-server-master/documentation/graph-4a8d8e1d-eef8-4593-bd4c-422866243121.png",
+    "bytes": 13117,
+    "compressed_bytes": 10828,
+    "crc32": 3351245305
+  },
+  {
+    "path": "echarts-node-export-server-master/documentation/graph-e7df5157-ef8d-424f-a3db-e9184cbd570d.svg",
+    "bytes": 4243,
+    "compressed_bytes": 813,
+    "crc32": 1731916591
+  },
+  {
+    "path": "echarts-node-export-server-master/documentation/installation-node-js.md",
+    "bytes": 3282,
+    "compressed_bytes": 1469,
+    "crc32": 3828606330
+  },
+  {
+    "path": "echarts-node-export-server-master/documentation/readme.md",
+    "bytes": 413,
+    "compressed_bytes": 259,
+    "crc32": 1259621849
+  },
+  {
+    "path": "echarts-node-export-server-master/documentation/troubleshooting-faq.md",
+    "bytes": 2697,
+    "compressed_bytes": 1312,
+    "crc32": 73536403
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/echarts.v5.6.0.min.js",
+    "bytes": 1034102,
+    "compressed_bytes": 335581,
+    "crc32": 1281676879
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/package-lock.json",
+    "bytes": 16246,
+    "compressed_bytes": 4535,
+    "crc32": 876648082
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/package.json",
+    "bytes": 595,
+    "compressed_bytes": 315,
+    "crc32": 1513792750
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/server.js",
+    "bytes": 4468,
+    "compressed_bytes": 1878,
+    "crc32": 4066552981
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/ssr.js",
+    "bytes": 4511,
+    "compressed_bytes": 1379,
+    "crc32": 2079887684
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/test.sh",
+    "bytes": 427,
+    "compressed_bytes": 261,
+    "crc32": 3676126892
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/",
+    "bytes": 0,
+    "compressed_bytes": 0,
+    "crc32": 0
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/bar.test.js",
+    "bytes": 53998,
+    "compressed_bytes": 3566,
+    "crc32": 2936763820
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/boxplot.test.js",
+    "bytes": 24925,
+    "compressed_bytes": 3446,
+    "crc32": 2430771140
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/candlestick.test.js",
+    "bytes": 12631,
+    "compressed_bytes": 2161,
+    "crc32": 437901727
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/funnel.test.js",
+    "bytes": 21414,
+    "compressed_bytes": 2926,
+    "crc32": 2569493514
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/line.test.js",
+    "bytes": 90075,
+    "compressed_bytes": 6074,
+    "crc32": 478582777
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/parallel.test.js",
+    "bytes": 21912,
+    "compressed_bytes": 2597,
+    "crc32": 1916646733
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/pie.test.js",
+    "bytes": 20437,
+    "compressed_bytes": 2877,
+    "crc32": 405998613
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/radar.test.js",
+    "bytes": 22078,
+    "compressed_bytes": 3013,
+    "crc32": 902136003
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/sankey.test.js",
+    "bytes": 13991,
+    "compressed_bytes": 2294,
+    "crc32": 2804828393
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/scatter.test.js",
+    "bytes": 25701,
+    "compressed_bytes": 2723,
+    "crc32": 4097344766
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/charts/sunburst.test.js",
+    "bytes": 18300,
+    "compressed_bytes": 2772,
+    "crc32": 2101069538
+  },
+  {
+    "path": "echarts-node-export-server-master/export-server/tests/server.test.js",
+    "bytes": 11241,
+    "compressed_bytes": 2000,
+    "crc32": 1640920171
+  },
+  {
+    "path": "echarts-node-export-server-master/readme.md",
+    "bytes": 6202,
+    "compressed_bytes": 2589,
+    "crc32": 666979467
+  }
+]

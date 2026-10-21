@@ -1,0 +1,6 @@
+{
+  "scope": "syntax-only; not type checking or full API compilation",
+  "files": 8,
+  "errors": [],
+  "status": "pass"
+}

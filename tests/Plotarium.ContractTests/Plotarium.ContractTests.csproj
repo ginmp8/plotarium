@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><ProjectReference Include="../../src/application/Plotarium.Application/Plotarium.Application.csproj" /></ItemGroup><ItemGroup><Compile Include="../../src/infrastructure/Plotarium.Infrastructure/AssetCatalog.cs" Link="ProductionAssetCatalog.cs" /></ItemGroup></Project>

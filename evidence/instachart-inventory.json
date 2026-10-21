@@ -1,0 +1,634 @@
+{
+  "schema_version": 1,
+  "operation": "inventory",
+  "input": "/mnt/data/instachart-master.zip",
+  "input_type": "zip",
+  "package_kind": "zip",
+  "input_sha256": "719335f945a5b9462584c0451049d443033e73f00c75ac2e27cd33995ade51dc",
+  "inventory_sha256": "ed3a5ace5c2e4b01623b199d23df22d9e4201e17b1dcfcc17671fc55c977e3b5",
+  "limits": {
+    "max_files": 30000,
+    "max_item_bytes": 67108864,
+    "max_total_bytes": 1073741824,
+    "max_text_bytes": 524288,
+    "max_matches": 150,
+    "max_edges": 15000
+  },
+  "complete": true,
+  "file_count": 73,
+  "readable_count": 73,
+  "total_verified_bytes": 548128,
+  "by_kind": {
+    "binary-or-unknown": 1,
+    "png": 1,
+    "text-by-name": 48,
+    "text-likely": 23
+  },
+  "by_extension": {
+    ".astro": 14,
+    ".example": 1,
+    ".go": 28,
+    ".ico": 1,
+    ".json": 3,
+    ".md": 2,
+    ".mjs": 2,
+    ".mod": 1,
+    ".png": 1,
+    ".sh": 2,
+    ".sum": 1,
+    ".svg": 7,
+    ".toml": 1,
+    ".ts": 1,
+    ".yaml": 1,
+    ".yml": 4,
+    "[none]": 3
+  },
+  "notes": [],
+  "notes_omitted": 0,
+  "files": [
+    {
+      "path": "instachart-master/.air.toml",
+      "size": 1263,
+      "sha256": "4c54599a41645b0e8a857f95943153242c1030972af82f2d17b90c37e1806cbf",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 695
+    },
+    {
+      "path": "instachart-master/.github/workflows/build.yml",
+      "size": 820,
+      "sha256": "f1b33f018816363371ca97b480cd6393e879fca7ad221f6a7c3bc3df655f33a6",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 384
+    },
+    {
+      "path": "instachart-master/.github/workflows/coveritup.yml",
+      "size": 3886,
+      "sha256": "b6b193d5ab3a0ec409cdd28bfa322ec18338e37942746693a62a7c7f19122d0a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1018
+    },
+    {
+      "path": "instachart-master/.github/workflows/release.yml",
+      "size": 901,
+      "sha256": "eceb2db0c9d64dcb1cb510094569ef0146a2da2e2baa834b6d8fa00daa67771a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 417
+    },
+    {
+      "path": "instachart-master/.github/workflows/test.yml",
+      "size": 1160,
+      "sha256": "27d92717979125939b31e8651505e4ab27d67ac43997fa231fc81fd437553733",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 487
+    },
+    {
+      "path": "instachart-master/.gitignore",
+      "size": 302,
+      "sha256": "2decbd99c9b0ccbc0c476f0a91448ac4a3860fc6e268f2bb40dd75c75076e6f9",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 215
+    },
+    {
+      "path": "instachart-master/.goreleaser.yaml",
+      "size": 695,
+      "sha256": "193c7c44be987b954f60458378182392b590769c01ce4c5e99075711a8f8fd0f",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 300
+    },
+    {
+      "path": "instachart-master/LICENSE",
+      "size": 1071,
+      "sha256": "923528aaeaf77efb5619ce6702e23654e868cd7d52b80dc60a9b1488c2806c7d",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 632
+    },
+    {
+      "path": "instachart-master/README.md",
+      "size": 6799,
+      "sha256": "f137beea4229623b4d39438abbbda177f15fdf6074459c4ea279fcd23f0c1d24",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2103
+    },
+    {
+      "path": "instachart-master/README_BACK.md",
+      "size": 12410,
+      "sha256": "ef3b22e6653f9fe1f9e99bb8847edad741d27ca3fd2df2e0be4847ca0e1b15f8",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2758
+    },
+    {
+      "path": "instachart-master/build.sh",
+      "size": 76,
+      "sha256": "e81d53467b01a1ca1842c371518a5e98ca81fdfe9f69bb594db19b0ef9b9123f",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 68
+    },
+    {
+      "path": "instachart-master/frontend/.env.example",
+      "size": 27,
+      "sha256": "6f979027c85aca2001e8c7c9111176e66eb29dffb98306ae4d47ffad05c970ae",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 27
+    },
+    {
+      "path": "instachart-master/frontend/.gitignore",
+      "size": 212,
+      "sha256": "720a86083c55dc61a91cd1d59bce2a17f4b502e98bedef1940825dc67d265818",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 141
+    },
+    {
+      "path": "instachart-master/frontend/astro.config.mjs",
+      "size": 215,
+      "sha256": "e5846f1332cb8c7a4679351abeaf4bb72fe6c76a5482b8ecb67886c700608682",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 132
+    },
+    {
+      "path": "instachart-master/frontend/package-lock.json",
+      "size": 278032,
+      "sha256": "e95f9e8607814d36af215e0c22a590cf9ad25cf1a92afc166b678ee4e254c6fe",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 63222
+    },
+    {
+      "path": "instachart-master/frontend/package.json",
+      "size": 565,
+      "sha256": "d7e660829696a43f0b70bf16e23bd4f8d301be5f139c9701584db067b40038f9",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 277
+    },
+    {
+      "path": "instachart-master/frontend/public/favicon.ico",
+      "size": 119346,
+      "sha256": "1f84a1498e7fffa2f7b687220f0cda1162c0bc88714d5ce1279b7d83200d41b9",
+      "kind": "binary-or-unknown",
+      "status": "ok",
+      "compressed_size": 37030
+    },
+    {
+      "path": "instachart-master/frontend/public/logo.png",
+      "size": 13437,
+      "sha256": "308be9551f620f68e3b715c0348633b29a1400f3eaeac533668318a0d36b555d",
+      "kind": "png",
+      "status": "ok",
+      "compressed_size": 13437
+    },
+    {
+      "path": "instachart-master/frontend/src/assets/barchart.svg",
+      "size": 3552,
+      "sha256": "b3ca05fad465c9563561a4b4ac74e2b331e4341bbf1d5da300e8bfbc9c0b27dc",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 1163
+    },
+    {
+      "path": "instachart-master/frontend/src/assets/linechart.svg",
+      "size": 1689,
+      "sha256": "50d8a90c25babee3e215424eb0bbb87a0ec951dcc7633b6e987d38c7c4a45ae5",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 461
+    },
+    {
+      "path": "instachart-master/frontend/src/assets/medium.svg",
+      "size": 257,
+      "sha256": "02a216dd4b1e000e4520165e5ed845e34105ad48f0a59912b8a3dfe7c2d85d8e",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 159
+    },
+    {
+      "path": "instachart-master/frontend/src/assets/octocat.svg",
+      "size": 3027,
+      "sha256": "1e37bfcbc6622fe3de653721de5c901db6d327d8f04c2a14835ebd309ff847ec",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 1353
+    },
+    {
+      "path": "instachart-master/frontend/src/assets/piechart.svg",
+      "size": 1070,
+      "sha256": "05818ca1453a51ccf66f773a49d4c785dfbfa6fe194789df0509646375b12891",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 578
+    },
+    {
+      "path": "instachart-master/frontend/src/assets/radarchart.svg",
+      "size": 1363,
+      "sha256": "9830b175a660da31fb7820742f4b55f45a3a2e7d766ea4f7620a082f53cbb5a9",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 371
+    },
+    {
+      "path": "instachart-master/frontend/src/assets/sun.svg",
+      "size": 1177,
+      "sha256": "df192ab17fa1c29f1eec389f97ee686917c7db41798266bff2dc659f6a25c248",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 594
+    },
+    {
+      "path": "instachart-master/frontend/src/components/BarChart.astro",
+      "size": 2010,
+      "sha256": "6bb6b3bb79540245d432dcd9145871b877ade993c554ddcdc1ee21456905d201",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 918
+    },
+    {
+      "path": "instachart-master/frontend/src/components/Compare.astro",
+      "size": 1832,
+      "sha256": "90a1c9f4c78a03603ff16018e3dcc34475ab3984e44b9dd81aa46a0d095958e9",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 815
+    },
+    {
+      "path": "instachart-master/frontend/src/components/FinalAction.astro",
+      "size": 1520,
+      "sha256": "c79310124a7cefe271023445f09d74e04371a5b038e6bb7e5281036b8a7bc6aa",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 692
+    },
+    {
+      "path": "instachart-master/frontend/src/components/Footer.astro",
+      "size": 363,
+      "sha256": "4dde3d9e2b6432725afc3f00cf29684de101a8051a86f0214c28788081b8a554",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 213
+    },
+    {
+      "path": "instachart-master/frontend/src/components/Hero.astro",
+      "size": 3143,
+      "sha256": "9ac49512ab64554a94a8f178b4633c3f35ae832b8793ba2f0894b767184dda1b",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 1336
+    },
+    {
+      "path": "instachart-master/frontend/src/components/Layout.astro",
+      "size": 2962,
+      "sha256": "bd645c0a6b7328da03a7964f8a3d4dc7bf74660bd4df832b5da16670507a5da1",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 1118
+    },
+    {
+      "path": "instachart-master/frontend/src/components/LineChart.astro",
+      "size": 1794,
+      "sha256": "6a1e568bc6345a14689bbd9796e5d134b47bc45d37df08e4011f161a0522d23a",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 878
+    },
+    {
+      "path": "instachart-master/frontend/src/components/MultipleOutputs.astro",
+      "size": 1907,
+      "sha256": "c377e0283c55f79ef2242f5b150ba52cfbe8ec21b53338f24acd20b43ac3b104",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 775
+    },
+    {
+      "path": "instachart-master/frontend/src/components/Nav.astro",
+      "size": 1298,
+      "sha256": "48a64940832147a79353da1583a240d453b920d0247315d9c7fd1e41f4e7b646",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 546
+    },
+    {
+      "path": "instachart-master/frontend/src/components/PieChart.astro",
+      "size": 1928,
+      "sha256": "22a46ffefdeacc30b4d5359f62e02018050e07f372ba6ebc2a421b69fc262522",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 895
+    },
+    {
+      "path": "instachart-master/frontend/src/components/RadarChart.astro",
+      "size": 1778,
+      "sha256": "7a41134d4f03267286f3ab908457e1a3a24cbe8c031e867d67002e7b8d448046",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 853
+    },
+    {
+      "path": "instachart-master/frontend/src/components/SelfHosting.astro",
+      "size": 1537,
+      "sha256": "20776d6e36790ea3f1c5f587f419f3fe78387013becfcfed32817e5e39799937",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 701
+    },
+    {
+      "path": "instachart-master/frontend/src/components/Themes.astro",
+      "size": 1403,
+      "sha256": "6f912790bd14a51d6ecfe57f7fff72daabeca3cd9ea2a7ad2bf8322764de0c5b",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 534
+    },
+    {
+      "path": "instachart-master/frontend/src/env.d.ts",
+      "size": 39,
+      "sha256": "9c9283a414423d9223e5ea86941b142443b8af7a007f77612dc2c098de2d2500",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 39
+    },
+    {
+      "path": "instachart-master/frontend/src/pages/index.astro",
+      "size": 1454,
+      "sha256": "37b2091e7f33ad5f75d3039cd53c9a6f3faa8c19b80e0fb3ff66f5303bfdbb27",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 559
+    },
+    {
+      "path": "instachart-master/frontend/tailwind.config.mjs",
+      "size": 176,
+      "sha256": "fccc4f82b3cda15e884d9504b4e8908c82860db4d8564f2e1cd1608e397ad537",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 144
+    },
+    {
+      "path": "instachart-master/frontend/tsconfig.json",
+      "size": 189,
+      "sha256": "964490c02aa004c279a223bfaaa574cc096c6e083e24c138226842e785990a5b",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 120
+    },
+    {
+      "path": "instachart-master/go.mod",
+      "size": 2469,
+      "sha256": "b1c06b7416c1368a5a6f29e094de195db122f389912c62a9fc5dfbd1b6a39e5c",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 843
+    },
+    {
+      "path": "instachart-master/go.sum",
+      "size": 14864,
+      "sha256": "14b9d11f729cbe8c7e2a166aeef7f1a5b8090b818591f6670dfddf0bfc316f0d",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 7028
+    },
+    {
+      "path": "instachart-master/install.sh",
+      "size": 1315,
+      "sha256": "46a6b52c84396b6c658d9944cd20618b020216618d68da76e36b995af56b0b86",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 437
+    },
+    {
+      "path": "instachart-master/main.go",
+      "size": 1565,
+      "sha256": "e888a8e5eab44af1db7e92021605b3c929f8f52f1462764cf6669de4cc45181d",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 629
+    },
+    {
+      "path": "instachart-master/pkg/bar_chart.go",
+      "size": 5091,
+      "sha256": "ce64d2717c8d3582abd088c980524b8646b218cbab036e7cb0e5b947fcb64257",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1283
+    },
+    {
+      "path": "instachart-master/pkg/bar_chart_handler.go",
+      "size": 2357,
+      "sha256": "e5a8c12b623f1a3bd3344555961bd04d5bbd8fa2d468694b6d9a001d87f5ce51",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 781
+    },
+    {
+      "path": "instachart-master/pkg/bar_chart_handler_test.go",
+      "size": 1536,
+      "sha256": "d6372487174e354eaca3b22fcd5869bef77892e8d5327f2a016423488e0f4fd5",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 612
+    },
+    {
+      "path": "instachart-master/pkg/chart.go",
+      "size": 4599,
+      "sha256": "4086fe17f6c3595b720703ac0cdde5646eb6741105a25150ff2d64fb1a55dd7a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1448
+    },
+    {
+      "path": "instachart-master/pkg/donut_chart.go",
+      "size": 687,
+      "sha256": "ae8cfc4b2e48f728085270ab13b2c9105d3c1a1b55c12febf12588a1d44cdf99",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 375
+    },
+    {
+      "path": "instachart-master/pkg/donut_chart_handler.go",
+      "size": 1472,
+      "sha256": "0416d6dbca25cca7c4338a8989279198c45e56def4b4b498d6b1bf59ace159ce",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 579
+    },
+    {
+      "path": "instachart-master/pkg/donut_chart_handler_test.go",
+      "size": 1401,
+      "sha256": "b13b7901ca9913d27bc98b215961c5589d032c6e925cd39ec01af6e29ecc27a5",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 604
+    },
+    {
+      "path": "instachart-master/pkg/echo.go",
+      "size": 3186,
+      "sha256": "ae0ea5c5b599c65f398e561d5f73f2dbe8c1ec940e6e9d73cbdbdff7794c46e3",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1361
+    },
+    {
+      "path": "instachart-master/pkg/funnel_chart.go",
+      "size": 1529,
+      "sha256": "498b3c451c96c25501e4cb0e0c206799ab03843cada9649eface007db9ecd22d",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 696
+    },
+    {
+      "path": "instachart-master/pkg/funnel_chart_handler.go",
+      "size": 1480,
+      "sha256": "33a1600c060ef76c25dee4fb2b61cc0de0e7879c4bb5a07cb14717d691e43cb1",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 581
+    },
+    {
+      "path": "instachart-master/pkg/funnel_chart_handler_test.go",
+      "size": 1547,
+      "sha256": "8e57cdace9c989138aa3897c597a8c5c1c6a5f8756e1f5b8650fed9554c2d01a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 637
+    },
+    {
+      "path": "instachart-master/pkg/line_chart.go",
+      "size": 1924,
+      "sha256": "be8a6987ce445539fce93c5cb57c49d41131494bb7a5d5977183a851f706978b",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 837
+    },
+    {
+      "path": "instachart-master/pkg/line_chart_handler.go",
+      "size": 1696,
+      "sha256": "5e9d8ca0b5fc52b086f019146032d2454e1c4154fed5726e0c8603f06e364843",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 623
+    },
+    {
+      "path": "instachart-master/pkg/line_chart_handler_test.go",
+      "size": 1642,
+      "sha256": "298168336c2864167dfed988a04b161ff8843bb6e18507590beddf9223ed1265",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 635
+    },
+    {
+      "path": "instachart-master/pkg/logger.go",
+      "size": 446,
+      "sha256": "304ac365ad6bc61d25f57acc6c0b78abd4ab5325c63c28894a199116439d1a22",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 280
+    },
+    {
+      "path": "instachart-master/pkg/pie_chart.go",
+      "size": 1179,
+      "sha256": "6a27fb61f64940a411cdeb3797e06d63f3ef1bf79a15a3a0604398ba87e893f6",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 551
+    },
+    {
+      "path": "instachart-master/pkg/pie_chart_handler.go",
+      "size": 1476,
+      "sha256": "66e5c3871152f8072cc183f27709d62c6c25b8a3609501bfe20a6ae8921c3c41",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 584
+    },
+    {
+      "path": "instachart-master/pkg/pie_chart_handler_test.go",
+      "size": 1393,
+      "sha256": "63cb99f4fc145c9f2da80a1cccbed4147fad45abf1b2bb639977e59a3f7b8fe0",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 602
+    },
+    {
+      "path": "instachart-master/pkg/radar_chart.go",
+      "size": 1663,
+      "sha256": "ccafecd696e2cedb784ecb4c591c14bd1f31845e3b8791ba4572aae87001741c",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 761
+    },
+    {
+      "path": "instachart-master/pkg/radar_chart_handler.go",
+      "size": 1527,
+      "sha256": "6f17de343361e5048fac405ac21a8b80974bd1039657994a40bd3b2f8e7d2bd6",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 599
+    },
+    {
+      "path": "instachart-master/pkg/radar_chart_handler_test.go",
+      "size": 1665,
+      "sha256": "4ebd18ec2337dd12d39ae9db54eaaa98118fbc150769fc084832f2909badbe12",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 652
+    },
+    {
+      "path": "instachart-master/pkg/routes.go",
+      "size": 3028,
+      "sha256": "74742e48c0afc30be8c741185e50c4051dda901743e1a7c26612b8f1f1187d06",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 730
+    },
+    {
+      "path": "instachart-master/pkg/table_chart.go",
+      "size": 655,
+      "sha256": "31c468a8c75247a690070a7a875c96a598b3829dcd54605f72760dc1d74df62e",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 344
+    },
+    {
+      "path": "instachart-master/pkg/table_chart_handler.go",
+      "size": 1650,
+      "sha256": "2148f57560e1377e58fcf9fcc8478c5eb32cadc1c46ae3919012e194a90c0b1d",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 608
+    },
+    {
+      "path": "instachart-master/pkg/table_chart_handler_test.go",
+      "size": 1708,
+      "sha256": "c0e89bf74138671683a05a322cafe56f4bc8ad1271c1b0d1e27b12323c246de2",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 652
+    },
+    {
+      "path": "instachart-master/pkg/util.go",
+      "size": 1634,
+      "sha256": "e313ec7aa6dd98566324f1def68b7d9076d35be581093b9fcf1f505796c3041a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 696
+    },
+    {
+      "path": "instachart-master/pkg/validator.go",
+      "size": 1059,
+      "sha256": "f02d3c3c18b3471526954382ba378a977688f3b56ba990ff3c2311c7e1d19e11",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 507
+    }
+  ]
+}

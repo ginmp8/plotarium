@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "scope": "JSON schema validity and supplied request examples only; not HTTP/OpenAPI conformance",
+  "examples": [
+    "echarts.json",
+    "mermaid.json",
+    "plotly.json",
+    "definition.json"
+  ]
+}

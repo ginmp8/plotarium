@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "operation": "inventory",
+  "input": "/mnt/data/echarts-node-export-server-master.zip",
+  "input_type": "zip",
+  "package_kind": "zip",
+  "input_sha256": "08db1d9da8b5276c904b3c8b78cf0db99e00d9b791a4250c92c74cc7eba1be55",
+  "inventory_sha256": "89802af93875b17d053aee978fca524ceb108f5fea2301663dfa85818fc083dd",
+  "limits": {
+    "max_files": 30000,
+    "max_item_bytes": 67108864,
+    "max_total_bytes": 1073741824,
+    "max_text_bytes": 524288,
+    "max_matches": 150,
+    "max_edges": 15000
+  },
+  "complete": true,
+  "file_count": 40,
+  "readable_count": 40,
+  "total_verified_bytes": 1508701,
+  "by_kind": {
+    "png": 2,
+    "text-by-name": 35,
+    "text-likely": 3
+  },
+  "by_extension": {
+    ".js": 15,
+    ".json": 2,
+    ".md": 7,
+    ".png": 2,
+    ".sh": 2,
+    ".svg": 1,
+    ".yml": 6,
+    "[none]": 5
+  },
+  "notes": [],
+  "notes_omitted": 0,
+  "files": [
+    {
+      "path": "echarts-node-export-server-master/.dockerignore",
+      "size": 165,
+      "sha256": "13d80f89054f4720e1d736631189dce67d91539eeb58b3737870276781b622f3",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 130
+    },
+    {
+      "path": "echarts-node-export-server-master/.github/CODEOWNERS",
+      "size": 65,
+      "sha256": "fb16128f345ee9697e7f4a2e7d1a2bdee0de11b816b2fae3ab2a557f7470f219",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 65
+    },
+    {
+      "path": "echarts-node-export-server-master/.github/dependabot.yml",
+      "size": 441,
+      "sha256": "3bed67ffd2e2884dd61c7b280b0b2df540eb0debca1b3ae53204b0fca4afe764",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 235
+    },
+    {
+      "path": "echarts-node-export-server-master/.github/workflows/alpine.yml",
+      "size": 562,
+      "sha256": "e2668026ea4e6688df720d3286dc58359304c4e62f3f854c6c7aa8cc52680427",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 274
+    },
+    {
+      "path": "echarts-node-export-server-master/.github/workflows/audit.yml",
+      "size": 509,
+      "sha256": "61f1d0f3b7e63aba33cf9fcc75ae93dbfb7d38fe331f9789958a4e60d1c8afb3",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 239
+    },
+    {
+      "path": "echarts-node-export-server-master/.github/workflows/docker.yml",
+      "size": 2172,
+      "sha256": "67b19470d75f334622636a6c37b18deb2ba7f27d3371cb3ba0b9e3f49b1ae2d6",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 954
+    },
+    {
+      "path": "echarts-node-export-server-master/.github/workflows/node.js.yml",
+      "size": 765,
+      "sha256": "9b9a2df2ecf295b57db32df63c6070cb5ad282da6119faf2a3dfaabee823b6f6",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 366
+    },
+    {
+      "path": "echarts-node-export-server-master/.gitignore",
+      "size": 89,
+      "sha256": "2f1cdd7282cbd4456ebe925345c840b9bbac06c4dd90833ebe99a400f1c537f4",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 59
+    },
+    {
+      "path": "echarts-node-export-server-master/.gitlab-ci.yml",
+      "size": 1464,
+      "sha256": "9ddfded51995c5e815ccc2efcc884a7434e48bc15f4554107ee2e027d00a87b2",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 230
+    },
+    {
+      "path": "echarts-node-export-server-master/CONTRIBUTING.md",
+      "size": 2466,
+      "sha256": "99ed7507c4f2ccf8fc3c22f47a2150d26f90c57920d112bbf6bc4a05a009a523",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1239
+    },
+    {
+      "path": "echarts-node-export-server-master/Dockerfile",
+      "size": 2153,
+      "sha256": "4810ec307150cac0905f038ce2643d1ac23d13017fa3b5c7c1d23607a9ad8c5c",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 955
+    },
+    {
+      "path": "echarts-node-export-server-master/LICENSE",
+      "size": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 12119
+    },
+    {
+      "path": "echarts-node-export-server-master/changelog.md",
+      "size": 20255,
+      "sha256": "7a8d2b3dc1d7effa1ce0d371d28a21d841b359a5c3b82d40f23cb6f10227e0a6",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 5018
+    },
+    {
+      "path": "echarts-node-export-server-master/docker-helper.sh",
+      "size": 728,
+      "sha256": "a3db7ff4847965e3c49141ab50157af93953a2e0b8ece6145387765f640446b2",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 351
+    },
+    {
+      "path": "echarts-node-export-server-master/documentation/docker.md",
+      "size": 2000,
+      "sha256": "e2778c7536ad89c4be0c336297de937e8abed8cd2cc9f5b6e919983976e19ee2",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 977
+    },
+    {
+      "path": "echarts-node-export-server-master/documentation/graph-2eae6ee3-cb0c-464d-8997-7c2476e8d69d.png",
+      "size": 12714,
+      "sha256": "02d342a1a85d9a7df04b67b0f4aacf75b74cced11011c4f14814a0c56be52dbd",
+      "kind": "png",
+      "status": "ok",
+      "compressed_size": 10043
+    },
+    {
+      "path": "echarts-node-export-server-master/documentation/graph-4a8d8e1d-eef8-4593-bd4c-422866243121.png",
+      "size": 13117,
+      "sha256": "aaf6937432dde6701579cd4158861d93db2beface3c98e7371accd6fded778c5",
+      "kind": "png",
+      "status": "ok",
+      "compressed_size": 10828
+    },
+    {
+      "path": "echarts-node-export-server-master/documentation/graph-e7df5157-ef8d-424f-a3db-e9184cbd570d.svg",
+      "size": 4243,
+      "sha256": "d713546632aec940d5d2f90be4b09af3f28d0f66892b70cc9172207ff64e1253",
+      "kind": "text-likely",
+      "status": "ok",
+      "compressed_size": 813
+    },
+    {
+      "path": "echarts-node-export-server-master/documentation/installation-node-js.md",
+      "size": 3282,
+      "sha256": "6dee95391d7f07a8661dcdf4a29b453144f798e61bbd482328206a8bd3d8742e",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1469
+    },
+    {
+      "path": "echarts-node-export-server-master/documentation/readme.md",
+      "size": 413,
+      "sha256": "9ce5785a8f86a0dd8fd8019d4e459b4cc05d6a0af1c9987a93a38a16c5ce39b6",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 259
+    },
+    {
+      "path": "echarts-node-export-server-master/documentation/troubleshooting-faq.md",
+      "size": 2697,
+      "sha256": "e10ec78ce6f88118d0e33534936ade9d0ba62370671b8c412337d62c1441005e",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1312
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/echarts.v5.6.0.min.js",
+      "size": 1034102,
+      "sha256": "bf4a223524e40b77c304bec67e1222cf551f14880cf42c69dc046558e11c07b1",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 335581
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/package-lock.json",
+      "size": 16246,
+      "sha256": "113f7bf6edff0695d93803ad6de323b7745bdbd4dd54a8bb8cb5cd42e071197c",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 4535
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/package.json",
+      "size": 595,
+      "sha256": "65bfc27057249b81a76d5c9cb107031e22f7b8cb7fc8e3cc26e2007aa59fd7ae",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 315
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/server.js",
+      "size": 4468,
+      "sha256": "270ee46f6f5c8240f3cc86b7da9e58fa6ec58eb11db8fe0e10488465331ff74d",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1878
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/ssr.js",
+      "size": 4511,
+      "sha256": "6fcd79a98e172da650f19567d271f65a765f7c3bf5a6b7d74e763d5f798216f0",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 1379
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/test.sh",
+      "size": 427,
+      "sha256": "84bc90fba857bd19a8ba724163f2ea94c10f166df73e6e06435dda3065aef367",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 261
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/bar.test.js",
+      "size": 53998,
+      "sha256": "39f2a379d8a8e569fee31aaefe5ee1e1620e83e99d5e11bdfd1b31de2bdac015",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 3566
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/boxplot.test.js",
+      "size": 24925,
+      "sha256": "9800f100000e7cac4a0e34292dff52641bc14178a82b2a91902177af3e1127ec",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 3446
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/candlestick.test.js",
+      "size": 12631,
+      "sha256": "94894dd42b615c778a9885c63710d186fe12e9145c22a7945c40ff807c456f8c",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2161
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/funnel.test.js",
+      "size": 21414,
+      "sha256": "1c9e355113d4067109b9370a830eec5b17247b1756cd0f8a10f30da7ec42f26c",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2926
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/line.test.js",
+      "size": 90075,
+      "sha256": "e3fe315f847ec129526373ea6a00ffbe52aaa6d7aa9f38fb6c847a578787b593",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 6074
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/parallel.test.js",
+      "size": 21912,
+      "sha256": "26041f9268fb13b152d588e809070cea8416ce218bc49205dd7f634ff7486ca9",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2597
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/pie.test.js",
+      "size": 20437,
+      "sha256": "04ec6c6bc329d81983a66fa1bf4ad7eae706b9140da05f8f8c9314a5f3ab314f",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2877
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/radar.test.js",
+      "size": 22078,
+      "sha256": "42bb0f6e144572bb3527fd7c268404d47a51ef9476729097a2a0d530f0fcb00a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 3013
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/sankey.test.js",
+      "size": 13991,
+      "sha256": "5aad5103cbe508769447ed1cb2828a2068c0c7f75b0c1a6202f31918ad027ef5",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2294
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/scatter.test.js",
+      "size": 25701,
+      "sha256": "45b030a084ecd62354ef2fe22bbba75c636c4050f7fd7e9254eb8325a3ce95ad",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2723
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/charts/sunburst.test.js",
+      "size": 18300,
+      "sha256": "c0eccc1785987aee5cd53bc2c4a08b0408b7dd1adc1bd5de9bb27e3fb999499a",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2772
+    },
+    {
+      "path": "echarts-node-export-server-master/export-server/tests/server.test.js",
+      "size": 11241,
+      "sha256": "1104548a3c1a3d1f6f48c69c0a9768a111e3655143787574b983878d554c398e",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2000
+    },
+    {
+      "path": "echarts-node-export-server-master/readme.md",
+      "size": 6202,
+      "sha256": "23d04b94be011eb5a525d6ddab369e442ccae37a1dd8b1f31ebb4625a03fb739",
+      "kind": "text-by-name",
+      "status": "ok",
+      "compressed_size": 2589
+    }
+  ]
+}

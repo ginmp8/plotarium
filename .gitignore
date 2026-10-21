@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+.rhapsodia/
+.nuget/
+artifacts/
+.env
+*.user
+.vs/

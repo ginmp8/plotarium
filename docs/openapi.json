@@ -1,0 +1,354 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Plotarium",
+    "version": "0.1.0-alpha.1",
+    "description": "Candidate API contract. Full HTTP/browser integration has not been executed. No automatic Node, browser or network resource downloads."
+  },
+  "security": [
+    {
+      "ApiKey": []
+    }
+  ],
+  "paths": {
+    "/v1/render": {
+      "post": {
+        "operationId": "render",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Requested representation, returned as an attachment. JSON is a reusable definition envelope, not Base64.",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/webp": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/svg+xml": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Definition"
+                }
+              },
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed or ambiguous request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Input, complexity or output limit exceeded",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Rejected definition, policy or engine failure",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Render queue full",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal failure",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Browser missing or startup failure",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Render deadline exceeded",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/capabilities": {
+      "get": {
+        "operationId": "capabilities",
+        "responses": {
+          "200": {
+            "description": "Pinned engines, formats, profile and limits"
+          }
+        }
+      }
+    },
+    "/health/live": {
+      "get": {
+        "operationId": "live",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Process is alive"
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "ready",
+        "responses": {
+          "200": {
+            "description": "Assets verified and executable file present. Not a rendering smoke test."
+          },
+          "503": {
+            "description": "Browser executable file is absent"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Api-Key"
+      }
+    },
+    "schemas": {
+      "RenderRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "engine"
+        ],
+        "properties": {
+          "engine": {
+            "type": "string",
+            "enum": [
+              "echarts",
+              "plotly",
+              "mermaid"
+            ]
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "png",
+              "jpeg",
+              "webp",
+              "svg",
+              "json",
+              "pdf"
+            ],
+            "default": "png"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 4096,
+            "default": 800
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 4096,
+            "default": 450
+          },
+          "scale": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3,
+            "default": 1
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "dark"
+            ],
+            "default": "light"
+          },
+          "background": {
+            "type": "string",
+            "pattern": "^(#[0-9A-Fa-f]{6}|transparent)$",
+            "default": "#ffffff"
+          },
+          "spec": {
+            "type": "object"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50000
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "engine": {
+                  "const": "mermaid"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "source"
+              ],
+              "not": {
+                "required": [
+                  "spec"
+                ]
+              }
+            },
+            "else": {
+              "required": [
+                "spec"
+              ],
+              "not": {
+                "required": [
+                  "source"
+                ]
+              }
+            }
+          }
+        ],
+        "description": "Structural envelope only. The implementation additionally enforces engine-specific shape, duplicate keys, complexity, active-content policy, pixel area and output limits. JSON output is not engine-semantic validation."
+      },
+      "Definition": {
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "normalization",
+          "validation",
+          "engineVersion",
+          "request"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "const": "1"
+          },
+          "normalization": {
+            "const": "envelope-only"
+          },
+          "validation": {
+            "const": "structural-only"
+          },
+          "engineVersion": {
+            "type": "string"
+          },
+          "request": {
+            "$ref": "#/components/schemas/RenderRequest"
+          }
+        }
+      },
+      "Problem": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          },
+          "traceId": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
