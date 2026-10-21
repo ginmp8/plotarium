@@ -1,31 +1,27 @@
-# Evidencias de validacao
+# Validacao executada - Plotarium 0.1.1
 
-## Executado
+**Versao 0.1.1 aprovada para o smoke funcional executado, nao homologada para exposicao publica.** Receipts e hashes de cada artefato em `evidence/0.1.1/`.
 
-- Intake dos sete arquivos: inventario completo de membros e SHA-256, limites de arquivo e registro de symlink nao seguido.
-- Extracao para leitura de 62 arquivos, 13.354 linhas; analise semantica focada nos fluxos relevantes, nao em todas essas linhas ou todo o corpus.
-- SDK .NET 10.0.302: SHA-512 comparado com metadata oficial, instalacao isolada, `--info`, compilacao e execucao do nucleo.
-- Primeiro ciclo de testes: 18 casos, falhas reais antes da implementacao da validacao (`core-red.json`), depois 18 aprovados (`core-green-initial.json`).
-- Suite final do nucleo: 75 aprovados, 0 falhas (`core-tests.json`), incluindo entrada, limites, duplicate keys, SVG ativo, admissao, cancelamento, timeout, definicao JSON, assets e adulteracao.
-- O teste AssetCatalog compila o mesmo arquivo de producao como linked source, sem substituir PuppeteerSharp por tipos falsos. Isto NAO compila o restante de Infrastructure.
-- Restore completo tentado: primeira tentativa parou por configuracao ambiente de plataforma; segunda, com plataforma normalizada somente no comando do sandbox, falhou NU1301 por acesso ao NuGet.
+## Executado nesta entrega
 
-## Bloqueado / nao executado
+- .NET SDK 10.0.302 (Linux x64), Chromium 144.0.7559.96.
+- `dotnet restore Plotarium.slnx -p:Platform="Any CPU" --ignore-failed-sources`: aprovado; projeto sem pacotes NuGet de terceiros.
+- `dotnet build Plotarium.slnx -p:Platform="Any CPU" -c Release --no-restore`: **aprovado, 0 warnings, 0 errors**.
+- `dotnet run --project tests/Plotarium.ContractTests -c Release --no-build`: **75/75**.
+- `dotnet publish src/interfaces/Plotarium.Api -p:Platform="Any CPU" -c Release --no-restore -o artifacts/publish`: **aprovado**, DLL e assets locais copiados.
+- Publicacao executada via `dotnet artifacts/publish/Plotarium.Api.dll`, sem configurar API Key, em `127.0.0.1:55731` do ambiente de testes.
+- `dotnet run --project tests/Plotarium.HttpTests -c Release --no-build -- http://127.0.0.1:55731/`: **24/24**, incluindo 18 combinacoes (ECharts, Plotly, Mermaid x PNG/SVG/JSON/JPEG/WebP/PDF), contrato sem autenticacao, status esperados 400/404/422 e MIME/assinatura/dimensoes.
+- Revisao visual: os tres PNGs gerados possuem conteudo grafico visivel. Os tres PDFs foram verificados com `pdfinfo` (1 pagina cada), convertidos para imagem via Poppler; PDF ECharts inspecionado visualmente.
+- Artefatos testados verificam seus bytes SHA-256 contra os hashes declarados no JSON de testes.
 
-Restore da Infra/API, build/publish completo, browser real via C#, PNG/SVG/PDF/JPEG/WebP gerados pela API, testes de autenticacao HTTP real, carga, tempos p50/p95, CPU/RSS, kill/recovery real, matriz Windows/macOS, perceptual diff, auditoria de vulnerabilidades e imagem de container. Nenhum resultado visual foi inventado e nenhum output falso foi incluido.
+## Configuracao de sandbox na avaliacao
 
-Os testes HTTP estao implementados e devem ser executados somente contra a API real. A contagem 75 nao inclui testes de browser nem testes dos servidores originais.
+O browser foi executado com `ASPNETCORE_ENVIRONMENT=Development` e `Plotarium__Browser__DisableSandbox=true` **somente** porque o contêiner de validação nao permite user namespaces apropriados. Isso **nao valida** que o Chromium inicia com sandbox ativo em Windows/Linux de producao. O codigo nao desabilita sandbox por padrao e rejeita esse opt-in fora de Development. Nenhum browser binario esta incluido no ZIP.
 
-## Matriz exigida antes de promover
+## Nao comprovado
 
-1. Restore, lock e build limpos com a versao pinada de PuppeteerSharp.
-2. Tres engines x seis formatos; MIME, assinatura, dimensoes, conteudo nao vazio e revisao visual.
-3. ECharts bar/line/pie/sankey/graph/heatmap; Plotly line/scatter/box/sankey e 3D somente quando declarado; Mermaid flowchart/sequence/state/class/ER. Tipos nao testados nao ganham cobertura automaticamente.
-4. Chave incorreta, JSON malformado/duplicado, XSS, Mermaid init/frontmatter/click/HTML, referencias a file/http/data e tentativa de buscar metadados internos. Observar egress de processo, nao somente evento de pagina.
-5. Cancelamento antes/depois de launch, timeout de render, crash de browser, fila cheia, saida excessiva e recuperacao de permissoes; nenhum processo orfao.
-6. Fontes fixadas, labels longos, Unicode/pt-BR, transparencia/JPEG opaco e escalas 1/2/3 dentro do limite.
-7. Testes repetidos com SO/arquitetura/browser e assets pinados; nao confundir reprodutibilidade do build com igualdade de pixels.
+Execucao Windows/macOS, browser sandbox de producao, carga/performance de picos, seguranca de exposicao publica anonima, recurso remoto/bypass do navegador, cobertura de todos os tipos nativos e pixels idênticos entre hosts. Um teste de assinatura MIME nao prova equivalencia visual; a revisao manual de 3 PNGs nao cobre todos os estilos/diagramas. O renderer mudou de PuppeteerSharp para CDP direto na 0.1.1; compatibilidade com futuras versoes do Chromium deve ser revalidada.
 
-## Identidade
+## Historico
 
-`candidate-files.json` registra hashes dos arquivos de entrega (exclui caches, .rhapsodia e artefatos de build). `validation-receipt.json` separa testes executados dos gates bloqueados. Recebimento na Library e registrado separadamente: persistencia bem-sucedida nao significa validacao funcional da API.
+As evidencias de `evidence/` anteriores registram o candidato `0.1.0-alpha.1` e seus impedimentos de restore; foram preservadas sem reescrever os resultados historicos. Evidencias da release atual sao armazenadas em `evidence/0.1.1/`.

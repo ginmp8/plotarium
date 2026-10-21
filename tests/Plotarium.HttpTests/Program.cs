@@ -7,9 +7,7 @@ using System.Text.Json;
 using System.Xml.Linq;
 if(args.Length!=1 || !Uri.TryCreate(args[0],UriKind.Absolute,out var origin) || origin.Scheme is not ("http" or "https"))
 { Console.Error.WriteLine("Usage: dotnet run --project tests/Plotarium.HttpTests -- http://localhost:5000/"); return 2; }
-var key=Environment.GetEnvironmentVariable("Plotarium__ApiKey") ?? throw new InvalidOperationException("Set Plotarium__ApiKey.");
 using var http=new HttpClient{BaseAddress=origin,Timeout=TimeSpan.FromSeconds(60)};
-http.DefaultRequestHeaders.Add("X-Api-Key",key);
 var results=new List<object>();int failed=0;
 var output=Path.Combine("artifacts","integration",DateTimeOffset.UtcNow.ToString("yyyyMMddTHHmmssfff"));Directory.CreateDirectory(output);
 var engines=new Dictionary<string,object>
@@ -25,7 +23,7 @@ foreach(var format in new[]{"png","svg","json","jpeg","webp","pdf"})
     try
     {
         using var response=await http.PostAsJsonAsync("v1/render",body);
-        if(!response.IsSuccessStatusCode)throw new Exception($"HTTP {(int)response.StatusCode}");
+        if(!response.IsSuccessStatusCode)throw new Exception($"HTTP {(int)response.StatusCode}: "+(await response.Content.ReadAsStringAsync())[..Math.Min(280,(await response.Content.ReadAsStringAsync()).Length)]);
         var bytes=await response.Content.ReadAsByteArrayAsync();if(bytes.Length<8)throw new Exception("Empty artifact");
         var mime=format switch{"png"=>"image/png","svg"=>"image/svg+xml","json"=>"application/json","jpeg"=>"image/jpeg","webp"=>"image/webp",_=>"application/pdf"};
         if(response.Content.Headers.ContentType?.MediaType!=mime)throw new Exception("Unexpected MIME");
@@ -59,7 +57,26 @@ foreach(var (name,content,status) in new[]{("invalid-json","{",HttpStatusCode.Ba
 using(var unauthenticated=new HttpClient{BaseAddress=origin,Timeout=TimeSpan.FromSeconds(10)})
 {
     using var response=await unauthenticated.GetAsync("v1/capabilities");
-    var pass=response.StatusCode==HttpStatusCode.Unauthorized;if(!pass)failed++;results.Add(new{name="authentication",status=pass?"pass":"fail"});
+    var pass=response.StatusCode==HttpStatusCode.OK;if(!pass)failed++;results.Add(new{name="anonymous_capabilities",status=pass?"pass":"fail",http=(int)response.StatusCode});
+}
+// The correct route is POST /v1/render, not a separate URL for each engine.
+using (var wrongRoute = await http.PostAsJsonAsync("v1/render/echarts", engines["echarts"]))
+{
+    var pass = wrongRoute.StatusCode == HttpStatusCode.NotFound;
+    if (!pass) failed++;
+    results.Add(new { name = "incorrect_engine_route_is_404", status = pass ? "pass" : "fail", http = (int)wrongRoute.StatusCode });
+}
+using (var invalidBody = await http.PostAsJsonAsync("v1/render", new { engine = "echarts", definition = new { series = new[] { new { type = "pie", data = new[] { 1, 2 } } } } }))
+{
+    var pass = invalidBody.StatusCode == HttpStatusCode.BadRequest;
+    if (!pass) failed++;
+    results.Add(new { name = "definition_instead_of_spec_is_400", status = pass ? "pass" : "fail", http = (int)invalidBody.StatusCode });
+}
+using (var response = await http.PostAsJsonAsync("v1/render", new { engine = "echarts", format = "json", spec = new { series = new[] { new { type = "pie", data = new[] { 1, 2 } } } } }))
+{
+    var pass = response.StatusCode == HttpStatusCode.OK;
+    if (!pass) failed++;
+    results.Add(new { name = "anonymous_json_render", status = pass ? "pass" : "fail", http = (int)response.StatusCode });
 }
 var report=JsonSerializer.Serialize(new{failed,passed=results.Count-failed,results,scope="HTTP signatures and basic dimensions, not perceptual equivalence"},new JsonSerializerOptions{WriteIndented=true});
 await File.WriteAllTextAsync(Path.Combine(output,"results.json"),report);Console.WriteLine(report);return failed==0?0:1;

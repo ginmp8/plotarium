@@ -1,51 +1,40 @@
-# Plotarium
+# Plotarium 0.1.1
 
-API .NET 10 para definicoes e imagens de graficos ECharts, Plotly e diagramas Mermaid. Sem servico Node.js, Python, Java ou Go em runtime. JavaScript das engines e executado em Chromium controlado por PuppeteerSharp.
+API ASP.NET Core 10 para gerar ECharts 6.1.0, Plotly.js 4.1.2 e Mermaid 12.1.0 em PNG, JPEG, WebP, SVG, PDF ou envelope JSON. **Sem qualquer autenticacao:** nao existe chave, token, usuario, middleware de auth nem cabecalho obrigatorio.
 
-**Versao: 0.1.0-alpha.1. Estado: implementacao candidata; nucleo testado, integracao grafica bloqueada por dependencia indisponivel. Nao liberar em producao com base apenas neste pacote.**
+Runtime de imagem: Chromium/Chrome local controlado pelo protocolo CDP diretamente em C#, sem PuppeteerSharp, Node.js ou pacotes NuGet de terceiros. Bibliotecas JavaScript estao incluidas em `assets/` com manifesto de integridade. JSON funciona sem navegador.
 
-## O que foi entregue
-
-Contrato unico `POST /v1/render`, engines e assets fixados, formatos PNG/SVG/JSON/JPEG/WebP/PDF, controles de entrada, fila limitada, prazo, processo de browser por job, definicao JSON sem browser, exemplos, testes executaveis e mapeamento de sete referencias. A existencia do codigo de um formato nao significa que sua exportacao foi validada aqui.
-
-Veja [estado de validacao](docs/validation.md), [dependencias](docs/dependencies.md), [contrato](docs/api-contract.md), [arquitetura](docs/architecture.md), [operacao](docs/operations.md), [seguranca](docs/security.md) e [referencias](docs/research/INDEX.md).
-
-## Estrutura
-
-- `src/domain`: contratos e limites basicos, sem pacotes externos.
-- `src/application`: validacao, definicao JSON, admissao e politica SVG.
-- `src/infrastructure`: assets locais e adaptador PuppeteerSharp/Chromium.
-- `src/interfaces/Plotarium.Api`: HTTP, autenticacao, erros e metricas.
-- `assets`: bundles browser pinados e manifesto SHA-256; nao executar scripts originais dos servidores.
-- `tests`: 75 verificacoes executaveis de nucleo e assets; teste HTTP grafico separado.
-- `docs/research` e `evidence`: decisao, fontes, inventario, rastreabilidade e evidencias reais.
-
-## Iniciar
-
-Instale um SDK .NET 10 suportado e Chromium/Chrome compativel com PuppeteerSharp 25.14.0. Nao ha download automatico de browser em runtime. As bibliotecas JS ja acompanham o pacote.
+## Iniciar no Windows (PowerShell)
 
 ```powershell
 $env:Plotarium__Browser__ExecutablePath = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
-# Defina Plotarium__ApiKey por seu gerenciador de segredos/ambiente; pelo menos 32 bytes.
 dotnet restore Plotarium.slnx
-dotnet build Plotarium.slnx -c Release --no-restore
-dotnet run --project tests/Plotarium.ContractTests -c Release --no-build
-dotnet run --project src/interfaces/Plotarium.Api -c Release --no-build
+dotnet build Plotarium.slnx -c Release
+dotnet run --project src/interfaces/Plotarium.Api -c Release
 ```
 
-O comando de teste do nucleo pode executar isoladamente sem o pacote PuppeteerSharp: `dotnet run --project tests/Plotarium.ContractTests -c Release`. Execute a partir da raiz do projeto, pois verifica `assets/`.
+No Visual Studio, coloque `Plotarium__Browser__ExecutablePath` nas variaveis de ambiente do perfil ativo ou configure o mesmo caminho na maquina; o Chrome/Chromium precisa estar instalado. Em Linux, configure `/usr/bin/chromium`. O browser deve ser executado sem privilegios, com sandbox. **A API nao exige `Plotarium__ApiKey`.**
 
-## Exemplo de chamada
+## Contrato e exemplos diretos de curl
+
+**Rota unica:** `POST /v1/render`. Campos `engine`, `format`, `width`, `height`, `spec` (ECharts/Plotly) ou `source` (Mermaid). `definition` nao e um campo aceito pela API. Os exemplos a seguir usam curl (Bash/Git Bash) e HTTPS local com certificado de desenvolvimento (`-k` apenas para desenvolvimento).
+
+```bash
+curl -k -X POST 'https://localhost:55731/v1/render' -H 'Content-Type: application/json' -d '{"engine":"echarts","format":"svg","width":800,"height":450,"spec":{"xAxis":{"type":"category","data":["Jan","Fev","Mar"]},"yAxis":{"type":"value"},"series":[{"type":"bar","data":[10,20,15]}]}}' -o echarts.svg
+curl -k -X POST 'https://localhost:55731/v1/render' -H 'Content-Type: application/json' -d '{"engine":"plotly","format":"png","spec":{"data":[{"type":"bar","x":["A","B"],"y":[1,2]}]}}' -o plotly.png
+curl -k -X POST 'https://localhost:55731/v1/render' -H 'Content-Type: application/json' -d '{"engine":"mermaid","format":"svg","source":"flowchart LR\nA[Inicio] --> B[Fim]"}' -o mermaid.svg
+```
+
+Use `curl.exe` no PowerShell (a interpretacao das aspas varia entre shells); os comandos Bash/Git Bash acima nao devem ser colados diretamente em Windows PowerShell antigo. `GET /v1/capabilities`, `/health/live` e `/health/ready` tambem sao publicos.
+
+## Testar e publicar
 
 ```powershell
-$headers = @{ 'X-Api-Key' = $env:Plotarium__ApiKey }
-Invoke-WebRequest -Uri 'http://localhost:5000/v1/render' -Method Post -Headers $headers -ContentType 'application/json' -InFile 'examples/echarts.json' -OutFile 'chart.png'
+dotnet run --project tests/Plotarium.ContractTests -c Release
+dotnet run --project tests/Plotarium.HttpTests -c Release -- http://localhost:5000/
+dotnet publish src/interfaces/Plotarium.Api -c Release -o artifacts/publish
 ```
 
-A URL depende de `ASPNETCORE_URLS`; consulte os logs de inicializacao. Para JSON, use `examples/definition.json`. O campo `request` devolvido pode ser reenviado com outro `format`.
+O teste HTTP precisa de uma API executando e verifica as 18 combinacoes de engine x formato, incluindo imagens reais. Veja [operacao](docs/operations.md), [contrato](docs/api-contract.md), [arquitetura](docs/architecture.md), [validacao](docs/validation.md), [dependencias](docs/dependencies.md) e [seguranca](docs/security.md).
 
-## O que falta comprovar
-
-Restore completo e compilacao da Infra/API, execucao real dos tres motores, 18 combinacoes basicas motor/formato, isolamento de rede/processo, cancelamento durante launch, fidelity visual, carga e Windows/macOS. O bloqueio observado foi `NU1301` no NuGet; veja comandos e lista de dependencias, sem testes simulados que encubram o bloqueio.
-
-O workspace persistente esperado e `/Projetos/Plotarium`; referencias reutilizaveis ficam em `/_external/visualization/2026-10-21`. A confirmacao efetiva de persistencia esta no recibo Library, separado da validacao do software.
+**Aviso:** sem autenticacao significa que qualquer cliente com acesso de rede pode solicitar renders. Mantenha a API na interface de loopback ou em uma rede privada protegida pelo ambiente. Nao a exponha diretamente a Internet; cargas complexas ainda podem consumir CPU/memoria apesar dos limites da aplicacao.

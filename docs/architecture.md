@@ -1,41 +1,22 @@
-# Arquitetura e decisoes
+# Arquitetura - Plotarium 0.1.1
 
-## Objetivo e limite
+`HTTP -> validacao de corpo -> RequestValidator -> RenderService -> [JSON envelope OU fila limitada -> ChromiumRenderer -> CDP loopback -> engine/assets locais -> SVG/PNG/JPEG/WebP/PDF] -> HTTP`.
 
-Uma unica API ASP.NET Core 10 recebe configuracoes nativas e emite definicoes/imagens. Nao e uma reimplementacao dos algoritmos graficos. Mantem ECharts 6.1.0, Plotly 4.1.2 e Mermaid 12.1.0 como bibliotecas JavaScript reais, carregadas localmente no Chromium.
+Domain: contratos e limites; Application: validacao, controle de fila/tempo, XML SVG; Infrastructure: assets hashados, processo isolado por render, protocolo CDP WebSocket em C#, carregamento offline e exportacao; Interfaces: API minimal ASP.NET Core. Nenhum banco, fila externa ou autenticacao.
 
-## Fluxo
+## Renderer
 
-`HTTP -> autenticacao -> limite de corpo -> RequestValidator -> RenderService -> definicao JSON OU BoundedRenderGate -> ChromiumRenderer -> assets locais -> engine -> bytes -> politica SVG -> HTTP`
+- `ChromiumProcess`: executavel Chrome/Chromium instalado pelo operador, perfil temporario por job, porta CDP efemera em loopback; mata o processo/destroi o perfil na saida.
+- `CdpConnection`: WebSocket limitado, correlacao de requests, limites de mensagens e propagacao de cancelamento.
+- `AssetCatalog`: valida hashes e estrutura de modulos do Mermaid antes de usar os bytes nativos.
+- `ChromiumRenderer`: injeta codigo local previamente verificado em um documento offline; sem interpolacao do JSON como script; usa ECharts, Plotly e Mermaid efetivos; recusa requests de rede. SVG passa por politica XML; raster usa `Page.captureScreenshot`; PDF usa `Page.printToPDF` apos apresentar SVG validado.
 
-Domain nao conhece browser ou HTTP. Application depende apenas de Domain. Infrastructure implementa `IChartRenderer` e usa Application. API compoe tudo. Nao foram adicionados EF, banco, MediatR, AutoMapper, Redis, filas externas ou gateway intermediario.
+Nao ha pacote PuppeteerSharp ou dependencia Node. A integracao depende de APIs CDP usadas pelo Chromium homologado. O Chrome deve rodar com sandbox, exceto opt-in de smoke local (Development, sem exposicao externa).
 
-## ADR-001: Chromium controlado por .NET
+## Contrato
 
-Adotado como denominador comum de layout DOM de Plotly/Mermaid e captura de raster/PDF. PuppeteerSharp e biblioteca .NET; nao instala servidor Node. ECharts poderia usar SSR SVG em outro runtime, mas isso nao resolve sozinho Plotly e Mermaid. ClearScript/V8 + rasterizador nao foi validado e nao integra esta versao.
+`POST /v1/render` recebe ECharts `spec` (option), Plotly `spec` (`data` e `layout`) ou Mermaid `source` (texto). O campo `definition` nao faz parte do contrato v1. `format` aceita png/jpeg/webp/svg/pdf/json. JSON e envelope estruturado e nao requer browser. SVG e PDF sao saidas renderizadas, nao source. `GET /v1/capabilities` declara versoes e formatos.
 
-## ADR-002: processo por trabalho
+Apos remover autenticacao, nao existe middleware de credenciais nem segredo de inicializacao. Limites globais continuam, mas quotas por consumidor deixam de existir. Restrinja acesso no host/rede; documente o risco em `docs/security.md`.
 
-O primeiro candidato abre um processo Chromium por renderizacao admitida, em vez de compartilhar browser/paginas. Isto reduz estados compartilhados e torna o kill dono-especifico; aumenta cold-start e custo. Nao ha alegacao de alto throughput. Concorrencia padrao 2, espera maxima de 4 requisicoes. Medir antes de introduzir pooling.
-
-Prazo padrao 30s inclui fila e operacoes. `WaitAsync` sozinho nao cancela JavaScript: o `finally` fecha/mata o processo pertencente ao job. Cancelamento durante launch pode aguardar a janela limitada de finalizacao do launch (10s por padrao) e fechamento (2s). Nao e uma garantia de resposta precisamente em 30s; esse pior caso e um teste de integracao obrigatorio.
-
-## ADR-003: configuracao nativa, politica do servidor
-
-ECharts usa `spec` option; Plotly usa `spec.data`/`spec.layout`; Mermaid usa `source`. Funcoes, carregamento remoto, config arbitraria de browser, custom series e HTML nao entram no contrato. Dimensoes, animacao, tooltip e politicas de seguranca sao propriedades do servidor. Plotly config nao e exposto.
-
-## ADR-004: significado do JSON
-
-JSON e envelope com schemaVersion, engineVersion, normalization=envelope-only e validation=structural-only. Nao converte Mermaid em AST, nao popula defaults internos das engines, nao inclui imagem Base64 e nao garante que uma definicao estruturalmente valida renderiza semanticamente. A versao do engine permite o consumidor localizar o runtime correto.
-
-## ADR-005: recursos locais e identidade
-
-Manifesto lista hash e versao de cada arquivo browser. AssetCatalog carrega/verifica os bytes; o browser recebe apenas respostas interceptadas na origem virtual `https://plotarium.invalid/`. Nao existe servidor real nesse dominio. O input nunca define arquivos/caminhos de carregamento. Os hashes protegem contra alteracao acidental apos o intake; nao sao assinatura independente do fornecedor.
-
-## ADR-006: formatos e extensibilidade
-
-SVG usa exportacao da engine; PNG/JPEG/WebP capturam a pagina final; PDF imprime uma pagina com dimensoes definidas. WebGL pode aparecer rasterizado dentro de SVG/PDF. Novas engines implementariam adaptacao e capacidades explicitas; nao se promete converter qualquer biblioteca ou linguagem arbitraria.
-
-## Reprodutibilidade
-
-Fixar SDK, pacote e lock, Chromium, sistema operacional, fontes e assets e necessario para comparacoes de pixels. A aplicacao desativa animacoes suportadas e espera fontes/frames, mas nao promete determinismo pixel-identico para todos os layouts. Core compilou/testou com SDK 10.0.302, runtime 10.0.10. Atualizacao de servicing e homologacao de browser sao gates distintos.
+Nuvem, desempenho, rendering fidedigno em todas as familias nativas, SO Windows/macOS, PDF/A e consistencia pixel-a-pixel exigem validacao separada. Documentos historicos de 0.1.0-alpha.1 em `evidence/` registram aquela fase, nao a validacao de 0.1.1.

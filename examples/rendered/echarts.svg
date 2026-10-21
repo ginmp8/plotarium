@@ -1,0 +1,30 @@
+<svg width="480" height="240" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 480 240">
+<rect width="480" height="240" x="0" y="0" fill="#ffffff"></rect>
+<path d="M72 160.5L432 160.5" fill="none" stroke="#dbdee4" class="zr0-cls-0"></path>
+<path d="M72 136.5L432 136.5" fill="none" stroke="#dbdee4" class="zr0-cls-0"></path>
+<path d="M72 112.5L432 112.5" fill="none" stroke="#dbdee4" class="zr0-cls-0"></path>
+<path d="M72 89.5L432 89.5" fill="none" stroke="#dbdee4" class="zr0-cls-0"></path>
+<path d="M72 65.5L432 65.5" fill="none" stroke="#dbdee4" class="zr0-cls-0"></path>
+<path d="M72 160.5L432 160.5" fill="none" stroke="#54555a" stroke-linecap="round" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(64 160)" fill="#54555a">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(64 136.25)" fill="#54555a">0.5</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(64 112.5)" fill="#54555a">1</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(64 88.75)" fill="#54555a">1.5</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:sans-serif;" transform="translate(64 65)" fill="#54555a">2</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(162 168)" fill="#54555a">A</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:sans-serif;" y="6" transform="translate(342 168)" fill="#54555a">B</text>
+<path d="M99.9 160l124.2 0l0 -47.5l-124.2 0Z" fill="#5070dd" class="zr0-cls-1"></path>
+<path d="M279.9 160l124.2 0l0 -95l-124.2 0Z" fill="#5070dd" class="zr0-cls-1"></path>
+<style ><![CDATA[
+.zr0-cls-0:hover {
+pointer-events:none;
+}
+.zr0-cls-1:hover {
+cursor:pointer;
+fill:rgba(88,123,243,1);
+}
+
+]]>
+
+</style>
+</svg>

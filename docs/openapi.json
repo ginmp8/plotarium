@@ -2,14 +2,10 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Plotarium",
-    "version": "0.1.0-alpha.1",
-    "description": "Candidate API contract. Full HTTP/browser integration has not been executed. No automatic Node, browser or network resource downloads."
+    "version": "0.1.1",
+    "description": "Unauthenticated ASP.NET Core API rendering ECharts, Plotly and Mermaid through locally installed Chromium. No token or API key required."
   },
-  "security": [
-    {
-      "ApiKey": []
-    }
-  ],
+  "security": [],
   "paths": {
     "/v1/render": {
       "post": {
@@ -67,16 +63,6 @@
           },
           "400": {
             "description": "Malformed or ambiguous request",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Problem"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication required",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -171,7 +157,6 @@
     "/health/live": {
       "get": {
         "operationId": "live",
-        "security": [],
         "responses": {
           "200": {
             "description": "Process is alive"
@@ -194,13 +179,6 @@
     }
   },
   "components": {
-    "securitySchemes": {
-      "ApiKey": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "X-Api-Key"
-      }
-    },
     "schemas": {
       "RenderRequest": {
         "type": "object",

@@ -1,0 +1,5 @@
+  Plotarium.Domain -> /mnt/data/plotarium-011-work/Plotarium/src/domain/Plotarium.Domain/bin/Any CPU/Release/net10.0/Plotarium.Domain.dll
+  Plotarium.Application -> /mnt/data/plotarium-011-work/Plotarium/src/application/Plotarium.Application/bin/Any CPU/Release/net10.0/Plotarium.Application.dll
+  Plotarium.Infrastructure -> /mnt/data/plotarium-011-work/Plotarium/src/infrastructure/Plotarium.Infrastructure/bin/Any CPU/Release/net10.0/Plotarium.Infrastructure.dll
+  Plotarium.Api -> /mnt/data/plotarium-011-work/Plotarium/src/interfaces/Plotarium.Api/bin/Any CPU/Release/net10.0/Plotarium.Api.dll
+  Plotarium.Api -> /mnt/data/plotarium-011-work/Plotarium/artifacts/publish/

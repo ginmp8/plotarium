@@ -14,3 +14,5 @@ Source reconstruction is independent; donor server compatibility is not promised
 - Deliver independent implementation, source evidence, limitations, acquisition/validation receipts and persistent Library verification.
 
 These acceptance conditions were recorded before implementation of validation/rendering logic. Later changes must be recorded, not silently made to bless failures.
+
+Nota de versao: 0.1.1 altera controle de acesso e renderer por solicitacao explicita; use docs/validation.md e docs/security.md para os gates atuais.

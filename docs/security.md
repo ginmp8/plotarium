@@ -1,25 +1,13 @@
-# Seguranca e limites da avaliacao
+# Seguranca - Plotarium 0.1.1
 
-Revisao estatica de um candidato nao e certificacao de seguranca. Nao foram executados testes de browser, egress, sandbox, carga ou invasao. A aplicacao nao deve ser exposta publicamente antes desses gates.
+**A API nao autentica nem autoriza clientes.** Todas as rotas (incluindo render, capabilities e health) sao acessiveis sem token, X-Api-Key, usuario ou sessao. Isso e deliberado por solicitacao do projeto, mas nao constitui autorizacao para exposicao publica: restrinja o bind a loopback ou rede privada com firewall e controle de acesso fora do servico. Nunca exponha o Chromium remoto; CDP usa endpoint local do processo do job.
 
-## Controles implementados
+Controles mantidos: JSON validado como dados; proibicao de callbacks, recursos externos e diretivas Mermaid; manifesto SHA-256 dos assets locais; bloqueio de requests de pagina via CDP Fetch; CSP restritiva; SVG XML inspecionado contra scripts/links/DTD; limites de tamanho, pixels, concorrencia/fila e tempo. Arquivos temporarios de browser sao de uso exclusivo do job e eliminados no fim.
 
-Entrada JSON tratada como dados, sem eval ou interpolacao executavel. Politicas de engine sao fixas. API key fora dos arquivos, comparacao de SHA-256 em tempo constante; sem log de corpo/chave/erro bruto da engine. Ausencia de chave bloqueia startup, exceto modo Development anonimo explicitamente habilitado e restrito a clientes loopback.
+Sem credenciais armazenadas no codigo, em arquivos de configuracao ou nos exemplos. O filho Chromium recebe uma lista restrita de variaveis de ambiente, sem segredos do host. O processo por renderizacao e encerrado ao final; validar memoria, limites de SO e eventuais leaks continua responsabilidade de homologacao.
 
-Manifesto SHA-256 de assets locais; recusa de path traversal e links nos assets. Intercepcao de requisicoes instalada antes da navegacao, respostas somente para origem virtual e nomes existentes no catalogo. CSP recusa conexoes, frames, workers e formulários. Sem carregamento de CDN em runtime. O caminho do browser e configuracao do operador, nao input do cliente.
+**Sandbox:** nao desabilite no ambiente de producao. Uma chave de configuracao `Plotarium__Browser__DisableSandbox` aceita true apenas quando ASPNETCORE_ENVIRONMENT=Development, para teste em contêiner isolado onde user namespaces nao estao disponiveis. Esse modo reduz isolamento; nao aceita exposicao externa. A politica CDP/CSP nao substitui bloqueio de egress em nivel de rede/processo.
 
-Mermaid strict com maxTextSize/maxEdges do servidor. Saida SVG recusa DTD, processing instructions, namespaces ativos, script, foreignObject, on*, xml:base, URLs externas e animacao. Este perfil nao e um sanitizador universal e pode recusar SVG legitimo com funcionalidades nao suportadas.
+Capacidade default: concorrencia 2; fila 4; request 1MiB; saida 16MiB; 30s por operacao. Limites da API nao substituem cgroups, quotas de CPU, PIDs, memoria, limite de conexoes ou controle de rede. A entrada do cliente e nao confiavel; nao logar corpos/sources renderizados.
 
-## Requisitos operacionais ainda nao comprovados
-
-Execute Chromium como usuario sem privilegios com sandbox ativo. Nenhuma flag --no-sandbox/--disable-setuid-sandbox e incluida. Egress de processo deve ser negado por politica de rede do ambiente: request interception/CSP nao controlam todo o trafego interno do Chromium. Mantenha arquivos de assets somente leitura, temporarios limitados, memoria/CPU/PIDs com limites de SO e filesystem sem dados de outros usuarios.
-
-Nao injete credenciais AWS/banco/desenvolvimento no processo do renderizador. A chave Plotarium__ApiKey e esvaziada no ambiente especifico de launch, mas isto nao substitui isolamento do processo e minimo privilegio. Outros segredos nao devem coexistir nesse runtime.
-
-TLS, rotacao/armazenamento de chaves, quotas por consumidor, protecao do proxy, WAF e rate limit por identidade sao responsabilidades do ambiente a definir antes de publicacao. A fila global protege concorrencia, nao e um sistema completo antiautomacao.
-
-## Fronteiras e riscos residuais
-
-Cada trabalho abre seu proprio Chromium e o encerra; ainda e necessario provar ausencia de processo orfao durante cancelamento de launch e falha de pagina. O limite de bytes de saida e verificado depois de a biblioteca produzir o resultado: memoria e tempo precisam de limites externos. O Chrome instalado no sandbox (144) nao foi homologado com PuppeteerSharp 25.14.0 nem declarado atualizado.
-
-As fontes recebidas nao foram autenticadas contra um release assinado independente. Hashes fixam exatamente o material enviado, nao sua autenticidade upstream. Antes de producao, conferir origem, SBOM, avisos de licenca e vulnerabilidades do conjunto realmente restaurado, incluindo pacotes transitivos e browser.
+Licencas: os bundles JavaScript de terceiros possuem avisos em assets/licenses. Atualizar browser e .NET conforme patches suportados, revisar CVEs e redigir uma auditoria de carga antes de uso de producao.

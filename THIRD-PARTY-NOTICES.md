@@ -6,4 +6,4 @@ Os assets JavaScript sao codigo de terceiros, nao reimplementacao: Apache EChart
 
 Os arquivos originais, licencas e excertos de engenharia reversa mantem suas licencas upstream e sao armazenados separadamente como referencias. O MIT do codigo novo nao relicencia esse material. Esta separacao nao substitui revisao juridica das condicoes reais de distribuicao.
 
-PuppeteerSharp 25.14.0 sera restaurado do NuGet, nao acompanha o codigo como binario. Chromium e fontes tambem nao sao redistribuidos neste pacote. Origem, versao, plataforma e licencas devem ser registradas pelo operador.
+O projeto 0.1.1 nao utiliza PuppeteerSharp ou pacotes NuGet externos. Chromium e fontes nao sao redistribuidos no ZIP. Origem, versao, plataforma e licencas devem ser registradas pelo operador.

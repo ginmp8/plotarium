@@ -1,9 +1,11 @@
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Text;
+using System.Text.RegularExpressions;
 using Plotarium.Domain;
 namespace Plotarium.Infrastructure;
 
-public sealed class AssetCatalog
+public sealed partial class AssetCatalog
 {
     private readonly IReadOnlyDictionary<string, byte[]> files;
     public AssetCatalog(string directory)
@@ -33,6 +35,28 @@ public sealed class AssetCatalog
             if (!loaded.ContainsKey(entry)) throw new InvalidDataException("Required engine asset is missing.");
         files = loaded;
     }
+    public string ReadScript(string path) => files.TryGetValue(path, out var bytes)
+        ? Encoding.UTF8.GetString(bytes) : throw new InvalidDataException("Missing verified renderer asset.");
+
+    public IReadOnlyDictionary<string,string> MermaidModules()
+    {
+        var modules = new Dictionary<string,string>(StringComparer.Ordinal);
+        foreach(var (path, bytes) in files.Where(x=>x.Key.StartsWith("/assets/mermaid/",StringComparison.Ordinal)))
+        {
+            var source = Encoding.UTF8.GetString(bytes);
+            var rewritten = RelativeModuleReference().Replace(source, match => {
+                var target = new Uri(new Uri("https://plotarium.invalid" + path),match.Groups["path"].Value).AbsolutePath;
+                if(!files.ContainsKey(target) || !target.StartsWith("/assets/mermaid/",StringComparison.Ordinal))
+                    throw new InvalidDataException("Unresolved Mermaid module.");
+                return match.Groups["quote"].Value + "@plotarium" + target + match.Groups["quote"].Value;
+            });
+            modules.Add("@plotarium"+path,rewritten);
+        }
+        return modules;
+    }
+    [GeneratedRegex("(?<quote>['\\\"])(?<path>\\.{1,2}/[^'\\\"]+\\.mjs)\\k<quote>", RegexOptions.CultureInvariant)]
+    private static partial Regex RelativeModuleReference();
+
     public bool TryRead(Uri uri, out byte[]? bytes)
     {
         bytes = null;

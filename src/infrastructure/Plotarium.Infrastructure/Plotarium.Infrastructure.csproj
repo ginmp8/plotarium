@@ -1,1 +1,1 @@
-<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="../../application/Plotarium.Application/Plotarium.Application.csproj" /><PackageReference Include="PuppeteerSharp" /></ItemGroup><ItemGroup><EmbeddedResource Include="renderer.js" /></ItemGroup></Project>
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="../../application/Plotarium.Application/Plotarium.Application.csproj" /></ItemGroup><ItemGroup><EmbeddedResource Include="render-bridge.js" /></ItemGroup></Project>

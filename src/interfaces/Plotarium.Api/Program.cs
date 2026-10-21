@@ -1,8 +1,5 @@
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 using Plotarium.Application;
 using Plotarium.Domain;
@@ -20,18 +17,13 @@ var seconds=section.GetValue("TimeoutSeconds",30);
 if(concurrency is <1 or >32 || queue is <0 or >100 || seconds is <1 or >120 ||
    browserSettings.LaunchTimeoutMs is <1000 or >30000 || browserSettings.ProtocolTimeoutMs is <1000 or >120000)
     throw new InvalidOperationException("Invalid render limits.");
-var key=section["ApiKey"];
-var anonymousDevelopment=builder.Environment.IsDevelopment() && section.GetValue("AllowAnonymousDevelopment",false);
-if(!anonymousDevelopment && (key is null || Encoding.UTF8.GetByteCount(key)<32))
-    throw new InvalidOperationException("Set Plotarium__ApiKey to a secret of at least 32 bytes.");
-var expectedKeyHash=key is null?Array.Empty<byte>():SHA256.HashData(Encoding.UTF8.GetBytes(key));
 builder.Services.AddSingleton(new BoundedRenderGate(concurrency,queue));
 builder.Services.AddSingleton(browserSettings);
 builder.Services.AddSingleton(new AssetCatalog(assetRoot));
 builder.Services.AddSingleton<IChartRenderer,ChromiumRenderer>();
 builder.Services.AddSingleton(sp=>new RenderService(sp.GetRequiredService<IChartRenderer>(),sp.GetRequiredService<BoundedRenderGate>(),TimeSpan.FromSeconds(seconds)));
 var app=builder.Build();
-using var meter=new Meter("Plotarium","0.1.0-alpha.1");
+using var meter=new Meter("Plotarium","0.1.1");
 var completed=meter.CreateCounter<long>("plotarium.render.completed");
 var failures=meter.CreateCounter<long>("plotarium.render.failed");
 var latency=meter.CreateHistogram<double>("plotarium.render.duration","ms");
@@ -40,17 +32,6 @@ app.Use(async(context,next)=>
     context.Response.Headers.XContentTypeOptions="nosniff";
     context.Response.Headers.CacheControl="no-store";
     context.Response.Headers["Content-Security-Policy"]="default-src 'none'; sandbox";
-    if(context.Request.Path=="/health/live") { await next(context); return; }
-    var loopback=context.Connection.RemoteIpAddress is { } ip && IPAddress.IsLoopback(ip);
-    if(!(anonymousDevelopment && loopback))
-    {
-        var supplied=context.Request.Headers["X-Api-Key"];
-        if(supplied.Count!=1 || supplied[0] is not { Length: >=32 and <=1024 } candidate || expectedKeyHash.Length!=32 ||
-           !CryptographicOperations.FixedTimeEquals(SHA256.HashData(Encoding.UTF8.GetBytes(candidate)),expectedKeyHash))
-        {
-            await Results.Problem(statusCode:401,title:"Authentication required.",extensions:new Dictionary<string,object?>{{"code","unauthorized"}}).ExecuteAsync(context);return;
-        }
-    }
     try { await next(context); }
     catch(RenderFailure ex)
     {
@@ -63,7 +44,7 @@ app.Use(async(context,next)=>
     catch(OperationCanceledException) when(context.RequestAborted.IsCancellationRequested) { context.Abort(); }
     catch(Exception)
     {
-        // No exception message, graph input, API key or browser stderr enters application logs.
+        // No exception message, graph input or browser stderr enters application logs.
         app.Logger.LogError("Render request failed. TraceId: {TraceId}",context.TraceIdentifier);
         if(!context.Response.HasStarted) await Results.Problem(statusCode:500,title:"Internal render error.",extensions:new Dictionary<string,object?>{{"traceId",context.TraceIdentifier}}).ExecuteAsync(context);
         else context.Abort();
