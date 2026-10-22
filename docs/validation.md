@@ -32,3 +32,15 @@ O harness HTTP verifica 18 combinações de 3 engines × 6 formatos com MIME e a
 - Não testados: Windows/macOS, segurança de serviço anônimo exposto à internet, desempenho sob carga de produção, GPU em todas as máquinas, todos os specs/plugins/layouts, correção pixel a pixel, provedores de mapas remotos.
 
 O histórico `evidence/` da 0.1.0-alpha.1 preserva limitações e receipts daquela implementação e **não** é evidência executada nesta release. Os recibos autoritativos da 0.2.0 estão em `evidence/0.2.0/`.
+
+
+## Plotarium 0.3.0
+
+- Linux .NET 10 Release build: **PASS**, 0 errors/warnings.
+- ContractTests: **95/95 PASS**.
+- HttpTests on a nonroot server with sandboxed Chromium: **35/35 PASS**, including the original 18 engine/format responses and new interactive/MCP tests.
+- UI component tests using real ECharts/Plotly JS in Chromium and fixed local fixtures: **3/3 PASS** (including world map, theme/zoom/reset); no JavaScript errors.
+- OpenAPI JSON 3.1 parses; JavaScript syntax checks for viewer and engine adapters pass.
+- `GET /v1/charts/{id}/view` and `format:html` return hosted HTML; they are not self-contained offline HTML downloads.
+- **Not tested:** Windows, public-host registration, actual Teams/WhatsApp/ChatGPT host interaction, and the Mermaid ESM interactive viewer in a browser on a fully navigable origin. The managed Chromium policy prohibited localhost navigation in the test environment; only component tests circumvented the need for navigating, without modifying policy.
+- See `evidence/0.3.0/validation.json` for executable evidence and hashes.

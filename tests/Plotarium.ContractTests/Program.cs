@@ -152,6 +152,38 @@ Test("tampered asset rejected",()=>{
         try{_ = new Plotarium.Infrastructure.AssetCatalog(temp);throw new Exception("Tampering accepted");}catch(InvalidDataException){}
     }finally{Directory.Delete(temp,true);}
 });
+
+// 0.3.0: interactive share contract, written before the implementation.
+Test("html output is a valid requested format",()=>Equal("html",Parse(valid.Replace("\"spec\"","\"format\":\"html\",\"spec\"")).Format));
+Test("ephemeral share id is unguessable and request is retained",()=>{
+    var store = new ChartStore(2,TimeSpan.FromMinutes(15));
+    var item=store.Create(Parse(valid));
+    Equal(true,System.Text.RegularExpressions.Regex.IsMatch(item.Id,"^[a-f0-9]{32}$"));
+    Equal("echarts",store.Get(item.Id)!.Request.Engine);
+    Equal(null,store.Get("not-an-id"));
+});
+Test("expired chart is never available",()=>{
+    var time=new MutableClock(DateTimeOffset.Parse("2026-10-21T20:00:00Z"));
+    var store=new ChartStore(1,TimeSpan.FromMinutes(5),time);
+    var a=store.Create(Parse(valid));
+    time.Advance(TimeSpan.FromMinutes(6));
+    Equal(null,store.Get(a.Id));
+    Equal(true,store.Create(Parse(valid)).Id!=a.Id);
+});
+Test("chart capacity rejects live entries rather than evicting them",()=>{
+    var store=new ChartStore(1,TimeSpan.FromMinutes(10));
+    var item=store.Create(Parse(valid));
+    try { _=store.Create(Parse(valid)); throw new Exception("Live chart evicted"); }
+    catch(RenderFailure ex) { Equal(429,ex.Status); }
+    Equal(true,store.Get(item.Id) is not null);
+});
+Test("engine capabilities disclose only real interactive support",()=>{
+    Equal(true,ChartCapabilities.For("echarts").Interactive);
+    Equal(true,ChartCapabilities.For("plotly").Interactive);
+    Equal(false,ChartCapabilities.For("mermaid").SupportsPointSelection);
+    Equal(false,ChartCapabilities.For("echarts").SupportsArbitraryCallbacks);
+});
+
 Console.WriteLine(JsonSerializer.Serialize(new { failed, passed = results.Count-failed, results }, new JsonSerializerOptions{WriteIndented=true}));
 return failed == 0 ? 0 : 1;
 
@@ -159,4 +191,11 @@ sealed class RecordingRenderer(Func<RenderRequest,CancellationToken,Task<RenderA
 {
     public int Calls{get;private set;}
     public Task<RenderArtifact> RenderAsync(RenderRequest request,CancellationToken cancellationToken){Calls++;return run(request,cancellationToken);}
+}
+
+sealed class MutableClock(DateTimeOffset start):TimeProvider
+{
+    private DateTimeOffset now=start;
+    public override DateTimeOffset GetUtcNow() => now;
+    public void Advance(TimeSpan by) => now+=by;
 }

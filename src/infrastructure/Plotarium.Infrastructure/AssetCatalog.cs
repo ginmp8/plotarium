@@ -35,6 +35,17 @@ public sealed partial class AssetCatalog
             if (!loaded.ContainsKey(entry)) throw new InvalidDataException("Required engine asset is missing.");
         files = loaded;
     }
+    public bool TryReadPublic(string relative, out byte[]? bytes)
+    {
+        bytes = null;
+        if (relative.Length > 250 || relative.Contains('\\') || relative.Split('/').Any(part=>part is "" or "." or ".."))return false;
+        if (!relative.StartsWith("echarts/",StringComparison.Ordinal) &&
+            !relative.StartsWith("plotly/",StringComparison.Ordinal) &&
+            !relative.StartsWith("mermaid/",StringComparison.Ordinal) &&
+            !relative.StartsWith("topojson/",StringComparison.Ordinal) &&
+            !relative.StartsWith("geojson/",StringComparison.Ordinal))return false;
+        return files.TryGetValue("/assets/"+relative,out bytes);
+    }
     public string ReadScript(string path) => files.TryGetValue(path, out var bytes)
         ? Encoding.UTF8.GetString(bytes) : throw new InvalidDataException("Missing verified renderer asset.");
 

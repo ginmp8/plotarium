@@ -1,0 +1,1 @@
+{"engine":"plotly","width":1100,"height":700,"theme":"light","spec":{"data":[{"type":"scatter3d","mode":"markers+lines","x":[0,1,2,3,4,5],"y":[2,5,1,6,3,8],"z":[1,4,2,6,5,9],"marker":{"size":6,"color":[1,2,3,4,5,6],"colorscale":"Viridis"}}],"layout":{"title":{"text":"Evolucao espacial"},"scene":{"xaxis":{"title":"X"},"yaxis":{"title":"Y"},"zaxis":{"title":"Z"}}}}}

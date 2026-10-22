@@ -1,0 +1,193 @@
+{
+  "failed": 0,
+  "passed": 35,
+  "results": [
+    {
+      "name": "echarts/png",
+      "status": "pass",
+      "sha256": "f0c3f3c20b2491c74ccf738ecd90fb4381a5bfa73000fc592a8e9c378b8559f3",
+      "bytes": 2881
+    },
+    {
+      "name": "echarts/svg",
+      "status": "pass",
+      "sha256": "097caa353fa821282881f2b0eb10bfa39a972c9f6c7772e3e12dbf37710413fd",
+      "bytes": 2176
+    },
+    {
+      "name": "echarts/json",
+      "status": "pass",
+      "sha256": "90831ff67aef05f76bc8b2eccba160c62945a7958e0945fa07e005b4fb9eb29a",
+      "bytes": 347
+    },
+    {
+      "name": "echarts/jpeg",
+      "status": "pass",
+      "sha256": "e2d63a5d5e9eea3ddf5e690c5861d3d1ed2031a8fc470c77d52a15fdd06fee65",
+      "bytes": 4379
+    },
+    {
+      "name": "echarts/webp",
+      "status": "pass",
+      "sha256": "4b2224bfde8f9b78031e0d820574a182fbb53d55cbdedb7d9f40b54f030997c6",
+      "bytes": 1588
+    },
+    {
+      "name": "echarts/pdf",
+      "status": "pass",
+      "sha256": "258a45731b84e8d4e10e06e99751dc94981cdc25b57de367612ad0e591aec1d3",
+      "bytes": 6929
+    },
+    {
+      "name": "plotly/png",
+      "status": "pass",
+      "sha256": "8aa359fd5c1a27081ba491e68ff181eb13b7ce270decfb278d981cec4da34bda",
+      "bytes": 4702
+    },
+    {
+      "name": "plotly/svg",
+      "status": "pass",
+      "sha256": "ba5dde69523f245f91d265fea0eebe2185c9b446416d4a62e7cb3443105668c3",
+      "bytes": 5744
+    },
+    {
+      "name": "plotly/json",
+      "status": "pass",
+      "sha256": "9bb3f6c8d4752f84774b1aa4bb578745e2569e017f8cc0bc01ecf36cabbdec20",
+      "bytes": 336
+    },
+    {
+      "name": "plotly/jpeg",
+      "status": "pass",
+      "sha256": "c9ec117befa9ab8d3eb1e5d00e8748bfb5d228e6d38171a7bbe4e309efb3e5e8",
+      "bytes": 5311
+    },
+    {
+      "name": "plotly/webp",
+      "status": "pass",
+      "sha256": "c9b682c896ec1a91d6d1e7cedc45d70d368f7b33450cfe318e908d97bd73eb96",
+      "bytes": 2946
+    },
+    {
+      "name": "plotly/pdf",
+      "status": "pass",
+      "sha256": "df7c612b190030c715517edb283df26e0520c92c3691bcd0e7f6954108133fec",
+      "bytes": 6935
+    },
+    {
+      "name": "mermaid/png",
+      "status": "pass",
+      "sha256": "06beb6729bd1a8e459a18daf243852021f8a44f7712652f40b615b09e6e85625",
+      "bytes": 3976
+    },
+    {
+      "name": "mermaid/svg",
+      "status": "pass",
+      "sha256": "078d6482799c5c8fa6883745c0161cfbea9ad9ec01cacfa9cd1b892485452cf6",
+      "bytes": 11432
+    },
+    {
+      "name": "mermaid/json",
+      "status": "pass",
+      "sha256": "5a684498fa2afb015e76cc83c963204150693b78fd07e30b2c22c47311fdeeee",
+      "bytes": 283
+    },
+    {
+      "name": "mermaid/jpeg",
+      "status": "pass",
+      "sha256": "8d6394d5a19aeab33fe001be952575a3aba2434eeb3035b8250a2d973dab47e8",
+      "bytes": 5191
+    },
+    {
+      "name": "mermaid/webp",
+      "status": "pass",
+      "sha256": "45bef551da2634e2cc1eebcf0a598f40f0d8e8c2fb24924af911a71fd6463701",
+      "bytes": 2188
+    },
+    {
+      "name": "mermaid/pdf",
+      "status": "pass",
+      "sha256": "04b4b34778e98844b1a1a0398a8a424d6d06797e671a12c7bd31be7e3b6b2c5d",
+      "bytes": 23524
+    },
+    {
+      "name": "invalid-json",
+      "status": "pass",
+      "http": 400
+    },
+    {
+      "name": "unknown-engine",
+      "status": "pass",
+      "http": 422
+    },
+    {
+      "name": "anonymous_capabilities",
+      "status": "pass",
+      "http": 200
+    },
+    {
+      "name": "incorrect_engine_route_is_404",
+      "status": "pass",
+      "http": 404
+    },
+    {
+      "name": "definition_instead_of_spec_is_400",
+      "status": "pass",
+      "http": 400
+    },
+    {
+      "name": "anonymous_json_render",
+      "status": "pass",
+      "http": 200
+    },
+    {
+      "name": "interactive_create_view_share_echarts",
+      "status": "pass"
+    },
+    {
+      "name": "interactive_create_view_share_plotly",
+      "status": "pass"
+    },
+    {
+      "name": "interactive_create_view_share_mermaid",
+      "status": "pass"
+    },
+    {
+      "name": "mermaid_esm_asset",
+      "status": "pass",
+      "http": 200
+    },
+    {
+      "name": "invalid_chart_link_404",
+      "status": "pass",
+      "http": 404
+    },
+    {
+      "name": "unsafe_custom_script_refused",
+      "status": "pass",
+      "http": 422
+    },
+    {
+      "name": "html_as_render_format",
+      "status": "pass",
+      "http": 200
+    },
+    {
+      "name": "mcp_initialize",
+      "status": "pass"
+    },
+    {
+      "name": "mcp_tools/list",
+      "status": "pass"
+    },
+    {
+      "name": "mcp_resources/read",
+      "status": "pass"
+    },
+    {
+      "name": "mcp_tools/call",
+      "status": "pass"
+    }
+  ],
+  "scope": "HTTP signatures and basic dimensions, not perceptual equivalence"
+}

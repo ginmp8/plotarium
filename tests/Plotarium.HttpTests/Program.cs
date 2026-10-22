@@ -78,5 +78,95 @@ using (var response = await http.PostAsJsonAsync("v1/render", new { engine = "ec
     if (!pass) failed++;
     results.Add(new { name = "anonymous_json_render", status = pass ? "pass" : "fail", http = (int)response.StatusCode });
 }
+
+// Interactive 0.3.0 regression scenarios: request, resource, sharing, and MCP protocol boundaries.
+foreach(var (engine,definition) in engines)
+{
+    try
+    {
+        using var created=await http.PostAsJsonAsync("v1/charts",definition);
+        if(created.StatusCode!=HttpStatusCode.Created)throw new Exception("Create "+(int)created.StatusCode);
+        using var parsed=JsonDocument.Parse(await created.Content.ReadAsStringAsync());
+        var chart=parsed.RootElement;
+        var id=chart.GetProperty("id").GetString()!;
+        if(id.Length!=32 || !chart.GetProperty("capabilities").GetProperty("interactive").GetBoolean())throw new Exception("Invalid chart descriptor");
+        var view=chart.GetProperty("viewUrl").GetString()!;
+        using(var page=await http.GetAsync(view))
+        {
+            if(page.StatusCode!=HttpStatusCode.OK || page.Content.Headers.ContentType?.MediaType!="text/html") throw new Exception("View unavailable");
+            if(page.Headers.TryGetValues("Content-Security-Policy",out var headers)&&headers.Any(x=>x.Contains("unsafe-inline",StringComparison.Ordinal)))
+                throw new Exception("Unsafe inline script CSP");
+            var html=await page.Content.ReadAsStringAsync();
+            if(!html.Contains("data-chart-id=\""+id+"\"",StringComparison.Ordinal))throw new Exception("Viewer lost identity");
+        }
+        using(var embed=await http.GetAsync($"v1/charts/{id}/embed"))
+            if(embed.StatusCode!=HttpStatusCode.OK||(await embed.Content.ReadAsStringAsync()).Contains("data-embed=\"true\"")==false)
+                throw new Exception("Embed unavailable");
+        using(var definitionResponse=await http.GetAsync($"v1/charts/{id}/definition"))
+        {
+            if(definitionResponse.StatusCode!=HttpStatusCode.OK)throw new Exception("Definition unavailable");
+            using var data=JsonDocument.Parse(await definitionResponse.Content.ReadAsStringAsync());
+            if(data.RootElement.GetProperty("request").GetProperty("engine").GetString()!=engine)throw new Exception("Definition changed engine");
+        }
+        using(var channel=await http.GetAsync($"v1/charts/{id}/share/teams"))
+        {
+            using var data=JsonDocument.Parse(await channel.Content.ReadAsStringAsync());
+            if(data.RootElement.GetProperty("ready").GetBoolean())throw new Exception("Local origin must not claim public Teams support");
+        }
+        using(var asset=await http.GetAsync("v1/viewer/adapters/"+engine+".js"))
+            if(asset.StatusCode!=HttpStatusCode.OK || asset.Content.Headers.ContentType?.MediaType!="text/javascript")
+                throw new Exception("Missing engine adapter");
+        if(engine=="echarts")
+        {
+            using var preview=await http.GetAsync($"v1/charts/{id}/preview?format=png");
+            var bytes=await preview.Content.ReadAsByteArrayAsync();
+            if(preview.StatusCode!=HttpStatusCode.OK || bytes.Length<24 || bytes[0]!=137) throw new Exception("Interactive preview failed: "+(int)preview.StatusCode);
+        }
+        results.Add(new{name="interactive_create_view_share_"+engine,status="pass"});
+    }
+    catch(Exception ex){failed++;results.Add(new{name="interactive_create_view_share_"+engine,status="fail",error=ex.Message});}
+}
+using(var viewAsset=await http.GetAsync("v1/assets/mermaid/mermaid.esm.min.mjs"))
+{
+    var pass=viewAsset.StatusCode==HttpStatusCode.OK&&viewAsset.Content.Headers.ContentType?.MediaType=="text/javascript";
+    if(!pass)failed++;results.Add(new{name="mermaid_esm_asset",status=pass?"pass":"fail",http=(int)viewAsset.StatusCode});
+}
+using(var notFound=await http.GetAsync("v1/charts/00000000000000000000000000000000/view"))
+{
+    var pass=notFound.StatusCode==HttpStatusCode.NotFound;
+    if(!pass)failed++;results.Add(new{name="invalid_chart_link_404",status=pass?"pass":"fail",http=(int)notFound.StatusCode});
+}
+using(var noScript=await http.PostAsJsonAsync("v1/charts",new{engine="echarts",spec=new{series=new[]{new{type="custom",data=new[]{1}}}}}))
+{
+    var pass=noScript.StatusCode==HttpStatusCode.UnprocessableEntity;
+    if(!pass)failed++;results.Add(new{name="unsafe_custom_script_refused",status=pass?"pass":"fail",http=(int)noScript.StatusCode});
+}
+using(var rawHtml=await http.PostAsJsonAsync("v1/render",new{engine="echarts",format="html",spec=new{series=new[]{new{type="bar",data=new[]{3,4}}}}}))
+{
+    var pass=rawHtml.StatusCode==HttpStatusCode.OK&&rawHtml.Content.Headers.ContentType?.MediaType=="text/html";
+    if(!pass)failed++;results.Add(new{name="html_as_render_format",status=pass?"pass":"fail",http=(int)rawHtml.StatusCode});
+}
+var mcpRequests=new object[]{
+    new{jsonrpc="2.0",id=1,method="initialize",@params=new{protocolVersion="2025-11-25",capabilities=new{}}},
+    new{jsonrpc="2.0",id=2,method="tools/list",@params=new{}},
+    new{jsonrpc="2.0",id=3,method="resources/read",@params=new{uri="ui://plotarium/chart.html"}},
+    new{jsonrpc="2.0",id=4,method="tools/call",@params=new{name="create_interactive_chart",arguments=new{engine="echarts",spec=new{series=new[]{new{type="bar",data=new[]{5,6}}}}}}}
+};
+foreach(var request in mcpRequests)
+{
+    var method=request.GetType().GetProperty("method")!.GetValue(request)!.ToString();
+    try
+    {
+        using var response=await http.PostAsJsonAsync("mcp",request);
+        using var json=JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        var result=json.RootElement.GetProperty("result");
+        if(response.StatusCode!=HttpStatusCode.OK)throw new Exception("MCP HTTP "+(int)response.StatusCode);
+        if(method=="tools/list"&&result.GetProperty("tools")[0].GetProperty("_meta").GetProperty("ui").GetProperty("resourceUri").GetString()!="ui://plotarium/chart.html")throw new Exception("No MCP app resource association");
+        if(method=="resources/read"&&result.GetProperty("contents")[0].GetProperty("mimeType").GetString()!="text/html;profile=mcp-app")throw new Exception("Wrong MCP UI resource MIME");
+        if(method=="tools/call"&&!result.GetProperty("structuredContent").GetProperty("chartId").GetString()!.All(Uri.IsHexDigit))throw new Exception("Missing MCP chart id");
+        results.Add(new{name="mcp_"+method,status="pass"});
+    }catch(Exception ex){failed++;results.Add(new{name="mcp_"+method,status="fail",error=ex.Message});}
+}
+
 var report=JsonSerializer.Serialize(new{failed,passed=results.Count-failed,results,scope="HTTP signatures and basic dimensions, not perceptual equivalence"},new JsonSerializerOptions{WriteIndented=true});
 await File.WriteAllTextAsync(Path.Combine(output,"results.json"),report);Console.WriteLine(report);return failed==0?0:1;

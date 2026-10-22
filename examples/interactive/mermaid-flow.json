@@ -1,0 +1,1 @@
+{"engine":"mermaid","width":900,"height":560,"source":"flowchart LR\nA[Solicitacao] --> B{Validacao}\nB -->|Aprovada| C[Processamento]\nB -->|Rejeitada| D[Devolutiva]\nC --> E[Concluido]"}

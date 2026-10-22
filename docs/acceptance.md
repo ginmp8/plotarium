@@ -16,3 +16,11 @@ Source reconstruction is independent; donor server compatibility is not promised
 These acceptance conditions were recorded before implementation of validation/rendering logic. Later changes must be recorded, not silently made to bless failures.
 
 Nota de versao: 0.2.0 altera controle de acesso e renderer por solicitacao explicita; use docs/validation.md e docs/security.md para os gates atuais.
+
+
+## Criterios adicionais para 0.3.0
+
+- HTML interativo servido com assets locais e definicao validada; zoom, tema, reset e visualizacoes ECharts/Plotly confirmados em teste de componente isolado; Mermaid segue as restricoes da engine (sem callbacks arbitrarios).
+- `POST /v1/charts` 201 cria links aleatorios temporarios; `GET /view|embed|definition|preview` retornam conteudos estruturados e binarios correspondentes; IDs desconhecidos retornam 404.
+- `GET /share/teams|whatsapp|chatgpt` descreve canais, sem fazer entrega a terceiros; `/mcp` responde aos metodos do subconjunto documentado.
+- Preservar seis formatos de renderizacao preexistentes para as 3 engines, sem autenticacao, e documentar riscos de publicacao.

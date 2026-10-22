@@ -1,11 +1,11 @@
-# Contrato HTTP v1 - Plotarium 0.2.0
+# Contrato HTTP v1 - Plotarium 0.3.0
 
 **Sem autenticacao.** Nenhum header de identidade e necessario ou validado. `POST /v1/render`, Content-Type application/json, devolve arquivo com o MIME da representacao. Rotas publicas `GET /v1/capabilities`, `/health/live` e `/health/ready`.
 
 | Campo | Valores | Obrigatoriedade |
 |---|---|---|
 | `engine` | `echarts`, `plotly`, `mermaid` | sim |
-| `format` | `png` (default), `jpeg`, `webp`, `svg`, `json`, `pdf` | nao |
+| `format` | `png` (default), `jpeg`, `webp`, `svg`, `json`, `pdf`, `html`, `html` | nao |
 | `spec` | objeto ECharts option ou Plotly com `data`/`layout` | sim, apenas ECharts/Plotly |
 | `source` | codigo Mermaid | sim, apenas Mermaid |
 | `width`, `height` | 64..4096, defaults 800x450 | nao |
@@ -23,7 +23,7 @@ JSON devolve envelope `schemaVersion`, `normalization: envelope-only`, `validati
 
 HTTP: 200 output; 400 corpo malformado/schema/duplicata; 413 limite; 415 media type; 422 entrada/perfil invalido; 429 fila; 503 browser/assets; 504 prazo; 500 erro interno. 404 corresponde a rota incorreta (por exemplo `/v1/render/echarts`). **Nao ha HTTP 401 do aplicativo.**
 
-Limites: 1MiB entrada, 16MiB saida, maxPixels 16.777.216, 100.000 nos JSON, 50.000 elementos por array, Mermaid 50.000 chars. Recursos remotos, HTML, codigo JavaScript do cliente e callbacks sao proibidos. Retorno binario direto, nao Base64 em JSON. Saida SVG valida politica XML.
+Limites: 1MiB entrada, 16MiB saida, maxPixels 16.777.216, 100.000 nos JSON, 50.000 elementos por array, Mermaid 50.000 chars. HTML arbitrario no payload, recursos remotos, codigo JavaScript do cliente e callbacks sao proibidos. O formato de resposta `html` e um visualizador previamente empacotado que depende deste servidor. Retorno binario direto, nao Base64 em JSON. Saida SVG valida politica XML.
 
 ## Maps and additional chart types (0.2.0)
 
@@ -32,3 +32,8 @@ Limites: 1MiB entrada, 16MiB saida, maxPixels 16.777.216, 100.000 nos JSON, 50.0
 - Plotly `scattermap`, `densitymap`, `choroplethmap` explicitly return `422 offline_maplibre`. Plotly v4 removed legacy `*mapbox` traces (422 `removed_mapbox`). ECharts GL and arbitrary user callbacks remain unsupported.
 - WebGL output `svg` can be self-contained raster-in-SVG (`<image href="data:image/png;base64,..."/>`). It is not always an editable vector chart. A Chromium build without GPU/WebGL support can fail with `422 engine_rejected_definition`.
 - The fixed `https://plotarium.invalid/assets/topojson/` address is a CDP-intercepted internal namespace and is **never fetched over the Internet**. All other browser-origin network requests remain blocked; user-supplied URLs and external providers are not allowed.
+
+
+## Interactive contract (0.3.0)
+
+O contrato adicional e **aditivo**: `POST /v1/charts` (201) recebe o mesmo `RenderRequest` e retorna id/TTL, URLs de `view`, `embed`, `definition`, `preview` e descritores de compartilhamento. `GET /v1/interactive/capabilities` indica funcionalidade real por engine. `POST /mcp` apresenta ferramentas MCP em JSON-RPC. As definicoes permanecem apenas na memoria local ate expirar ou ocorrer restart. O token e a propria URL (sem login), entao nao use para dados sensiveis num ambiente publico sem isolamento. Integracoes Teams/WhatsApp/ChatGPT requerem adaptadores de host externos. [Contrato completo](interactive.md).

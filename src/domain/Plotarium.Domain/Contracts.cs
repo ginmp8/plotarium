@@ -44,6 +44,7 @@ public static class Contract
         "png" => ("image/png", "png"), "jpeg" => ("image/jpeg", "jpg"),
         "webp" => ("image/webp", "webp"), "svg" => ("image/svg+xml", "svg"),
         "json" => ("application/json", "json"), "pdf" => ("application/pdf", "pdf"),
+        "html" => ("text/html; charset=utf-8", "html"),
         _ => throw new RenderFailure("format", "Unsupported format.")
     };
 }

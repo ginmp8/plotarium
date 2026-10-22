@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Plotarium",
-    "version": "0.2.0",
-    "description": "Unauthenticated ASP.NET Core API rendering ECharts, Plotly and Mermaid through locally installed Chromium. No token or API key required. Adds bundled offline ECharts GeoJSON maps and Plotly geographies, with WebGL rasterized SVG export. MapLibre remote/tile-based traces remain unsupported."
+    "version": "0.3.0",
+    "description": "Anonymous ASP.NET Core static and interactive chart API. Bundled ECharts 6.1, Plotly 4.1, Mermaid 12.1; browser views, expiring links and limited MCP Apps resource. Remote platform clients and origin policies require separate deployment."
   },
   "security": [],
   "paths": {
@@ -22,7 +22,7 @@
         },
         "responses": {
           "200": {
-            "description": "Requested representation, returned as an attachment. JSON is a reusable definition envelope, not Base64.",
+            "description": "Requested representation, returned as an attachment. JSON is a reusable definition envelope, not Base64. format=html returns HTML that references this backend, not a portable file.",
             "content": {
               "image/png": {
                 "schema": {
@@ -57,6 +57,12 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "description": "Hosted interactive viewer document"
                 }
               }
             }
@@ -176,6 +182,309 @@
           }
         }
       }
+    },
+    "/v1/charts": {
+      "post": {
+        "operationId": "createInteractiveChart",
+        "description": "Anonymous temporary chart in process RAM. Id is a bearer capability. Default TTL=15min, capacity=128.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InteractiveChart"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad JSON"
+          },
+          "422": {
+            "description": "Invalid chart definition"
+          },
+          "429": {
+            "description": "Active chart capacity exceeded"
+          }
+        }
+      }
+    },
+    "/v1/charts/{id}/definition": {
+      "get": {
+        "operationId": "getInteractiveChartDefinition",
+        "description": "Request, expiry and engine capabilities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown or expired chart id"
+          }
+        }
+      }
+    },
+    "/v1/charts/{id}/view": {
+      "get": {
+        "operationId": "openInteractiveChart",
+        "description": "Full HTML viewer referencing this origin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown or expired chart id"
+          }
+        }
+      }
+    },
+    "/v1/charts/{id}/embed": {
+      "get": {
+        "operationId": "embedInteractiveChart",
+        "description": "Compact HTML viewer for iframe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{32}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown or expired chart id"
+          }
+        }
+      }
+    },
+    "/v1/charts/{id}/preview": {
+      "get": {
+        "operationId": "previewInteractiveChart",
+        "description": "Static preview in requested format; format query supports png/svg/jpeg/webp/pdf",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{32}$"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "png",
+                "svg",
+                "jpeg",
+                "webp",
+                "pdf"
+              ],
+              "default": "png"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/webp": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/svg+xml": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown or expired chart id"
+          }
+        }
+      }
+    },
+    "/v1/charts/{id}/share/{channel}": {
+      "get": {
+        "operationId": "shareInteractiveChart",
+        "description": "Channel-specific link/card descriptor; not message sending",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{32}$"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "teams",
+                "whatsapp",
+                "chatgpt",
+                "web"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown or expired chart id"
+          }
+        }
+      }
+    },
+    "/v1/interactive/capabilities": {
+      "get": {
+        "operationId": "interactiveCapabilities",
+        "responses": {
+          "200": {
+            "description": "Per-engine support, channels, limitations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mcp": {
+      "post": {
+        "operationId": "mcpJsonRpc",
+        "description": "MCP Streamable HTTP JSON-only subset, no SSE/subscriptions; remote hosts require HTTPS and trusted gateway.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON-RPC result or error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted notification"
+          },
+          "403": {
+            "description": "Browser Origin refused"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -203,7 +512,8 @@
               "webp",
               "svg",
               "json",
-              "pdf"
+              "pdf",
+              "html"
             ],
             "default": "png"
           },
@@ -278,7 +588,7 @@
             }
           }
         ],
-        "description": "Structural envelope only. The implementation additionally enforces engine-specific shape, duplicate keys, complexity, active-content policy, pixel area and output limits. JSON output is not engine-semantic validation."
+        "description": "Structural envelope only. The implementation additionally enforces engine-specific shape, duplicate keys, complexity, active-content policy, pixel area and output limits. JSON output is not engine-semantic validation. format=html returns hosted HTML, not a standalone self-contained chart."
       },
       "Definition": {
         "type": "object",
@@ -324,6 +634,51 @@
           },
           "traceId": {
             "type": "string"
+          }
+        }
+      },
+      "InteractiveChart": {
+        "type": "object",
+        "description": "Expiring capability-backed chart descriptor",
+        "required": [
+          "id",
+          "expiresAt",
+          "engine",
+          "viewUrl",
+          "embedUrl",
+          "previewUrl",
+          "definitionUrl"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          },
+          "engine": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "viewUrl": {
+            "type": "string"
+          },
+          "embedUrl": {
+            "type": "string"
+          },
+          "previewUrl": {
+            "type": "string"
+          },
+          "definitionUrl": {
+            "type": "string"
+          },
+          "capabilities": {
+            "type": "object"
           }
         }
       }

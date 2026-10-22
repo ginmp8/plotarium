@@ -1,8 +1,20 @@
-# Plotarium 0.2.0
+# Plotarium 0.3.0
 
 API ASP.NET Core 10 para gerar ECharts 6.1.0, Plotly.js 4.1.2 e Mermaid 12.1.0 em PNG, JPEG, WebP, SVG, PDF ou envelope JSON. **Sem qualquer autenticacao:** nao existe chave, token, usuario, middleware de auth nem cabecalho obrigatorio.
 
 Runtime de imagem: Chromium/Chrome local controlado pelo protocolo CDP diretamente em C#, sem PuppeteerSharp, Node.js ou pacotes NuGet de terceiros. Bibliotecas JavaScript estao incluidas em `assets/` com manifesto de integridade. JSON funciona sem navegador.
+
+
+## Novidades 0.3.0: visualização interativa
+
+- `POST /v1/render` agora aceita `"format":"html"`: página interativa servida pelo próprio Plotarium.
+- `POST /v1/charts` fornece URLs de `view`, `embed`, `preview`, `definition` e compartilhamento, válidas por 15 minutos (configurável), com limite de 128 gráficos ativos em memória.
+- Visualizador web acessível e responsivo, sem CDN: zoom, pan quando suportado pela engine, tooltip e seleção, theme toggle e exportações estáticas.
+- Adaptadores de apresentação separados para ECharts, Plotly e Mermaid: uma biblioteca futura pode fornecer seu próprio adaptador validado, sem mudar o viewer genérico.
+- Teams (Adaptive Card com prévia + link), WhatsApp (descritor de link/botão, sem disparar mensagem) e ChatGPT (MCP Apps via `POST /mcp`, `ui://plotarium/chart.html`). Os clientes exigem configuração, permissões e implantação HTTPS própria para integração efetiva.
+- Segurança preservada: sem JS arbitrário nas especificações, sem assets externos, acesso a mapas locais, conteúdo HTML com CSP e links temporários. **A API continua sem autenticação**, portanto a implantação pública exige proteção externa.
+
+Consulte **[Guia da versão interativa](docs/interactive.md)** e a [collection com 12 requisições](examples/postman/Plotarium-0.3.0.postman_collection.json) para importar no Postman, contratos HTTP/MCP, limites, configuração do proxy HTTPS e instruções para extensões.
 
 ## Iniciar no Windows (PowerShell)
 

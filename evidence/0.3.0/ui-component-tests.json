@@ -1,0 +1,28 @@
+{
+  "passed": 3,
+  "failed": 0,
+  "mode": "component fixture; not a real host navigation",
+  "results": [
+    {
+      "engine": "echarts",
+      "world_map": false,
+      "status": "pass",
+      "zoom": "120%",
+      "page_errors": []
+    },
+    {
+      "engine": "plotly",
+      "world_map": false,
+      "status": "pass",
+      "zoom": "120%",
+      "page_errors": []
+    },
+    {
+      "engine": "echarts",
+      "world_map": true,
+      "status": "pass",
+      "zoom": "120%",
+      "page_errors": []
+    }
+  ]
+}

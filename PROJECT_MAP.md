@@ -1,4 +1,4 @@
-# Plotarium 0.2.0 - Mapa do projeto
+# Plotarium 0.3.0 - Mapa do projeto
 
 - `src/domain/Plotarium.Domain`: `RenderRequest`, tipos, formatos e limites.
 - `src/application/Plotarium.Application`: `RequestValidator`, `RenderService`, fila limitada e politica de XML/SVG.
@@ -8,7 +8,7 @@
 - `tests/Plotarium.HttpTests`: endpoints publicos e matriz 3 motores x 6 formatos contra um processo real.
 - `assets/`: bibliotecas JavaScript versionadas e manifesto de integridade; `docs/research` e `evidence`: corpus/analise historica; `examples/`: corpos HTTP exemplificados.
 
-Contrato unico POST /v1/render; `spec` ECharts/Plotly; `source` Mermaid. Nao sao necessarios headers de autenticacao. API requer navegador para imagem; JSON funciona sem navegador. `docs/security.md` enumera riscos de servir clientes anonimos.
+Contrato base POST /v1/render; `spec` ECharts/Plotly; `source` Mermaid. Nao sao necessarios headers de autenticacao. API requer navegador para imagem; JSON funciona sem navegador. `docs/security.md` enumera riscos de servir clientes anonimos.
 
 ## 0.2.0
 
@@ -17,3 +17,13 @@ Contrato unico POST /v1/render; `spec` ECharts/Plotly; `source` Mermaid. Nao sao
 - `src/infrastructure/.../ChromiumRenderer.cs`: carrega mapas exigidos e intercepta **apenas** GET aos TopoJSON verificados; requests externos permanecem proibidos.
 - `tests/...` e `scripts/coverage_smoke.py`: contrato, 3×6 formatos HTTP e matriz de tipos com exclusões explícitas. Casos completos em `examples/coverage/`.
 - `docs/chart-compatibility.md` identifica suporte e limites, `docs/geographic-data.md` documenta a fonte dos polígonos. Sem autenticação.
+
+
+## 0.3.0 - Interactive delivery
+
+- `src/application/Plotarium.Application/InteractiveCharts.cs`: `ChartStore` de links criptograficamente aleatorios, expiracao e limite de capacidade, com capacidades declaradas por engine. Sem persistencia de graficos em disco ou banco.
+- `src/interfaces/Plotarium.Api/Interactive/InteractiveRoutes.cs`: `POST /v1/charts`, visualizador, embed, preview e descritores Teams/WhatsApp/ChatGPT. O uso externo requer origem HTTPS configurada e gateway protegido.
+- `src/interfaces/Plotarium.Api/Interactive/viewer.js`, `viewer.css` e `adapters/*.js`: HTML servido pelo backend, com engines locais e sem scripts arbitrarios do usuario. Novas libs precisam ser aprovadas/registradas no servidor antes de incluir um adaptador.
+- `src/interfaces/Plotarium.Api/Interactive/McpEndpoints.cs`: subconjunto JSON-RPC/MCP Streamable HTTP com ferramenta de criacao e recurso de interface `ui://plotarium/chart.html`; sem certificacao de cliente ChatGPT real nem SSE.
+- `docs/interactive.md`, `docs/release-notes-0.3.0.md`: contratos, importacao de cURL pelo Postman, integracoes e limites operacionais.
+- `tests/Plotarium.ContractTests` e `tests/Plotarium.HttpTests`: protecao do contrato original e novas rotas, recursos e MCP.
