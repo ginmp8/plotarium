@@ -1,4 +1,4 @@
-# Dependencias - Plotarium 0.1.1
+# Dependencias - Plotarium 0.2.0
 
 | Dependencia | Para que serve | Disponibilidade |
 |---|---|---|
@@ -14,4 +14,10 @@
 
 Para Linux: `export Plotarium__Browser__ExecutablePath=/usr/bin/chromium`. Para Windows: caminho absoluto do Chrome/Chromium instalado. Valide o sandbox e fonts do navegador no ambiente real. Build/verificacao local nao atesta Windows/macOS, confiabilidade sob carga, CVEs ou comportamento pixel-identico.
 
-`evidence/` e `docs/research/` preservam material historico do desenvolvimento original de 0.1.0-alpha.1; as informacoes sobre NuGet bloqueado nao se aplicam a este renderer 0.1.1.
+`evidence/` e `docs/research/` preservam material historico do desenvolvimento original de 0.1.0-alpha.1; as informacoes sobre NuGet bloqueado nao se aplicam a este renderer 0.2.0.
+
+## Geographic data (0.2.0)
+
+- Source: user-supplied `plotly.js-main.zip` with `plotly.js-main/dist/topojson/*_110m.json` and `*_50m.json`, reusing Plotly's bundled Natural Earth-derived datasets. All files and SHA-256 digests are included in `assets/manifest.json` and loaded only after verification.
+- Conversion: `python3 scripts/generate_geodata.py /path/to/plotly.js-main.zip`, produces `assets/geojson/*.geojson` from the TopoJSON and updates the asset manifest. No pip, npm, service, GDAL, internet or Node.js is required.
+- Plotly WebGL requires working Chrome/Chromium WebGL; `EnableSoftwareWebGl` is an **opt-in Development-only** browser option (not a production configuration default). ECharts GL would require a separately versioned extension and is not included.

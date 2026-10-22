@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"series":[{"type":"gauge","data":[{"value":75,"name":"Rate"}]}]}}

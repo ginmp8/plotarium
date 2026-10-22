@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"xAxis":{"type":"category","data":["A","B","C","D"]},"yAxis":{"type":"value"},"series":[{"type":"boxplot","data":[[1,2,3,4,5],[2,3,5,7,9]]}]}}

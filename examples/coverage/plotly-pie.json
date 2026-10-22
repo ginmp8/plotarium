@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"pie","labels":["A","B"],"values":[3,7]}]}}

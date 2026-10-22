@@ -1,4 +1,4 @@
-# Operacao - Plotarium 0.1.1
+# Operacao - Plotarium 0.2.0
 
 Requisitos: .NET SDK 10 para compilar; ASP.NET Core Runtime 10 para executar publish framework-dependent; instalacao local de Chrome/Chromium; fontes locais. Nao precisa PuppeteerSharp, Node, npm ou qualquer PackageReference externo. Os assets sao redistribuidos junto ao projeto; nao ha downloads de bibliotecas na inicializacao.
 
@@ -43,3 +43,15 @@ Readiness so confere presenca do executavel e manifestos, nao executa grafico. E
 ## Sandbox do Chromium
 
 Use Chromium sem privilegios com o sandbox nativo. `Plotarium__Browser__DisableSandbox=true` existe **somente para smoke de desenvolvimento em contêiner isolado**, e e rejeitado fora de `ASPNETCORE_ENVIRONMENT=Development`. Esse ajuste desabilita uma camada de protecao e nunca deve ser usado para servir requisições nao confiaveis em rede. Endpoints nao possuem autenticacao: aplique restricao de rede antes de publicar.
+
+## Renderizadores WebGL, mapas e compatibilidade em 0.2.0
+
+Os exemplos completos estão em `README.md` e em `examples/coverage/*.json` (copie o corpo de cada arquivo em Postman Body → raw → JSON). Para testar todos os exemplos com um servidor local, execute:
+
+```sh
+python3 scripts/coverage_smoke.py http://127.0.0.1:55731
+```
+
+No Windows com HTTPS `https://localhost:55731`, configure corretamente o certificado de desenvolvimento; o script stdlib valida HTTPS por padrão (não desativa TLS). É possível configurar outro bind HTTP de loopback só para o teste; **não exponha a porta publicamente**. Erros `offline_maplibre` são esperados para os três cases MapLibre.
+
+Para Chromium sem GPU, `Plotarium__Browser__EnableSoftwareWebGl=true` somente em `ASPNETCORE_ENVIRONMENT=Development`, em ambiente isolado de validação. Em produção mantenha WebGL de hardware/sandbox suportado, ou aceite que esses gráficos podem falhar controladamente.

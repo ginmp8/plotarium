@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"parcats","dimensions":[{"label":"A","values":["a","b","a"]},{"label":"B","values":["b","a","c"]}]}]}}

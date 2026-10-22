@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"surface","z":[[0,1,2],[1,2,3],[2,3,4]]}]}}

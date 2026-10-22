@@ -16,6 +16,87 @@
       "provenance": "supplied-archive; upstream byte identity not independently verified"
     },
     {
+      "path": "geojson/africa.geojson",
+      "sha256": "0b13b2f71756a9637b6e105faf1c027fcb1273c818a1e37c90705464ccd5883b",
+      "bytes": 76662,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "geojson/asia.geojson",
+      "sha256": "ec3b477050c7ac00a25be4f1e0d184cba78dc3f1e6555cffe3e307e80075bb24",
+      "bytes": 118406,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "geojson/europe.geojson",
+      "sha256": "05024e819e4280fcbebbd47b3ba64ced92a6e2eb231b69afda6697fd015a9b1a",
+      "bytes": 66686,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "geojson/north-america.geojson",
+      "sha256": "ffbc38c0ec364559440e20faaf61457be324802174ee46a4f54007fe6e4a48a6",
+      "bytes": 79328,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "geojson/oceania.geojson",
+      "sha256": "647e27cf38294d974238542492627c7d2cbf57f6608ad752f849fb6786fa5ccb",
+      "bytes": 23805,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "geojson/south-america.geojson",
+      "sha256": "c7a5652219183de821ef3d18a24788946f6c891aa18c767c24fcf924772182e8",
+      "bytes": 44560,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "geojson/usa.geojson",
+      "sha256": "b611c91e6be82871093486e186bae4fa46d357bb396242364dc57e33f4c018e5",
+      "bytes": 71520,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "geojson/world-50m.geojson",
+      "sha256": "a9082eb94b6abd9c46d6557d5f6ffedd62fdaa16e60852b7d99985dd5c992a34",
+      "bytes": 1750516,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "geojson/world.geojson",
+      "sha256": "12d90cd284171fa2493b07cae0c2783e297b1d097e30a2a8f8750a1753be291a",
+      "bytes": 462242,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "derived from plotly.js-main/dist/topojson",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
       "path": "licenses/echarts-LICENSE",
       "sha256": "634293835b43a6dd2094fa39182a3d9a6b9ca43b7fdb9ac354e8037af2a3093a",
       "bytes": 11990,
@@ -23,6 +104,15 @@
       "sourceMember": "echarts-master/LICENSE",
       "version": "6.1.0",
       "provenance": "supplied-archive; upstream byte identity not independently verified"
+    },
+    {
+      "path": "licenses/echarts-LICENSE-d3",
+      "sha256": "e1211892da0b0e0585b7aebe8f98c1274fba15bafe47fa1f4ee8a7a502c06304",
+      "bytes": 1475,
+      "sourceArchive": "echarts-master.zip",
+      "sourceMember": "echarts-master/licenses/LICENSE-d3",
+      "version": "6.1.0",
+      "provenance": "supplied-archive"
     },
     {
       "path": "licenses/echarts-NOTICE",
@@ -34,12 +124,12 @@
       "provenance": "supplied-archive; upstream byte identity not independently verified"
     },
     {
-      "path": "plotly/plotly.min.js",
-      "sha256": "1e7b7d8428f6e2b5e8e9ff11a576dd09c635ebae0b40906da9d49fc1cb6a2146",
-      "bytes": 5176747,
-      "sourceArchive": "plotly.js-main.zip",
-      "sourceMember": "plotly.js-main/dist/plotly-strict.min.js",
-      "version": "4.1.2",
+      "path": "licenses/mermaid-LICENSE",
+      "sha256": "68a30b220f977afe62212b43471820b033f5a8185ae883c84cc0cbbc522bcee5",
+      "bytes": 1089,
+      "sourceArchive": "kroki-main.zip",
+      "sourceMember": "kroki-main/licenses/mermaid-license.txt",
+      "version": "12.1.0",
       "provenance": "supplied-archive; upstream byte identity not independently verified"
     },
     {
@@ -1024,22 +1114,103 @@
       "provenance": "supplied-archive; upstream byte identity not independently verified"
     },
     {
-      "path": "licenses/mermaid-LICENSE",
-      "sha256": "68a30b220f977afe62212b43471820b033f5a8185ae883c84cc0cbbc522bcee5",
-      "bytes": 1089,
-      "sourceArchive": "kroki-main.zip",
-      "sourceMember": "kroki-main/licenses/mermaid-license.txt",
-      "version": "12.1.0",
+      "path": "plotly/plotly.min.js",
+      "sha256": "1e7b7d8428f6e2b5e8e9ff11a576dd09c635ebae0b40906da9d49fc1cb6a2146",
+      "bytes": 5176747,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/plotly-strict.min.js",
+      "version": "4.1.2",
       "provenance": "supplied-archive; upstream byte identity not independently verified"
     },
     {
-      "path": "licenses/echarts-LICENSE-d3",
-      "sha256": "e1211892da0b0e0585b7aebe8f98c1274fba15bafe47fa1f4ee8a7a502c06304",
-      "bytes": 1475,
-      "sourceArchive": "echarts-master.zip",
-      "sourceMember": "echarts-master/licenses/LICENSE-d3",
-      "version": "6.1.0",
-      "provenance": "supplied-archive"
+      "path": "topojson/africa_110m.json",
+      "sha256": "0364f4b9a6b16dc03ebca91c9d5eefefb4f9e6eb8c35d6263592f8bb4b647136",
+      "bytes": 36570,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/africa_110m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/asia_110m.json",
+      "sha256": "cd32cc41ffe375e9b026159cb5b3acaeda5d802c2154463b26d22587d2661ef3",
+      "bytes": 79956,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/asia_110m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/europe_110m.json",
+      "sha256": "11dd75b5c85db2339c5c0b314612a19374216c64b0090d192de31f841785d016",
+      "bytes": 38133,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/europe_110m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/north-america_110m.json",
+      "sha256": "f52f86860953f710613809587f59a855e8074a2d2eaa25ef913ef3a4b61b0c8e",
+      "bytes": 73900,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/north-america_110m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/oceania_110m.json",
+      "sha256": "50dbce96b3a3e1be04beda1a80101eb9bcd0558cf330bdd3f6b98d61ff781cea",
+      "bytes": 44211,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/oceania_110m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/south-america_110m.json",
+      "sha256": "c21f1509ddb9fea737f898c9fab4d43a4060e9d214712a5acaede11cd8915482",
+      "bytes": 22523,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/south-america_110m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/usa_110m.json",
+      "sha256": "fc83e70129aa4911c0ab6e42faadd854e4ec1da71a095785c294e999e34c4d58",
+      "bytes": 68514,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/usa_110m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/usa_50m.json",
+      "sha256": "37670105d23a569a56a8ad9da01fdc45582bb66bd6d4f58b22175fa29c98c92f",
+      "bytes": 304145,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/usa_50m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/world_110m.json",
+      "sha256": "e1bf51740ad28396265e52123ea7315d692f112664ab2cb0f1ea76a96fe1bb0a",
+      "bytes": 285045,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/world_110m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "path": "topojson/world_50m.json",
+      "sha256": "20a160dbd13dd2bfa22f1858c0ae657860ea066d889563c51da383fd9696d759",
+      "bytes": 1692310,
+      "sourceArchive": "plotly.js-main.zip",
+      "sourceMember": "plotly.js-main/dist/topojson/world_50m.json",
+      "version": "4.1.2",
+      "provenance": "local derived GeoJSON, geographic boundaries from bundled Plotly data (Natural Earth-derived); see THIRD-PARTY-NOTICES.md"
     }
   ]
 }

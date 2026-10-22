@@ -117,10 +117,30 @@ await TestAsync("renderer failure releases admission",async()=>{
 });
 
 
+Test("world map accepted",()=>Equal("echarts", Parse("{\"engine\":\"echarts\",\"spec\":{\"series\":[{\"type\":\"map\",\"map\":\"world\",\"data\":[{\"name\":\"Brazil\",\"value\":75}]}]}}").Engine));
+Test("usa map accepted",()=>Equal("echarts", Parse("{\"engine\":\"echarts\",\"spec\":{\"series\":[{\"type\":\"map\",\"map\":\"usa\"}]}}").Engine));
+Test("chord accepted",()=>Equal("echarts", Parse("{\"engine\":\"echarts\",\"spec\":{\"series\":[{\"type\":\"chord\"}]}}").Engine));
+Test("unknown map rejected",()=>Reject("{\"engine\":\"echarts\",\"spec\":{\"series\":[{\"type\":\"map\",\"map\":\"untrusted\"}]}}"));
+Test("map missing region rejected",()=>Reject("{\"engine\":\"echarts\",\"spec\":{\"series\":[{\"type\":\"map\"}]}}"));
+Test("unknown geo map rejected",()=>Reject("{\"engine\":\"echarts\",\"spec\":{\"geo\":{\"map\":\"untrusted\"},\"series\":[{\"type\":\"lines\"}]}}"));
+Test("geo world accepted",()=>Equal("echarts",Parse("{\"engine\":\"echarts\",\"spec\":{\"geo\":{\"map\":\"world\"},\"series\":[{\"type\":\"lines\"}]}}").Engine));
+Test("Plotly choropleth accepted",()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"choropleth\",\"locations\":[\"BRA\"],\"z\":[1]}]}}").Engine));
+Test("Plotly scattergeo accepted",()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattergeo\",\"lat\":[1],\"lon\":[2]}]}}").Engine));
+Test("Plotly scatter3d accepted",()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scatter3d\",\"x\":[1],\"y\":[2],\"z\":[3]}]}}").Engine));
+Test("Legacy Mapbox refused",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattermapbox\"}]}}"));
+Test("MapLibre requires external provider",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattermap\"}]}}"));
+Test("MapLibre density refused",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"densitymap\"}]}}"));
+Test("MapLibre choropleth refused",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"choroplethmap\"}]}}"));
+Test("remote spec resource refused",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattergeo\",\"source\":\"https://malicious.example/a\"}]}}"));
 Test("production asset digests",()=>{
     var catalog=new Plotarium.Infrastructure.AssetCatalog(Path.Combine(Directory.GetCurrentDirectory(),"assets"));
     Equal(true,catalog.TryRead(new Uri("https://plotarium.invalid/assets/echarts/echarts.min.js"),out var bytes));
     Equal(true,bytes!.Length>1000);
+    Equal(true,catalog.TryReadTopoJson(new Uri("https://plotarium.invalid/assets/topojson/world_110m.json"),out var mapbytes));
+    Equal(true,mapbytes!.Length>1000);
+    Equal(false,catalog.TryReadTopoJson(new Uri("https://plotarium.invalid/assets/echarts/echarts.min.js"),out _));
+    Equal(false,catalog.TryReadTopoJson(new Uri("https://evil.invalid/assets/topojson/world_110m.json"),out _));
+    Equal(true,catalog.ReadGeoJson("world").Contains("Brazil",StringComparison.Ordinal));
     foreach(var target in new[]{"https://example.invalid/assets/echarts/echarts.min.js","file:///etc/passwd","http://plotarium.invalid/assets/echarts/echarts.min.js","https://plotarium.invalid:444/assets/echarts/echarts.min.js","https://plotarium.invalid/assets/echarts/echarts.min.js?x=1"})
         Equal(false,catalog.TryRead(new Uri(target),out _));
 });

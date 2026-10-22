@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"singleAxis":{"type":"time"},"series":[{"type":"themeRiver","data":[["2026/01/01",4,"A"],["2026/01/02",5,"A"],["2026/01/01",3,"B"],["2026/01/02",6,"B"]]}]}}

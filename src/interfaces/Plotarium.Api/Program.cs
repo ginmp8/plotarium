@@ -23,7 +23,7 @@ builder.Services.AddSingleton(new AssetCatalog(assetRoot));
 builder.Services.AddSingleton<IChartRenderer,ChromiumRenderer>();
 builder.Services.AddSingleton(sp=>new RenderService(sp.GetRequiredService<IChartRenderer>(),sp.GetRequiredService<BoundedRenderGate>(),TimeSpan.FromSeconds(seconds)));
 var app=builder.Build();
-using var meter=new Meter("Plotarium","0.1.1");
+using var meter=new Meter("Plotarium","0.2.0");
 var completed=meter.CreateCounter<long>("plotarium.render.completed");
 var failures=meter.CreateCounter<long>("plotarium.render.failed");
 var latency=meter.CreateHistogram<double>("plotarium.render.duration","ms");
@@ -61,7 +61,9 @@ app.MapGet("/v1/capabilities",()=>Results.Json(new
     schemaVersion="1",engines=new[]{new{name="echarts",version=Contract.EngineVersion("echarts")},new{name="plotly",version=Contract.EngineVersion("plotly")},new{name="mermaid",version=Contract.EngineVersion("mermaid")}},
     formats=new[]{"png","jpeg","webp","svg","json","pdf"},json="definition-envelope; structural-only",
     limits=new{bodyBytes=Contract.MaxBodyBytes,maxPixels=Contract.MaxPixels,outputBytes=Contract.MaxOutputBytes,concurrency,queueCapacity=queue},
-    profile="offline-static; no callbacks, HTML labels, external data, geographic providers or ECharts GL",
+    profile="offline-static; packaged ECharts GeoJSON maps and Plotly TopoJSON geo; WebGL raster-in-SVG output; no arbitrary callbacks, CDN/tile providers or ECharts GL",
+    geography=new { echartsMaps=new[]{"world","world-50m","africa","asia","europe","north-america","south-america","oceania","usa"}, plotlyGeoTraces=new[]{"choropleth","scattergeo"}, mapLibreTiles=false },
+    rasterizedSvg=new[]{"scattergl","scatterpolargl","scatter3d","mesh3d","surface","volume","isosurface","cone","streamtube","splom"},
     browser="operator-installed Chromium; no Node runtime"
 }));
 app.MapPost("/v1/render",async(HttpContext context,RenderService service)=>

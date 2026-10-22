@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"xAxis":{"type":"category","data":["A","B","C","D"]},"yAxis":{"type":"value"},"series":[{"type":"candlestick","data":[[10,12,8,15],[12,9,7,14],[9,15,8,16]]}]}}

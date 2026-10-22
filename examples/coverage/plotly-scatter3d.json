@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"scatter3d","mode":"markers","x":[0,1,2],"y":[2,3,1],"z":[1,2,3]}]}}

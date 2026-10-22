@@ -83,12 +83,24 @@ public static partial class RequestValidator
                 if (trace.ValueKind != JsonValueKind.Object) throw new RenderFailure("trace", "Every trace must be an object.");
                 if (trace.TryGetProperty("type", out var type) && type.ValueKind != JsonValueKind.String)
                     throw new RenderFailure("trace", "Trace type must be a string.");
-                if (trace.TryGetProperty("type", out type) && type.GetString() is "scattergeo" or "choropleth" or "scattermapbox" or "choroplethmapbox" or "densitymapbox" or "scattermap" or "choroplethmap" or "densitymap")
-                    throw new RenderFailure("offline_map", "Geographic providers are not enabled in the offline profile.");
+                if (trace.TryGetProperty("source", out var sourceValue) && sourceValue.ValueKind == JsonValueKind.String &&
+                    Uri.TryCreate(sourceValue.GetString(), UriKind.Absolute, out _))
+                    throw new RenderFailure("external_resource", "External chart resources are not supported.");
+                if (trace.TryGetProperty("type", out type) && type.GetString() is "scattermapbox" or "choroplethmapbox" or "densitymapbox")
+                    throw new RenderFailure("removed_mapbox", "Legacy Mapbox traces were removed from Plotly.js 4; use offline scattergeo or choropleth, or configure a separate MapLibre provider.");
+                if (trace.TryGetProperty("type", out type) && type.GetString() is "scattermap" or "choroplethmap" or "densitymap")
+                    throw new RenderFailure("offline_maplibre", "Plotly MapLibre tiles/styles are not available in the offline renderer; use scattergeo or choropleth.");
             }
         }
         else
         {
+            if (spec.TryGetProperty("geo", out var geo))
+            {
+                var geos = geo.ValueKind == JsonValueKind.Array ? geo.EnumerateArray().ToArray() : new[] { geo };
+                foreach(var item in geos)
+                    if(item.ValueKind != JsonValueKind.Object || !item.TryGetProperty("map",out var name) || name.ValueKind != JsonValueKind.String || !SupportedMap(name.GetString()))
+                        throw new RenderFailure("offline_map", "ECharts geo must name a packaged local map.");
+            }
             if (!spec.TryGetProperty("series", out var series) || series.ValueKind is not (JsonValueKind.Object or JsonValueKind.Array))
                 throw new RenderFailure("series", "ECharts requires a series object or array.");
             if (series.ValueKind == JsonValueKind.Array)
@@ -103,9 +115,12 @@ public static partial class RequestValidator
     {
         if (s.ValueKind != JsonValueKind.Object || !s.TryGetProperty("type", out var type) || type.ValueKind != JsonValueKind.String)
             throw new RenderFailure("series_type", "Every ECharts series requires a string type.");
-        if (type.GetString() is not ("line" or "bar" or "pie" or "scatter" or "effectScatter" or "radar" or "tree" or "treemap" or "sunburst" or "boxplot" or "candlestick" or "heatmap" or "parallel" or "lines" or "graph" or "sankey" or "funnel" or "gauge" or "pictorialBar" or "themeRiver"))
-            throw new RenderFailure("series_profile", "Custom callbacks, maps and GL extensions are not enabled.");
+        if (type.GetString() is not ("line" or "bar" or "pie" or "scatter" or "effectScatter" or "radar" or "tree" or "treemap" or "sunburst" or "boxplot" or "candlestick" or "heatmap" or "parallel" or "lines" or "graph" or "sankey" or "funnel" or "gauge" or "pictorialBar" or "themeRiver" or "chord" or "map"))
+            throw new RenderFailure("series_profile", "Unsupported ECharts core series type; arbitrary custom callbacks and GL extensions are not installed.");
+        if (type.GetString() == "map" && (!s.TryGetProperty("map", out var map) || map.ValueKind != JsonValueKind.String || !SupportedMap(map.GetString())))
+            throw new RenderFailure("offline_map", "ECharts map must name a packaged local map.");
     }
+    public static bool SupportedMap(string? name) => name is "world" or "world-50m" or "africa" or "asia" or "europe" or "north-america" or "south-america" or "oceania" or "usa";
     [GeneratedRegex(@"\A(?:#[0-9a-fA-F]{6}|transparent)\z", RegexOptions.CultureInvariant)]
     private static partial Regex Background();
     [GeneratedRegex(@"(?:javascript\s*:|image\s*://|data\s*:|url\s*\(|@import|<\s*/?\s*(?:script|iframe|img|object|embed)\b)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]

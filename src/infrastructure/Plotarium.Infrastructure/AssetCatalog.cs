@@ -38,6 +38,8 @@ public sealed partial class AssetCatalog
     public string ReadScript(string path) => files.TryGetValue(path, out var bytes)
         ? Encoding.UTF8.GetString(bytes) : throw new InvalidDataException("Missing verified renderer asset.");
 
+    public string ReadGeoJson(string mapName) => ReadScript("/assets/geojson/" + mapName + ".geojson");
+
     public IReadOnlyDictionary<string,string> MermaidModules()
     {
         var modules = new Dictionary<string,string>(StringComparer.Ordinal);
@@ -56,6 +58,14 @@ public sealed partial class AssetCatalog
     }
     [GeneratedRegex("(?<quote>['\\\"])(?<path>\\.{1,2}/[^'\\\"]+\\.mjs)\\k<quote>", RegexOptions.CultureInvariant)]
     private static partial Regex RelativeModuleReference();
+
+    public bool TryReadTopoJson(Uri uri, out byte[]? bytes)
+    {
+        bytes = null;
+        if(!TryRead(uri, out var candidate) || !uri.AbsolutePath.StartsWith("/assets/topojson/", StringComparison.Ordinal) ||
+           !uri.AbsolutePath.EndsWith(".json", StringComparison.Ordinal) || candidate is null || candidate.Length > 2_000_000) return false;
+        bytes = candidate; return true;
+    }
 
     public bool TryRead(Uri uri, out byte[]? bytes)
     {

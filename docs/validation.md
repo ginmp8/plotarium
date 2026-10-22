@@ -1,27 +1,34 @@
-# Validacao executada - Plotarium 0.1.1
+# Validação executada — Plotarium 0.2.0
 
-**Versao 0.1.1 aprovada para o smoke funcional executado, nao homologada para exposicao publica.** Receipts e hashes de cada artefato em `evidence/0.1.1/`.
+**Escopo:** verificação local Linux/Chromium de compatibilidade HTTP, renderização offline de mapas, saída WebGL e comportamento negativo. Não equivale a homologação universal dos tipos de gráficos nem a teste em Windows/produção.
 
-## Executado nesta entrega
+## Comandos e resultados observados
 
-- .NET SDK 10.0.302 (Linux x64), Chromium 144.0.7559.96.
-- `dotnet restore Plotarium.slnx -p:Platform="Any CPU" --ignore-failed-sources`: aprovado; projeto sem pacotes NuGet de terceiros.
-- `dotnet build Plotarium.slnx -p:Platform="Any CPU" -c Release --no-restore`: **aprovado, 0 warnings, 0 errors**.
-- `dotnet run --project tests/Plotarium.ContractTests -c Release --no-build`: **75/75**.
-- `dotnet publish src/interfaces/Plotarium.Api -p:Platform="Any CPU" -c Release --no-restore -o artifacts/publish`: **aprovado**, DLL e assets locais copiados.
-- Publicacao executada via `dotnet artifacts/publish/Plotarium.Api.dll`, sem configurar API Key, em `127.0.0.1:55731` do ambiente de testes.
-- `dotnet run --project tests/Plotarium.HttpTests -c Release --no-build -- http://127.0.0.1:55731/`: **24/24**, incluindo 18 combinacoes (ECharts, Plotly, Mermaid x PNG/SVG/JSON/JPEG/WebP/PDF), contrato sem autenticacao, status esperados 400/404/422 e MIME/assinatura/dimensoes.
-- Revisao visual: os tres PNGs gerados possuem conteudo grafico visivel. Os tres PDFs foram verificados com `pdfinfo` (1 pagina cada), convertidos para imagem via Poppler; PDF ECharts inspecionado visualmente.
-- Artefatos testados verificam seus bytes SHA-256 contra os hashes declarados no JSON de testes.
+| Gate | Resultado | Evidência |
+|---|---|---|
+| `dotnet restore Plotarium.slnx -p:Platform="Any CPU" --ignore-failed-sources` | aprovado, sem pacotes NuGet externos | `evidence/0.2.0/restore.log` |
+| `dotnet build Plotarium.slnx -p:Platform="Any CPU" -c Release --no-restore` | **0 errors, 0 warnings** | `evidence/0.2.0/build.log` |
+| `dotnet tests/Plotarium.ContractTests/bin/Release/net10.0/Plotarium.ContractTests.dll` | **90 aprovados, 0 falhas** | `evidence/0.2.0/contract-tests.json` |
+| `dotnet tests/Plotarium.HttpTests/bin/Release/net10.0/Plotarium.HttpTests.dll http://127.0.0.1:55820/` | **24 aprovados, 0 falhas** | `evidence/0.2.0/http-tests.json` |
+| `python3 scripts/geo_format_smoke.py http://127.0.0.1:55820` | **6 aprovados, 0 falhas**, PNG/SVG/PDF | `evidence/0.2.0/geo-format-results.json` |
+| `python3 scripts/coverage_smoke.py http://127.0.0.1:55820` | **66 SVG válidos + 3 rejeições esperadas** (`offline_maplibre`); 0 falhas inesperadas | `evidence/0.2.0/coverage-results.json` |
 
-## Configuracao de sandbox na avaliacao
+O harness HTTP verifica 18 combinações de 3 engines × 6 formatos com MIME e assinatura válidos, mais autenticação anônima, erros negativos e rota correta. `format=json` é um envelope validado estruturalmente e não uma imagem renderizada. Não confundir retornos HTTP 200 com garantia de integridade visual.
 
-O browser foi executado com `ASPNETCORE_ENVIRONMENT=Development` e `Plotarium__Browser__DisableSandbox=true` **somente** porque o contêiner de validação nao permite user namespaces apropriados. Isso **nao valida** que o Chromium inicia com sandbox ativo em Windows/Linux de producao. O codigo nao desabilita sandbox por padrao e rejeita esse opt-in fora de Development. Nenhum browser binario esta incluido no ZIP.
+## Revisão de saídas visuais
 
-## Nao comprovado
+- ECharts `world` em PNG: contornos de países, América/Ásia e valores por país visíveis.
+- Plotly `choropleth` em PNG: fronteiras e cores por países visíveis.
+- Plotly `scatter3d` em PNG: eixos e pontos 3D visíveis após usar `Plotly.toImage` em vez de screenshot branco.
+- Plotly WebGL `format=svg` incorpora PNG raster em `<image href="data:image/png;base64,...">`; **não é SVG vetorial**. Arquivo continua autocontido e passa pela política de XML.
+- PDFs gerados são verificados quanto à assinatura/formato; esta validação não prova fidelidade cartográfica ou equivalência visual com navegador desktop.
 
-Execucao Windows/macOS, browser sandbox de producao, carga/performance de picos, seguranca de exposicao publica anonima, recurso remoto/bypass do navegador, cobertura de todos os tipos nativos e pixels idênticos entre hosts. Um teste de assinatura MIME nao prova equivalencia visual; a revisao manual de 3 PNGs nao cobre todos os estilos/diagramas. O renderer mudou de PuppeteerSharp para CDP direto na 0.1.1; compatibilidade com futuras versoes do Chromium deve ser revalidada.
+## Limites e ambiente de teste
 
-## Historico
+- SDK .NET 10.0.302, Chromium 144.0.7559.96, Linux x64.
+- Renderizador sem Node.js, sem PuppeteerSharp, sem NuGet externos; usa Chromium instalado pelo operador e assets versionados com SHA-256.
+- `Plotarium__Browser__DisableSandbox=true` e `Plotarium__Browser__EnableSoftwareWebGl=true` foram usados **somente em Development**, dentro do contêiner restrito; sandbox de produção não foi homologado.
+- MapLibre (`scattermap`, `choroplethmap`, `densitymap`) retorna HTTP 422 `offline_maplibre` por decisão explícita. ECharts GL e callbacks JavaScript arbitrários não estão disponíveis.
+- Não testados: Windows/macOS, segurança de serviço anônimo exposto à internet, desempenho sob carga de produção, GPU em todas as máquinas, todos os specs/plugins/layouts, correção pixel a pixel, provedores de mapas remotos.
 
-As evidencias de `evidence/` anteriores registram o candidato `0.1.0-alpha.1` e seus impedimentos de restore; foram preservadas sem reescrever os resultados historicos. Evidencias da release atual sao armazenadas em `evidence/0.1.1/`.
+O histórico `evidence/` da 0.1.0-alpha.1 preserva limitações e receipts daquela implementação e **não** é evidência executada nesta release. Os recibos autoritativos da 0.2.0 estão em `evidence/0.2.0/`.

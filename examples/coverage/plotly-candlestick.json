@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"candlestick","x":["2026-10-01","2026-10-02","2026-10-03"],"open":[3,4,5],"high":[5,7,8],"low":[1,2,3],"close":[4,6,6]}]}}

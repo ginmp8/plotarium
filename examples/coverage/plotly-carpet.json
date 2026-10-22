@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"carpet","a":[0,1],"b":[0,1],"x":[[0,0],[1,1]],"y":[[0,1],[0,1]]}]}}

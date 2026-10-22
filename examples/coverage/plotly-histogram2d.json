@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"histogram2d","x":[1,2,3,4,3,2],"y":[3,4,2,5,1,2]}]}}

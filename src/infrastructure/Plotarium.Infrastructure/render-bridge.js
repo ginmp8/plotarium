@@ -14,6 +14,12 @@ window.Plotarium = Object.freeze({
     plotariumMermaid = (await import('@plotarium/assets/mermaid/mermaid.esm.min.mjs')).default;
     return { loaded: true };
   },
+  loadGeoMaps(value) {
+    for (const [name, json] of Object.entries(value)) {
+      echarts.registerMap(name, { geoJSON: JSON.parse(json) });
+    }
+    return { registered: Object.keys(value) };
+  },
   async render(request) {
     const host = document.getElementById('chart');
     host.style.width = `${request.width}px`;
@@ -43,12 +49,30 @@ window.Plotarium = Object.freeze({
       try {
         await Plotly.newPlot(host, figure.data, layout, {
           staticPlot: true, displayModeBar: false, responsive: false,
-          topojsonURL: '/unavailable-topojson/'
+          topojsonURL: 'https://plotarium.invalid/assets/topojson/'
         });
-        const dataUrl = await Plotly.toImage(host, { format: 'svg', width: request.width, height: request.height });
-        const comma = dataUrl.indexOf(',');
-        svg = dataUrl.slice(0, comma).includes(';base64') ? atob(dataUrl.slice(comma + 1)) : decodeURIComponent(dataUrl.slice(comma + 1));
-      } finally { Plotly.purge(host); }
+        // WebGL and MapLibre canvases must be captured as raster pixels. Never return a blank SVG.
+        const rasterTraces = new Set(['scattergl', 'scatterpolargl', 'scatter3d', 'surface', 'mesh3d',
+          'cone', 'streamtube', 'volume', 'isosurface', 'splom', 'scattermap', 'choroplethmap', 'densitymap']);
+        if (figure.data.some(trace => rasterTraces.has(trace.type))) {
+          if (!document.createElement('canvas').getContext('webgl'))
+            throw new Error('WebGL is unavailable in this Chromium environment');
+          await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          try {
+            const png = await Plotly.toImage(host, { format: 'png', width: request.width, height: request.height });
+            if (png.startsWith('data:image/png;base64,')) return { png: png.slice('data:image/png;base64,'.length) };
+          } catch (_) { /* CDP canvas capture is still available */ }
+          return { capture: true };
+        }
+        try {
+          const dataUrl = await Plotly.toImage(host, { format: 'svg', width: request.width, height: request.height });
+          const comma = dataUrl.indexOf(',');
+          svg = dataUrl.slice(0, comma).includes(';base64') ? atob(dataUrl.slice(comma + 1)) : decodeURIComponent(dataUrl.slice(comma + 1));
+        } catch (_) {
+          // A rendering type may not have an SVG exporter, but live DOM is still rendered.
+          return { capture: true };
+        }
+      } finally { if (svg) Plotly.purge(host); }
     } else if (request.engine === 'mermaid') {
       const mermaid = plotariumMermaid;
       if (!mermaid) throw new Error('Mermaid not initialized');

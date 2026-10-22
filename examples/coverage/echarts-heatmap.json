@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"xAxis":{"type":"category","data":["A","B","C","D"]},"yAxis":{"type":"category","data":["P","Q"]},"visualMap":{"min":0,"max":10},"series":[{"type":"heatmap","data":[[0,0,6],[1,0,3],[2,0,9],[0,1,2],[1,1,5]]}]}}

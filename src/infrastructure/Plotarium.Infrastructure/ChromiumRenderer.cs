@@ -43,14 +43,40 @@ public sealed class ChromiumRenderer(BrowserSettings settings, AssetCatalog asse
             var window = await cdp.SendAsync("Runtime.evaluate", new { expression = "window" }, session, token);
             var objectId = window.GetProperty("result").GetProperty("objectId").GetString()!;
             
-            if (request.Engine == "echarts") await EvaluateTrustedAsync(assets.ReadScript("/assets/echarts/echarts.min.js"));
+            if (request.Engine == "echarts")
+            {
+                await EvaluateTrustedAsync(assets.ReadScript("/assets/echarts/echarts.min.js"));
+                var maps = CollectMaps(request);
+                if (maps.Count > 0)
+                {
+                    var localMaps = maps.ToDictionary(name => name, assets.ReadGeoJson, StringComparer.Ordinal);
+                    await CallAsync("function(maps) { return window.Plotarium.loadGeoMaps(maps); }", localMaps, initialization:true);
+                }
+            }
             else if (request.Engine == "plotly") await EvaluateTrustedAsync(assets.ReadScript("/assets/plotly/plotly.min.js"));
             else await CallAsync("function(value) { return window.Plotarium.loadMermaid(value); }", new { modules = assets.MermaidModules(), nonce }, initialization:true);
             
             var value = new { engine = request.Engine, spec = request.Spec, source = request.Source, width = request.Width, height = request.Height, scale = request.Scale, background = request.Background, theme = request.Theme };
             var rendered = await CallAsync("function(request) { return window.Plotarium.render(request); }", value);
             CheckNetwork();
-            var svg = rendered.GetProperty("svg").GetString()!;
+            string svg;
+            if(rendered.TryGetProperty("png", out var imagePng) && imagePng.ValueKind == JsonValueKind.String)
+            {
+                var png = imagePng.GetString()!;
+                svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\""+request.Width+"\" height=\""+request.Height+"\" viewBox=\"0 0 "+request.Width+" "+request.Height+"\"><image width=\""+request.Width+"\" height=\""+request.Height+"\" href=\"data:image/png;base64,"+png+"\"/></svg>";
+            }
+            else if(rendered.TryGetProperty("capture", out var capture) && capture.ValueKind == JsonValueKind.True)
+            {
+                // Preserve content of native canvas/WebGL charts as an inert, self-contained SVG.
+                var screenshotData = await cdp.SendAsync("Page.captureScreenshot", new {
+                    format = "png", fromSurface = true, captureBeyondViewport = false,
+                    clip = new { x = 0, y = 0, width = request.Width, height = request.Height, scale = 1 }
+                }, session, token);
+                CheckNetwork();
+                var png = screenshotData.GetProperty("data").GetString()!;
+                svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\""+request.Width+"\" height=\""+request.Height+"\" viewBox=\"0 0 "+request.Width+" "+request.Height+"\"><image width=\""+request.Width+"\" height=\""+request.Height+"\" href=\"data:image/png;base64,"+png+"\"/></svg>";
+            }
+            else svg = rendered.GetProperty("svg").GetString()!;
             SvgOutputPolicy.Validate(Encoding.UTF8.GetBytes(svg));
             if (Encoding.UTF8.GetByteCount(svg) > Contract.MaxOutputBytes) throw new RenderFailure("output_too_large", "Rendered output exceeds the limit.", 413);
             
@@ -114,9 +140,21 @@ public sealed class ChromiumRenderer(BrowserSettings settings, AssetCatalog asse
                         await cdp.SendAsync("Page.handleJavaScriptDialog", new { accept = false }, session, pumpStop.Token);
                     else if (method.GetString() == "Fetch.requestPaused")
                     {
-                        Interlocked.Increment(ref blocked);
-                        var id = item.GetProperty("params").GetProperty("requestId").GetString();
-                        await cdp.SendAsync("Fetch.failRequest", new { requestId = id, errorReason = "BlockedByClient" }, session, pumpStop.Token);
+                        var args = item.GetProperty("params");
+                        var id = args.GetProperty("requestId").GetString();
+                        var url = args.GetProperty("request").GetProperty("url").GetString();
+                        var requestMethod = args.GetProperty("request").GetProperty("method").GetString();
+                        if(requestMethod == "GET" && Uri.TryCreate(url,UriKind.Absolute,out var uri) && assets.TryReadTopoJson(uri,out var body))
+                        {
+                            await cdp.SendAsync("Fetch.fulfillRequest", new { requestId = id, responseCode = 200,
+                                responseHeaders = new[] { new { name = "Content-Type", value = "application/json" }, new { name = "Access-Control-Allow-Origin", value = "*" }, new { name = "Cache-Control", value = "no-store" } },
+                                body = Convert.ToBase64String(body!) }, session, pumpStop.Token);
+                        }
+                        else
+                        {
+                            Interlocked.Increment(ref blocked);
+                            await cdp.SendAsync("Fetch.failRequest", new { requestId = id, errorReason = "BlockedByClient" }, session, pumpStop.Token);
+                        }
                     }
                 }
             }
@@ -125,8 +163,31 @@ public sealed class ChromiumRenderer(BrowserSettings settings, AssetCatalog asse
         }
     }
 
+    private static SortedSet<string> CollectMaps(RenderRequest request)
+    {
+        var names = new SortedSet<string>(StringComparer.Ordinal);
+        if(request.Spec is not { } spec) return names;
+        void Add(JsonElement obj)
+        {
+            if(obj.ValueKind == JsonValueKind.Object && obj.TryGetProperty("map",out var map) &&
+               map.ValueKind == JsonValueKind.String && Plotarium.Application.RequestValidator.SupportedMap(map.GetString()))
+                names.Add(map.GetString()!);
+        }
+        if(spec.TryGetProperty("series",out var series))
+        {
+            if(series.ValueKind==JsonValueKind.Array) foreach(var item in series.EnumerateArray()) Add(item);
+            else Add(series);
+        }
+        if(spec.TryGetProperty("geo",out var geo))
+        {
+            if(geo.ValueKind==JsonValueKind.Array) foreach(var item in geo.EnumerateArray()) Add(item);
+            else Add(geo);
+        }
+        return names;
+    }
+
     private static string Shell(string nonce) => "<!doctype html><html><head><meta charset='utf-8'>" +
-        "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src blob: 'nonce-" + nonce + "'; style-src 'unsafe-inline'; img-src data: blob:; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'\">" +
+        "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src blob: 'nonce-" + nonce + "'; style-src 'unsafe-inline'; img-src data: blob:; font-src 'none'; connect-src https://plotarium.invalid; object-src 'none'; frame-src 'none'; worker-src blob:; base-uri 'none'; form-action 'none'\">" +
         "<style>html,body{margin:0;padding:0;overflow:hidden;}#chart{position:relative;overflow:hidden;}</style></head><body><div id='chart'></div></body></html>";
 
     private static string ReadBridge()

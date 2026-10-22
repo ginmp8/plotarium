@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"cone","x":[0,1],"y":[0,1],"z":[0,1],"u":[1,1],"v":[0,1],"w":[1,1]}]}}

@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Plotarium",
-    "version": "0.1.1",
-    "description": "Unauthenticated ASP.NET Core API rendering ECharts, Plotly and Mermaid through locally installed Chromium. No token or API key required."
+    "version": "0.2.0",
+    "description": "Unauthenticated ASP.NET Core API rendering ECharts, Plotly and Mermaid through locally installed Chromium. No token or API key required. Adds bundled offline ECharts GeoJSON maps and Plotly geographies, with WebGL rasterized SVG export. MapLibre remote/tile-based traces remain unsupported."
   },
   "security": [],
   "paths": {

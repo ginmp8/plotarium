@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"geo":{"map":"world"},"series":[{"type":"lines","coordinateSystem":"geo","data":[{"coords":[[-46.6,-23.5],[-73.9,40.7]]}]}]}}

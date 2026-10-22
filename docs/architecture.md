@@ -1,4 +1,4 @@
-# Arquitetura - Plotarium 0.1.1
+# Arquitetura - Plotarium 0.2.0
 
 `HTTP -> validacao de corpo -> RequestValidator -> RenderService -> [JSON envelope OU fila limitada -> ChromiumRenderer -> CDP loopback -> engine/assets locais -> SVG/PNG/JPEG/WebP/PDF] -> HTTP`.
 
@@ -19,4 +19,4 @@ Nao ha pacote PuppeteerSharp ou dependencia Node. A integracao depende de APIs C
 
 Apos remover autenticacao, nao existe middleware de credenciais nem segredo de inicializacao. Limites globais continuam, mas quotas por consumidor deixam de existir. Restrinja acesso no host/rede; documente o risco em `docs/security.md`.
 
-Nuvem, desempenho, rendering fidedigno em todas as familias nativas, SO Windows/macOS, PDF/A e consistencia pixel-a-pixel exigem validacao separada. Documentos historicos de 0.1.0-alpha.1 em `evidence/` registram aquela fase, nao a validacao de 0.1.1.
+Nuvem, desempenho, rendering fidedigno em todas as familias nativas, SO Windows/macOS, PDF/A e consistencia pixel-a-pixel exigem validacao separada. Documentos historicos de 0.1.0-alpha.1 em `evidence/` registram aquela fase, nao a validacao de 0.2.0.

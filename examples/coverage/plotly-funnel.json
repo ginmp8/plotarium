@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"funnel","y":["A","B","C"],"x":[100,80,50]}]}}

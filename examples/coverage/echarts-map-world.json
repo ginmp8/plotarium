@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"title":{"text":"World"},"visualMap":{"min":0,"max":100},"series":[{"type":"map","map":"world","data":[{"name":"Brazil","value":80},{"name":"China","value":60},{"name":"India","value":40}]}]}}

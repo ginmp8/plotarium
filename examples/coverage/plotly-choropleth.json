@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"choropleth","locations":["BRA","USA","CHN","IND"],"z":[80,30,50,45]}],"layout":{"geo":{"projection":{"type":"natural earth"}}}}}

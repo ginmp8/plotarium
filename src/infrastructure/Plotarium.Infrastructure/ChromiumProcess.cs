@@ -41,6 +41,15 @@ internal sealed class ChromiumProcess : IAsyncDisposable
             "--no-first-run", "--no-default-browser-check", "--disable-background-networking", "--disable-component-update",
             "--disable-sync", "--metrics-recording-only", "--password-store=basic", "--use-mock-keychain", "--hide-scrollbars",
             "--disable-features=Translate,MediaRouter,OptimizationHints", "about:blank" }) start.ArgumentList.Add(argument);
+        // GPU-less CI may opt into software WebGL only in an explicitly isolated development environment.
+        if (settings.EnableSoftwareWebGl)
+        {
+            if (!string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"), "Development", StringComparison.Ordinal))
+                throw new RenderFailure("browser_software_gl", "Software WebGL is restricted to Development.", 503);
+            start.ArgumentList.Add("--enable-unsafe-swiftshader");
+            start.ArgumentList.Add("--use-angle=swiftshader");
+            start.ArgumentList.Add("--enable-webgl");
+        }
         // No --no-sandbox, no ignore-certificate-errors, and no automatic browser download.
         if (settings.DisableSandbox)
         {

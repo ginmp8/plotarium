@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","spec":{"data":[{"type":"choroplethmap","locations":["BRA"],"z":[1]}],"layout":{"map":{"style":"white-bg"}}}}

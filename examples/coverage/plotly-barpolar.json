@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"barpolar","r":[1,2,3,2],"theta":[0,90,180,270]}]}}

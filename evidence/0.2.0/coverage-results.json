@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 1,
+  "scenarios": 69,
+  "rendered": 66,
+  "expectedUnsupported": 3,
+  "failed": 0,
+  "unsupportedCases": [
+    "plotly-choroplethmap",
+    "plotly-densitymap",
+    "plotly-scattermap"
+  ],
+  "failedCases": [],
+  "claim": "HTTP 200+XML SVG structure for rendered cases; external MapLibre types must return 422; visual correctness checked separately",
+  "results": [
+    {
+      "case": "echarts-bar",
+      "status": "pass",
+      "bytes": 2736,
+      "sha256": "dc155fdf416674aaa4e5db2233c5bcf948c5adcfec2a455008fa68eb4a736b07",
+      "duration_ms": 2020
+    },
+    {
+      "case": "echarts-boxplot",
+      "status": "pass",
+      "bytes": 3104,
+      "sha256": "6dbf19c859fd7d55b49d79d006b92c6d644f8716c605dfa17867fa4ba4d55f2a",
+      "duration_ms": 2143
+    },
+    {
+      "case": "echarts-candlestick",
+      "status": "pass",
+      "bytes": 3489,
+      "sha256": "f30c41197a2299b5b257476b46abd2e35943c54652e3100e8ad93fb2cbc95dc2",
+      "duration_ms": 1695
+    },
+    {
+      "case": "echarts-chord",
+      "status": "pass",
+      "bytes": 1413,
+      "sha256": "378f3e233bb069924d36deec3cfd59d2f402e2d3dfb9d34f83362f08883aa341",
+      "duration_ms": 1562
+    },
+    {
+      "case": "echarts-effectScatter",
+      "status": "pass",
+      "bytes": 9452,
+      "sha256": "eed86a359a9dbd86ca5295195c69863e0e1c5bc6b5dcad29da9e555e721d60a7",
+      "duration_ms": 1730
+    },
+    {
+      "case": "echarts-funnel",
+      "status": "pass",
+      "bytes": 1349,
+      "sha256": "5c1cc981de5fb2781c346d51687a4667c4d5bcfec331a5a9bd175f91fc9f5cfa",
+      "duration_ms": 1660
+    },
+    {
+      "case": "echarts-gauge",
+      "status": "pass",
+      "bytes": 10275,
+      "sha256": "30b91815bfaeb1f8ab2c2679bdd8fa2c1df36abe1c43ea7f1801437dc1dcfe6b",
+      "duration_ms": 1453
+    },
+    {
+      "case": "echarts-geo-lines-world",
+      "status": "pass",
+      "bytes": 364231,
+      "sha256": "6fcfd60ba45b26df0ee2bcf4caafb95b3055fdc2ba139c8337a7df7b28412c19",
+      "duration_ms": 1674
+    },
+    {
+      "case": "echarts-graph",
+      "status": "pass",
+      "bytes": 978,
+      "sha256": "f7179fc9a45db4a2660762b2e00b4fe42937105c53df2aefb1c3fb3202f92eb2",
+      "duration_ms": 1560
+    },
+    {
+      "case": "echarts-heatmap",
+      "status": "pass",
+      "bytes": 15113,
+      "sha256": "c17e71a860ad44328ef110332a04b2e1bdfd2e30378e8f83df6913ff6371fb65",
+      "duration_ms": 1678
+    },
+    {
+      "case": "echarts-line",
+      "status": "pass",
+      "bytes": 3435,
+      "sha256": "ed85127823858a691a4d4b13d17012a69ab0e71be465c2c2eb467423ebca074f",
+      "duration_ms": 1969
+    },
+    {
+      "case": "echarts-lines",
+      "status": "pass",
+      "bytes": 994,
+      "sha256": "f46062154c6e30f6b19fc93f68cf510abf34b5a797322145ee1f3eb040f8fa67",
+      "duration_ms": 1838
+    },
+    {
+      "case": "echarts-map-usa",
+      "status": "pass",
+      "bytes": 52608,
+      "sha256": "2a302dc59f085549dc592698f1ab11497b59b8f381324587d0e9bc53a58d53d0",
+      "duration_ms": 2047
+    },
+    {
+      "case": "echarts-map-world",
+      "status": "pass",
+      "bytes": 371720,
+      "sha256": "941153c54cf6cbf7231b4b9285646edf6fcf742f5a85f7960b91c3c7f15cf9e7",
+      "duration_ms": 1999
+    },
+    {
+      "case": "echarts-map-world-50m",
+      "status": "pass",
+      "bytes": 1346104,
+      "sha256": "54a44d28e7cfcab32057d7cf83907732c7a4aca30875752ac466d454269efe9b",
+      "duration_ms": 2716
+    },
+    {
+      "case": "echarts-parallel",
+      "status": "pass",
+      "bytes": 5081,
+      "sha256": "7e9ca51466b2533091180df91f6013e49b15b3c6d49a3f82f5416b163b96f5b2",
+      "duration_ms": 1632
+    },
+    {
+      "case": "echarts-pictorialBar",
+      "status": "pass",
+      "bytes": 3380,
+      "sha256": "51d45a0249dc304fff069fa5d7c0592080828299c412f8cfeead26f0547eef87",
+      "duration_ms": 1749
+    },
+    {
+      "case": "echarts-pie",
+      "status": "pass",
+      "bytes": 1368,
+      "sha256": "573f667e01bad458f64593e85522bf0edd23bdf17bc00a534fd650195acaa6f9",
+      "duration_ms": 1492
+    },
+    {
+      "case": "echarts-radar",
+      "status": "pass",
+      "bytes": 1958,
+      "sha256": "247da66f8a56419bfbe3167bb1bdeb58572f7fa3f23d6c10d47fd213f7df9e4b",
+      "duration_ms": 1612
+    },
+    {
+      "case": "echarts-sankey",
+      "status": "pass",
+      "bytes": 1880,
+      "sha256": "9b6c340a0733c87e4db6b0a79b152cc985adab9f1a774fd8be19272b150425aa",
+      "duration_ms": 1656
+    },
+    {
+      "case": "echarts-scatter",
+      "status": "pass",
+      "bytes": 5406,
+      "sha256": "d935e2ef3b74c14defa0cfc945db8670cdffcd6bb9d6df78e147282b6e99bab2",
+      "duration_ms": 1805
+    },
+    {
+      "case": "echarts-sunburst",
+      "status": "pass",
+      "bytes": 1590,
+      "sha256": "e3698cfe0ecacba6daf48c677d9e06f6150f56fd54e53afe30860dfb3fd098c1",
+      "duration_ms": 1676
+    },
+    {
+      "case": "echarts-themeRiver",
+      "status": "pass",
+      "bytes": 3477,
+      "sha256": "7fe30b0be5235721b73a1b442bb11121c6e0838053837ae1cb04b45102797f2e",
+      "duration_ms": 2184
+    },
+    {
+      "case": "echarts-tree",
+      "status": "pass",
+      "bytes": 1647,
+      "sha256": "e8e43508d46f0df507145f3c05e81c51368c9d4bd20e6739e025042297de6caa",
+      "duration_ms": 1466
+    },
+    {
+      "case": "echarts-treemap",
+      "status": "pass",
+      "bytes": 1790,
+      "sha256": "4e0f07cbd00268ec41021998d5dca4e2590863128221bf1db2508f6f07c62545",
+      "duration_ms": 1696
+    },
+    {
+      "case": "plotly-bar",
+      "status": "pass",
+      "bytes": 7242,
+      "sha256": "67130289508d8e02ad1b69610346210f224a2cabe0737ef2d260e295782d7bae",
+      "duration_ms": 4264
+    },
+    {
+      "case": "plotly-barpolar",
+      "status": "pass",
+      "bytes": 12305,
+      "sha256": "006c265ad1a4616ea43c03886339cb6d6b93c1b2ca46ff9e73a70e7ea6cad436",
+      "duration_ms": 3298
+    },
+    {
+      "case": "plotly-box",
+      "status": "pass",
+      "bytes": 4531,
+      "sha256": "3a69959d6c3125024a2c1c812f759792d4b7f92d67242f34bc646bd883c43f45",
+      "duration_ms": 5548
+    },
+    {
+      "case": "plotly-candlestick",
+      "status": "pass",
+      "bytes": 9008,
+      "sha256": "aed23e7e2414bffe40dca384c66acdd9777547f74d04ff40df0f087875631e26",
+      "duration_ms": 3906
+    },
+    {
+      "case": "plotly-carpet",
+      "status": "pass",
+      "bytes": 11349,
+      "sha256": "296643ac1ebf3bb7b0e6c61e32598097ebf7c9711610360ccbe59bb194243032",
+      "duration_ms": 7177
+    },
+    {
+      "case": "plotly-choropleth",
+      "status": "pass",
+      "bytes": 396059,
+      "sha256": "e00c4ff9ff1a474301aede36e7c29b84c0f8daaab4dac614dcbe0159b42755d2",
+      "duration_ms": 7438
+    },
+    {
+      "case": "plotly-choroplethmap",
+      "status": "expected_unsupported",
+      "http": 422,
+      "code": "offline_maplibre",
+      "duration_ms": 14
+    },
+    {
+      "case": "plotly-cone",
+      "status": "pass",
+      "bytes": 33692,
+      "sha256": "904b6ca586e714d09236575e5b02ab236d8ff496bdd03b5e87b218ea690e3349",
+      "duration_ms": 8340
+    },
+    {
+      "case": "plotly-contour",
+      "status": "pass",
+      "bytes": 13384,
+      "sha256": "92e84b100541463e14a8f61e209758c549864d371994298ffc4bb8f61217f77f",
+      "duration_ms": 4499
+    },
+    {
+      "case": "plotly-densitymap",
+      "status": "expected_unsupported",
+      "http": 422,
+      "code": "offline_maplibre",
+      "duration_ms": 6
+    },
+    {
+      "case": "plotly-funnel",
+      "status": "pass",
+      "bytes": 4970,
+      "sha256": "2288e1d9a93b9cae5f9d725070d021db304070109f2949a1a056f7c826a97984",
+      "duration_ms": 9804
+    },
+    {
+      "case": "plotly-funnelarea",
+      "status": "pass",
+      "bytes": 5546,
+      "sha256": "38b6be796220b4495685b84d3a6387a3b71aa9e61f37618b6b0e5b5c2a4a34a1",
+      "duration_ms": 10449
+    },
+    {
+      "case": "plotly-heatmap",
+      "status": "pass",
+      "bytes": 12229,
+      "sha256": "387120e5b24bacdbebf99f5f9585ceb22afb6bdfadc4dc311b34475effa415c5",
+      "duration_ms": 5598
+    },
+    {
+      "case": "plotly-histogram",
+      "status": "pass",
+      "bytes": 6317,
+      "sha256": "fad85f47a1d8885a3013f72049ccfc855da98073d2d12fe5f93211695a730c15",
+      "duration_ms": 4804
+    },
+    {
+      "case": "plotly-histogram2d",
+      "status": "pass",
+      "bytes": 17182,
+      "sha256": "f4effed044f23ac104bc82dc90ed2f12109b17a7c647fbde058a9e4bedd88339",
+      "duration_ms": 4822
+    },
+    {
+      "case": "plotly-histogram2dcontour",
+      "status": "pass",
+      "bytes": 18597,
+      "sha256": "39d1f97e72ec0feeedc81956d43b8aa305e8e50ab4d554e86f21b8f73a352f93",
+      "duration_ms": 4726
+    },
+    {
+      "case": "plotly-icicle",
+      "status": "pass",
+      "bytes": 2481,
+      "sha256": "913af5c8c0dc1372b4d86e4d5e1b3549fd1d58f46a60bcaebb0e9a4cef9879e6",
+      "duration_ms": 3988
+    },
+    {
+      "case": "plotly-image",
+      "status": "pass",
+      "bytes": 11008,
+      "sha256": "79c00f95bcaaae822702041b30ac6a2a35eec1003628db8797322c572ad51c1f",
+      "duration_ms": 3997
+    },
+    {
+      "case": "plotly-indicator",
+      "status": "pass",
+      "bytes": 5274,
+      "sha256": "e39e5e0a6bf9259ee8698162115d856568e1e5229a5bfac8f5f0d2de7d3a2662",
+      "duration_ms": 3838
+    },
+    {
+      "case": "plotly-isosurface",
+      "status": "pass",
+      "bytes": 84484,
+      "sha256": "624164e803ae64b46a97e1046ef10aee8684d57149f586da73ace46986d153f9",
+      "duration_ms": 7984
+    },
+    {
+      "case": "plotly-mesh3d",
+      "status": "pass",
+      "bytes": 29224,
+      "sha256": "659fac10301bcd838354fa486ce37b2848ccbf6f9b512215fedb95fc53ee2b3a",
+      "duration_ms": 7694
+    },
+    {
+      "case": "plotly-ohlc",
+      "status": "pass",
+      "bytes": 10005,
+      "sha256": "7197f8cefaf2d005069ff353f6cc3f307ef78f9569056b91d8dc5993d992bdd5",
+      "duration_ms": 4193
+    },
+    {
+      "case": "plotly-parcats",
+      "status": "pass",
+      "bytes": 7078,
+      "sha256": "f6df8e290679aa28e4e8f0155ddd60fc27016406e95f1ff0f34afb14ad199030",
+      "duration_ms": 4235
+    },
+    {
+      "case": "plotly-parcoords",
+      "status": "pass",
+      "bytes": 113161,
+      "sha256": "f01ac230a3758b819376282b42abaae79b6ebc69e5174204be7254c4dc42ac4a",
+      "duration_ms": 6705
+    },
+    {
+      "case": "plotly-pie",
+      "status": "pass",
+      "bytes": 4115,
+      "sha256": "4ab3552c8dbb406b828ff3e2ecc6704b30665100b46d12ab7f0066151dd62e74",
+      "duration_ms": 3599
+    },
+    {
+      "case": "plotly-sankey",
+      "status": "pass",
+      "bytes": 3944,
+      "sha256": "024ec0bf5ca5ae520f60e9df196dddd7ae1f0e6c3e14edc686d5d225838d7e47",
+      "duration_ms": 4890
+    },
+    {
+      "case": "plotly-scatter",
+      "status": "pass",
+      "bytes": 7964,
+      "sha256": "33c8e4a9af49c80910ff8f2bf53c9be1bb2897e6aaf428bedfcbccd83b86f65d",
+      "duration_ms": 4567
+    },
+    {
+      "case": "plotly-scatter3d",
+      "status": "pass",
+      "bytes": 39624,
+      "sha256": "425c1ce1d2caebe732e2e0ebe1de2be92e830e39609edaaf16b9dec5548dcf19",
+      "duration_ms": 7124
+    },
+    {
+      "case": "plotly-scattercarpet",
+      "status": "pass",
+      "bytes": 7180,
+      "sha256": "e5834be3b74f3edbcbcea9df602012ad5a60a87785538e69a486e4d2d7318ba3",
+      "duration_ms": 3833
+    },
+    {
+      "case": "plotly-scattergeo",
+      "status": "pass",
+      "bytes": 203794,
+      "sha256": "392bf72c2171a9d2d0851b70b5bd9c2956a1d82788141bc46fc68ab873f0611e",
+      "duration_ms": 4677
+    },
+    {
+      "case": "plotly-scattergl",
+      "status": "pass",
+      "bytes": 17488,
+      "sha256": "3934e1e43e5bc5338258437af247ca369485549730564313a4f6b0885bf4a10d",
+      "duration_ms": 5583
+    },
+    {
+      "case": "plotly-scattermap",
+      "status": "expected_unsupported",
+      "http": 422,
+      "code": "offline_maplibre",
+      "duration_ms": 8
+    },
+    {
+      "case": "plotly-scatterpolar",
+      "status": "pass",
+      "bytes": 8922,
+      "sha256": "4442f9eb883798107d1ff1620ab59e0cba96b1d34cc4d9f46016af8b78e16c5f",
+      "duration_ms": 4237
+    },
+    {
+      "case": "plotly-scatterpolargl",
+      "status": "pass",
+      "bytes": 56832,
+      "sha256": "217e41a31d1dfba04298eb9b0e6785bae7042f94405fb73283d0d4f288042741",
+      "duration_ms": 6340
+    },
+    {
+      "case": "plotly-scattersmith",
+      "status": "pass",
+      "bytes": 10786,
+      "sha256": "eecbc284a1029471620211afc56078247e4ce0a403429b2a41a1875a566232b5",
+      "duration_ms": 3578
+    },
+    {
+      "case": "plotly-scatterternary",
+      "status": "pass",
+      "bytes": 15771,
+      "sha256": "fca3909493b51a9faf241994e9578c5d00675cebd69532bf0b0be98426fd98d1",
+      "duration_ms": 4498
+    },
+    {
+      "case": "plotly-streamtube",
+      "status": "pass",
+      "bytes": 48984,
+      "sha256": "ff29a068df0daa583bb1ab1f5197c2ae7a263678ef44d0e034512feca1d79763",
+      "duration_ms": 6740
+    },
+    {
+      "case": "plotly-sunburst",
+      "status": "pass",
+      "bytes": 2873,
+      "sha256": "eefaf32dd27419f72ed206167c9f93db52f109222a66a80893de535617e2f0bd",
+      "duration_ms": 4825
+    },
+    {
+      "case": "plotly-surface",
+      "status": "pass",
+      "bytes": 51680,
+      "sha256": "87543f737192949a37cbf5e1def6c7d09575af099a6327095d012a20d55d977b",
+      "duration_ms": 8745
+    },
+    {
+      "case": "plotly-table",
+      "status": "pass",
+      "bytes": 5875,
+      "sha256": "ac6682668b74db9522d44075dcbf6debcd689a57523887dcafab47d25e8cf538",
+      "duration_ms": 4200
+    },
+    {
+      "case": "plotly-treemap",
+      "status": "pass",
+      "bytes": 2488,
+      "sha256": "4cefbc7200998ec33886859dd4ca3c8e5cefc613e87d42f290072f518d754963",
+      "duration_ms": 5016
+    },
+    {
+      "case": "plotly-violin",
+      "status": "pass",
+      "bytes": 8233,
+      "sha256": "84251c9f2a7b621b44d1e7647562232ff3026b1556b992d108e9ecd8a2400a17",
+      "duration_ms": 5956
+    },
+    {
+      "case": "plotly-volume",
+      "status": "pass",
+      "bytes": 68392,
+      "sha256": "7d2f246bbf5a4cbc497ceb429765de8a03b8053453676ea0131e64b0b03aad21",
+      "duration_ms": 10569
+    },
+    {
+      "case": "plotly-waterfall",
+      "status": "pass",
+      "bytes": 7374,
+      "sha256": "d0cb753ad82ef43d5734cb739133b13e371f21e32d70d579ae2afe6e089147eb",
+      "duration_ms": 5316
+    }
+  ]
+}

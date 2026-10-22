@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"bar","x":["A","B","C","D"],"y":[3,5,4,7]}]}}

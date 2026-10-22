@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"xAxis":{"type":"category","data":["A","B","C","D"]},"yAxis":{"type":"value"},"series":[{"type":"pictorialBar","symbol":"rect","data":[4,2,5,8]}]}}

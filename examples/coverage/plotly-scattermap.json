@@ -1,0 +1,1 @@
+{"engine":"plotly","format":"svg","width":700,"height":450,"spec":{"data":[{"type":"scattermap","lon":[-46.6,-73.9,116.4],"lat":[-23.5,40.7,39.9]}],"layout":{"map":{"style":"white-bg","zoom":0.6}}}}

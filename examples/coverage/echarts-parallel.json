@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"svg","width":700,"height":450,"spec":{"parallelAxis":[{"dim":0,"name":"A"},{"dim":1,"name":"B"}],"series":[{"type":"parallel","data":[[2,4],[4,6],[7,2]]}]}}
