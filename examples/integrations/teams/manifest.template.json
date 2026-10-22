@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "0.4.0",
+  "id": "REPLACE-WITH-REGISTERED-TEAMS-APP-UUID",
+  "packageName": "com.example.plotarium",
+  "developer": {
+    "name": "REPLACE_WITH_OPERATOR_NAME",
+    "websiteUrl": "https://REPLACE_WITH_PUBLIC_HOST",
+    "privacyUrl": "https://REPLACE_WITH_PUBLIC_HOST/privacy",
+    "termsOfUseUrl": "https://REPLACE_WITH_PUBLIC_HOST/terms"
+  },
+  "name": {
+    "short": "Plotarium",
+    "full": "Plotarium Interactive Charts"
+  },
+  "description": {
+    "short": "Interact with visual charts.",
+    "full": "Open Plotarium charts in a secure Teams tab."
+  },
+  "accentColor": "#1B3B56",
+  "staticTabs": [
+    {
+      "entityId": "plotarium",
+      "name": "Plotarium",
+      "contentUrl": "https://REPLACE_WITH_PUBLIC_HOST/v1/teams",
+      "websiteUrl": "https://REPLACE_WITH_PUBLIC_HOST",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ],
+  "validDomains": [
+    "REPLACE_WITH_PUBLIC_HOST"
+  ],
+  "permissions": []
+}

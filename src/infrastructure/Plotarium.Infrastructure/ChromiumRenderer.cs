@@ -13,7 +13,10 @@ public sealed class ChromiumRenderer(BrowserSettings settings, AssetCatalog asse
 
     public async Task<RenderArtifact> RenderAsync(RenderRequest request, CancellationToken token)
     {
-        if (string.IsNullOrWhiteSpace(settings.ExecutablePath) || !File.Exists(settings.ExecutablePath))
+        if (RequestValidator.IsMapLibre(request) && request.Spec is { } mapSpec &&
+            mapSpec.GetProperty("data").EnumerateArray().Any(x => x.TryGetProperty("type",out var t) && t.GetString() == "densitymap"))
+            throw new RenderFailure("offline_densitymap", "Density maps require a MapLibre worker and tiled geography; static offline rendering is unavailable in this environment.", 422);
+                if (string.IsNullOrWhiteSpace(settings.ExecutablePath) || !File.Exists(settings.ExecutablePath))
             throw new RenderFailure("browser_missing", "A configured Chromium executable is required.", 503);
         await using var browser = await ChromiumProcess.LaunchAsync(settings, token);
         await using var cdp = await CdpConnection.OpenAsync(browser.Endpoint, token);
@@ -46,6 +49,8 @@ public sealed class ChromiumRenderer(BrowserSettings settings, AssetCatalog asse
             if (request.Engine == "echarts")
             {
                 await EvaluateTrustedAsync(assets.ReadScript("/assets/echarts/echarts.min.js"));
+                if (RequestValidator.UsesEchartsGl(request))
+                    await EvaluateTrustedAsync(assets.ReadScript("/assets/echarts-gl/echarts-gl.min.js"));
                 var maps = CollectMaps(request);
                 if (maps.Count > 0)
                 {
@@ -56,7 +61,8 @@ public sealed class ChromiumRenderer(BrowserSettings settings, AssetCatalog asse
             else if (request.Engine == "plotly") await EvaluateTrustedAsync(assets.ReadScript("/assets/plotly/plotly.min.js"));
             else await CallAsync("function(value) { return window.Plotarium.loadMermaid(value); }", new { modules = assets.MermaidModules(), nonce }, initialization:true);
             
-            var value = new { engine = request.Engine, spec = request.Spec, source = request.Source, width = request.Width, height = request.Height, scale = request.Scale, background = request.Background, theme = request.Theme };
+            var value = new { engine = request.Engine, spec = request.Spec, source = request.Source, width = request.Width, height = request.Height, scale = request.Scale, background = request.Background, theme = request.Theme,
+                offlineWorldGeoJson = RequestValidator.IsMapLibre(request) ? assets.ReadGeoJson("world") : null };
             var rendered = await CallAsync("function(request) { return window.Plotarium.render(request); }", value);
             CheckNetwork();
             string svg;

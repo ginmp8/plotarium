@@ -1,11 +1,11 @@
-# Plotarium 0.3.0 - Interactive chart delivery
+# Plotarium 0.4.0 - Interactive chart delivery
 
 The service now has two distinct delivery paths:
 
 - **Static**: `POST /v1/render` with `format=png|jpeg|webp|svg|pdf|json` (unchanged from 0.2.0).
 - **Interactive**: `POST /v1/charts` stores a validated chart in bounded, process-local memory and returns expiring links. `POST /v1/render` with `format=html` returns the same hosted viewer HTML, not a standalone offline file.
 
-Charts are rendered natively in the viewer by bundled ECharts 6.1.0, Plotly 4.1.2, or Mermaid 12.1.0, with no CDN or user-supplied JavaScript. Existing data/resource and MapLibre limitations still apply. All API payloads retain the original `spec`/`source` schema. The HTML viewer needs network access to the same Plotarium origin for assets and the ephemeral definition; saving the HTML file by itself does not preserve a self-contained chart.
+Charts are rendered natively in the viewer by bundled ECharts 6.1.0, Plotly 4.1.2, or Mermaid 12.1.0, with no CDN or user-supplied JavaScript. ECharts GL is locally bundled. Plotly MapLibre trace types use the 0.4.0 constrained offline strategies described in release notes; native browser-hosted MapLibre has not been homologated. All API payloads retain the original `spec`/`source` schema. The HTML viewer needs network access to the same Plotarium origin for assets and the ephemeral definition; saving the HTML file by itself does not preserve a self-contained chart.
 
 ## Run on Windows
 
@@ -19,7 +19,7 @@ Chrome is needed for static image/PDF previews, not for creating a chart or serv
 
 ## cURLs for Postman (Import / Raw text)
 
-Tambem ha uma [collection Postman v2.1 com 12 requests](../examples/postman/Plotarium-0.3.0.postman_collection.json), incluindo `chartId` gerado automaticamente pelos requests de criacao. Importe pelo menu **Import > File** no Postman.
+Tambem ha uma [collection Postman v2.1 com 16 requests](../examples/postman/Plotarium-0.4.0.postman_collection.json), incluindo `chartId` gerado automaticamente pelos requests de criacao. Importe pelo menu **Import > File** no Postman.
 
 Create an ECharts map chart:
 
@@ -120,3 +120,7 @@ The interactive viewer calls a stable `PlotariumAdapters[engine].mount(context)`
 A reproducible UI component smoke is included at `tests/Plotarium.UiTests/smoke.py`. It requires optional Python Playwright and a locally installed Chromium; the viewer HTML is loaded with `set_content` and the local scripts and responses are injected as fixtures (not a full network navigation test). Example: `python tests/Plotarium.UiTests/smoke.py --base-url http://localhost:5000 --chromium /usr/bin/chromium`. On Windows, supply your `chrome.exe` path. The script saves sample PNGs to `artifacts/ui`.
 
 Run `dotnet run --project tests/Plotarium.ContractTests -c Release` and `dotnet run --project tests/Plotarium.HttpTests -c Release -- http://localhost:5000/`. The latter needs a running server with Chrome installed and tests the full render-format matrix plus interactive/MCP endpoints. Sandbox root launches may require *explicit development-only* `Plotarium__Browser__DisableSandbox=true`; never use that setting for production. Real Windows, real Teams/WhatsApp/ChatGPT clients and public domain access need external environment validation. See `evidence/0.3.0/` for executed/blocked distinctions.
+
+## 0.4.0 host clients
+
+Os modelos Teams/WhatsApp estão em `examples/integrations/`; o serviço só devolve descritores, não publica/enviar automaticamente. O HTML viewer continua a oferecer interatividade da engine no navegador; MCP Apps ainda depende de homologação no host. Limite o `FrameAncestors` estritamente, habilite autenticação externa e configure `PublicBaseUrl` HTTPS autorizado antes de compartilhar.

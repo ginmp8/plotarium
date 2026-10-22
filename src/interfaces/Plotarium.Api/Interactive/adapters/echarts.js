@@ -3,6 +3,9 @@ window.PlotariumAdapters ??= Object.create(null);
 window.PlotariumAdapters.echarts = Object.freeze({
   async mount({host,assets,request,loadScript,selection}) {
     await loadScript(assets+'echarts/echarts.min.js');
+    const useGl = Boolean(request.spec?.globe || request.spec?.grid3D || [request.spec?.series].flat().some(x =>
+      x && ['bar3D','scatter3D','line3D','lines3D','surface','map3D','polygons3D','graphGL'].includes(x.type)));
+    if(useGl) await loadScript(assets+'echarts-gl/echarts-gl.min.js');
     const opts=structuredClone(request.spec);
     const maps=new Set();
     function add(value){ if(value && typeof value.map==='string')maps.add(value.map); }

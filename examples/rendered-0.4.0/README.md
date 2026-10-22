@@ -1,0 +1,1 @@
+Validated Chromium/CDP PNG outputs from the exact example JSON files. ECharts GL is WebGL. Plotly MapLibre input is represented by geographic scatter/choropleth fallback in static output; not native MapLibre tiles.

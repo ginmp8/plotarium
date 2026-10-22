@@ -1,84 +1,137 @@
 #!/usr/bin/env python3
-"""Produce a deterministic source release, never executing any project code.
+"""Deterministically package Plotarium 0.4.0 source and 0.4-specific observed evidence.
 
-Usage: python3 scripts/package_release.py /absolute/output/Plotarium-0.2.0.zip
-Source root is the parent of this script. Requires existing passing receipts.
+Usage: python3 scripts/package_release.py /absolute/path/Plotarium-0.4.0.zip
+Requires successful, current build/contract/HTTP/feature/publish receipts. No program execution.
 """
-import datetime
 import hashlib
 import json
-import pathlib
+from pathlib import Path
 import stat
 import sys
 import zipfile
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-VERSION = '0.2.0'
-EXCLUDED_DIRS = {'bin','obj','artifacts','.git','.vs','.nuget','.rhapsodia','__pycache__'}
-EXCLUDED_FILES = {'Thumbs.db','.DS_Store'}
-DT = (2026, 10, 21, 0, 0, 0)
+ROOT = Path(__file__).resolve().parent.parent
+VERSION = '0.4.0'
+DATE = (2026, 10, 22, 0, 0, 0)
+IGNORED_DIRS = {'bin', 'obj', 'artifacts', '.git', '.vs', '.nuget', '.rhapsodia', '__pycache__'}
+IGNORED_FILES = {'.DS_Store', 'Thumbs.db'}
 
-def sha(b): return hashlib.sha256(b).hexdigest()
-def gather():
-    source=[]
+
+def sha256(content: bytes) -> str:
+    return hashlib.sha256(content).hexdigest()
+
+
+def source_files():
+    entries = []
     for path in sorted(ROOT.rglob('*')):
-        if set(path.relative_to(ROOT).parts) & EXCLUDED_DIRS: continue
-        if path.name in EXCLUDED_FILES:continue
-        if path.is_symlink():raise ValueError('Symlink is forbidden: '+str(path))
-        if not path.is_file():continue
-        if path.relative_to(ROOT).as_posix().startswith('releases/') and path.suffix=='.zip':continue
-        source.append(path)
-    return source
+        if set(path.relative_to(ROOT).parts).intersection(IGNORED_DIRS):
+            continue
+        if path.name in IGNORED_FILES:
+            continue
+        if path.is_symlink():
+            raise ValueError(f'Symlink not permitted in source release: {path}')
+        if not path.is_file():
+            continue
+        if path.relative_to(ROOT).as_posix().startswith('releases/') and path.suffix == '.zip':
+            continue
+        entries.append(path)
+    return entries
 
-def receipts():
-    d=ROOT/'evidence'/'0.2.0'
-    c=json.loads((d/'contract-final.json').read_text())
-    h=json.loads((d/'http-tests.json').read_text())
-    g=json.loads((d/'geo-format-results.json').read_text())
-    x=json.loads((d/'coverage-results.json').read_text())
-    assert (c['passed'],c['failed'])==(90,0)
-    assert (h['passed'],h['failed'])==(24,0)
-    assert (g['passed'],g['failed'])==(6,0)
-    assert (x['scenarios'],x['rendered'],x['expectedUnsupported'],x['failed'])==(69,66,3,0)
-    assert '0 Error(s)' in (d/'build-final.log').read_text()
-    assert '0 Warning(s)' in (d/'build-final.log').read_text()
-    assert 'Plotarium.Api -> ' in (d/'publish-final.log').read_text()
-    return {'contract':{'passed':90,'failed':0},'http':{'passed':24,'failed':0},'geo':{'passed':6,'failed':0},'coverage':{'scenarios':69,'rendered':66,'expectedUnsupported':3,'failed':0},'platform':'Linux x64 .NET 10.0.302 / Chromium 144.0.7559.96','windowsValidated':False}
 
-if __name__=='__main__':
-    if len(sys.argv)!=2:raise SystemExit('Expected absolute output ZIP path')
-    dest=pathlib.Path(sys.argv[1]);assert dest.is_absolute()
-    assert str(dest)!=''
-    assert ROOT not in dest.parents and ROOT!=dest.parent
-    stats=receipts()
-    src=gather()
-    assert len(src)>200, len(src)
-    file_manifest=[{'path':x.relative_to(ROOT).as_posix(),'bytes':x.stat().st_size,'sha256':sha(x.read_bytes())} for x in src if x.name!='release-content-hashes.json']
-    m=ROOT/'evidence'/'0.2.0'/'release-content-hashes.json'
-    m.write_text(json.dumps({'release':VERSION,'files':file_manifest,'tests':stats},indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
-    src=gather()
-    dest.parent.mkdir(parents=True,exist_ok=True)
-    stage=dest.with_name(dest.name+'.tmp')
+def check_evidence():
+    evidence = ROOT / 'evidence' / VERSION
+    contract = json.loads((evidence / 'contract-tests.json').read_text())
+    http = json.loads((evidence / 'http-tests.json').read_text())
+    feature = json.loads((evidence / 'feature-smokes.json').read_text())
+    required = [(contract, 103), (http, 35), (feature, 13)]
+    for result, count in required:
+        if (result.get('passed'), result.get('failed')) != (count, 0):
+            raise ValueError(f'Release evidence gate failed; expected {count}/0 but got {result.get("passed")}/{result.get("failed")}')
+    build = (evidence / 'build-final.log').read_text()
+    if '0 Error(s)' not in build or '0 Warning(s)' not in build:
+        raise ValueError('Build evidence does not prove zero errors and warnings')
+    publish = (evidence / 'publish-final.log').read_text()
+    if 'Plotarium.Api -> ' not in publish or 'Plotarium.Infrastructure ->' not in publish:
+        raise ValueError('Publish receipt not found')
+    val = json.loads((evidence / 'validation.json').read_text())
+    if val.get('release') != VERSION:
+        raise ValueError('Validation belongs to another release')
+    asset = json.loads((ROOT / 'assets' / 'manifest.json').read_text())
+    if not (ROOT / 'assets' / 'echarts-gl' / 'echarts-gl.min.js').is_file():
+        raise ValueError('Missing ECharts GL runtime')
+    return {'contract': contract['passed'], 'http': http['passed'], 'feature': feature['passed'],
+            'buildErrors': 0, 'buildWarnings': 0, 'publish': 'observed',
+            'browserVisualCases': ['echarts-bar3D', 'plotly-scattermap', 'plotly-choroplethmap'],
+            'assetManifestPresent': isinstance(asset, dict),
+            'limit': 'Does not certify remote Teams, WhatsApp, ChatGPT or native MapLibre workers.'}
+
+
+def main(dest: Path):
+    if not dest.is_absolute() or dest.name != f'Plotarium-{VERSION}.zip':
+        raise ValueError('Expected absolute output path ending in Plotarium-0.4.0.zip')
+    if ROOT in dest.parents or dest.parent == ROOT:
+        raise ValueError('Output must be outside the source tree')
+    stats = check_evidence()
+    entries = source_files()
+    if len(entries) < 300:
+        raise ValueError(f'Unexpectedly short source release ({len(entries)} files)')
+    # Preserve release identity without constructing a self-referential checksum.
+    manifest_path = ROOT / 'evidence' / VERSION / 'release-content-hashes.json'
+    manifest = [{'path': path.relative_to(ROOT).as_posix(), 'bytes': path.stat().st_size,
+                 'sha256': sha256(path.read_bytes())} for path in entries if path != manifest_path]
+    manifest_path.write_text(json.dumps({'release': VERSION, 'files': manifest, 'tests': stats},
+                                        ensure_ascii=False, indent=2) + '\n')
+    entries = source_files()
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    temporary = dest.with_name(dest.name + '.tmp')
     try:
-        with zipfile.ZipFile(stage,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9,strict_timestamps=True) as z:
-            for x in src:
-                rel='Plotarium/'+x.relative_to(ROOT).as_posix()
-                data=x.read_bytes()
-                zi=zipfile.ZipInfo(rel,DT)
-                zi.create_system=3
-                zi.external_attr=(stat.S_IFREG|0o644)<<16
-                zi.compress_type=zipfile.ZIP_DEFLATED
-                z.writestr(zi,data,compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
-        with zipfile.ZipFile(stage) as z:
-            assert z.testzip() is None
-            assert len(z.infolist()) == len(src)
-            assert len({i.filename.casefold() for i in z.infolist()}) == len(src)
-            for n in ('Plotarium/Directory.Build.props','Plotarium/docs/release-notes-0.2.0.md','Plotarium/assets/geojson/world.geojson','Plotarium/assets/topojson/world_110m.json','Plotarium/evidence/0.2.0/coverage-results.json','Plotarium/examples/rendered-0.2.0/plotly-scatter3d.png'):
-                assert n in z.namelist(),n
-        stage.replace(dest)
+        with zipfile.ZipFile(temporary, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+            for path in entries:
+                data = path.read_bytes()
+                info = zipfile.ZipInfo('Plotarium/' + path.relative_to(ROOT).as_posix(), DATE)
+                info.create_system = 3
+                info.external_attr = (stat.S_IFREG | 0o644) << 16
+                info.compress_type = zipfile.ZIP_DEFLATED
+                archive.writestr(info, data, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+        with zipfile.ZipFile(temporary) as archive:
+            names = archive.namelist()
+            if archive.testzip() is not None:
+                raise ValueError('ZIP CRC mismatch')
+            if len(names) != len(entries) or len({name.casefold() for name in names}) != len(entries):
+                raise ValueError('ZIP entry duplication or incomplete archive')
+            expected = [
+                'Plotarium/Directory.Build.props',
+                'Plotarium/assets/manifest.json',
+                'Plotarium/assets/echarts-gl/echarts-gl.min.js',
+                'Plotarium/docs/release-notes-0.4.0.md',
+                'Plotarium/scripts/feature_040_smoke.py',
+                'Plotarium/examples/postman/Plotarium-0.4.0.postman_collection.json',
+                'Plotarium/examples/rendered-0.4.0/echarts-bar3D.png',
+                'Plotarium/examples/rendered-0.4.0/plotly-scattermap.png',
+                'Plotarium/examples/rendered-0.4.0/plotly-choroplethmap.png',
+                'Plotarium/evidence/0.4.0/build-final.log',
+                'Plotarium/evidence/0.4.0/contract-tests.json',
+                'Plotarium/evidence/0.4.0/http-tests.json',
+                'Plotarium/evidence/0.4.0/feature-smokes.json',
+            ]
+            if any(name not in names for name in expected):
+                raise ValueError('Missing required 0.4.0 source or evidence: ' + str([name for name in expected if name not in names]))
+            for m in manifest:
+                actual = archive.read('Plotarium/' + m['path'])
+                if len(actual) != m['bytes'] or sha256(actual) != m['sha256']:
+                    raise ValueError('Source bytes differ from manifest: ' + m['path'])
+        temporary.replace(dest)
     finally:
-        stage.unlink(missing_ok=True)
-    report={'path':str(dest),'version':VERSION,'sha256':sha(dest.read_bytes()),'bytes':dest.stat().st_size,'entries':len(src),'tests':stats}
-    dest.with_suffix('.release.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    dest.with_suffix('.sha256').write_text(report['sha256']+'  '+dest.name+'\n',encoding='ascii')
-    print(json.dumps(report,indent=2))
+        temporary.unlink(missing_ok=True)
+    report = {'release': VERSION, 'path': str(dest), 'bytes': dest.stat().st_size,
+              'sha256': sha256(dest.read_bytes()), 'entries': len(entries), 'tests': stats}
+    dest.with_suffix('.release.json').write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
+    dest.with_suffix('.sha256').write_text(report['sha256'] + '  ' + dest.name + '\n')
+    print(json.dumps(report, indent=2, ensure_ascii=False))
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        raise SystemExit('Usage: python3 scripts/package_release.py /absolute/output/Plotarium-0.4.0.zip')
+    main(Path(sys.argv[1]))

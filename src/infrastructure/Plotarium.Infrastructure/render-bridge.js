@@ -27,17 +27,42 @@ window.Plotarium = Object.freeze({
     document.body.style.background = request.background;
     let svg;
     if (request.engine === 'echarts') {
+      const options = structuredClone(request.spec);
+      const gl = Boolean(options.globe || options.grid3D || [options.series].flat().some(x => x && ['bar3D','scatter3D','line3D','lines3D','surface','map3D','polygons3D','graphGL'].includes(x.type)));
       const chart = echarts.init(host, request.theme === 'dark' ? 'dark' : null,
-        { renderer: 'svg', width: request.width, height: request.height });
+        { renderer: gl ? 'canvas' : 'svg', width: request.width, height: request.height });
       try {
-        const options = structuredClone(request.spec);
         options.animation = false;
         options.backgroundColor = request.background;
         chart.setOption(options, { notMerge: true, lazyUpdate: false });
+        if (gl) {
+          await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          window.__plotariumActiveChart = chart;
+          return { capture: true }; // GL viewport remains alive until CDP captures pixels.
+        }
         svg = chart.renderToSVGString();
-      } finally { chart.dispose(); }
+      } finally { if (!gl) chart.dispose(); }
     } else if (request.engine === 'plotly') {
       const figure = structuredClone(request.spec);
+      if (request.offlineWorldGeoJson) {
+        // CDP's navigation origin is intentionally opaque and Chromium's administrative network policy
+        // prevents MapLibre blob-worker startup. Preserve geographic semantics via Plotly's offline geo engine.
+        // This conversion is explicit and visible as an output strategy; densitymap cannot be represented faithfully.
+        figure.data = figure.data.map(t => {
+          if (t.type === 'scattermap') return { ...t, type: 'scattergeo' };
+          if (t.type === 'choroplethmap') return { ...t, type: 'choropleth' };
+          if (t.type === 'densitymap') throw new Error('densitymap needs a MapLibre worker and is unavailable in this environment');
+          return t;
+        });
+        figure.layout = { ...(figure.layout || {}) };
+        const map = figure.layout.map || {};
+        delete figure.layout.map;
+        figure.layout.geo = { projection: { type: 'equirectangular', scale: Math.max(0.75,Number(map.zoom || 1)) },
+          center: map.center || { lat: 0, lon: 0 }, showland: true, showocean: true,
+          landcolor: request.theme === 'dark' ? '#3b5664' : '#d1d8cd',
+          oceancolor: request.theme === 'dark' ? '#13222c' : '#dcecf4',
+          bgcolor: 'rgba(0,0,0,0)', ...(figure.layout.geo || {}) };
+      }
       const layout = Object.assign({}, figure.layout || {}, {
         width: request.width, height: request.height, autosize: false,
         paper_bgcolor: request.background === 'transparent' ? 'rgba(0,0,0,0)' : request.background

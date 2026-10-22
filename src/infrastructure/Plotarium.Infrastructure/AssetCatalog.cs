@@ -31,7 +31,7 @@ public sealed partial class AssetCatalog
                 throw new InvalidDataException("Asset digest mismatch.");
             if (!loaded.TryAdd("/assets/"+relative, bytes)) throw new InvalidDataException("Duplicate asset path.");
         }
-        foreach(var entry in new[]{"/assets/echarts/echarts.min.js","/assets/plotly/plotly.min.js","/assets/mermaid/mermaid.esm.min.mjs"})
+        foreach(var entry in new[]{"/assets/echarts/echarts.min.js","/assets/echarts-gl/echarts-gl.min.js","/assets/plotly/plotly.min.js","/assets/mermaid/mermaid.esm.min.mjs"})
             if (!loaded.ContainsKey(entry)) throw new InvalidDataException("Required engine asset is missing.");
         files = loaded;
     }
@@ -40,6 +40,7 @@ public sealed partial class AssetCatalog
         bytes = null;
         if (relative.Length > 250 || relative.Contains('\\') || relative.Split('/').Any(part=>part is "" or "." or ".."))return false;
         if (!relative.StartsWith("echarts/",StringComparison.Ordinal) &&
+            !relative.StartsWith("echarts-gl/",StringComparison.Ordinal) &&
             !relative.StartsWith("plotly/",StringComparison.Ordinal) &&
             !relative.StartsWith("mermaid/",StringComparison.Ordinal) &&
             !relative.StartsWith("topojson/",StringComparison.Ordinal) &&

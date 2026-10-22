@@ -1,4 +1,8 @@
-# Plotarium 0.3.0
+## Release 0.4.0
+
+Veja [Novidades da 0.4.0](docs/release-notes-0.4.0.md). ECharts GL 3D e mapas geográficos offline estão disponíveis para exportação e compartilhamento. O modo MapLibre nativo exige navegador compatível; o servidor estático usa fallback geo verificado. **MCP e integrações Teams/WhatsApp ainda requerem homologação nos clientes e credenciais próprias do operador**.
+
+# Plotarium 0.4.0
 
 API ASP.NET Core 10 para gerar ECharts 6.1.0, Plotly.js 4.1.2 e Mermaid 12.1.0 em PNG, JPEG, WebP, SVG, PDF ou envelope JSON. **Sem qualquer autenticacao:** nao existe chave, token, usuario, middleware de auth nem cabecalho obrigatorio.
 
@@ -14,7 +18,7 @@ Runtime de imagem: Chromium/Chrome local controlado pelo protocolo CDP diretamen
 - Teams (Adaptive Card com prévia + link), WhatsApp (descritor de link/botão, sem disparar mensagem) e ChatGPT (MCP Apps via `POST /mcp`, `ui://plotarium/chart.html`). Os clientes exigem configuração, permissões e implantação HTTPS própria para integração efetiva.
 - Segurança preservada: sem JS arbitrário nas especificações, sem assets externos, acesso a mapas locais, conteúdo HTML com CSP e links temporários. **A API continua sem autenticação**, portanto a implantação pública exige proteção externa.
 
-Consulte **[Guia da versão interativa](docs/interactive.md)** e a [collection com 12 requisições](examples/postman/Plotarium-0.3.0.postman_collection.json) para importar no Postman, contratos HTTP/MCP, limites, configuração do proxy HTTPS e instruções para extensões.
+Consulte **[Guia da versão interativa](docs/interactive.md)** e a [collection atualizada com 16 requisições](examples/postman/Plotarium-0.4.0.postman_collection.json) para importar no Postman, contratos HTTP/MCP, limites, configuração do proxy HTTPS e instruções para extensões.
 
 ## Iniciar no Windows (PowerShell)
 

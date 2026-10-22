@@ -25,7 +25,7 @@ public static class InteractiveRoutes
 
         app.MapGet("/v1/interactive/capabilities", () => Results.Json(new
         {
-            schemaVersion = "1",version="0.3.0",formats=new[]{"html","png","svg","jpeg","webp","pdf","json"},
+            schemaVersion = "1",version="0.4.0",formats=new[]{"html","png","svg","jpeg","webp","pdf","json"},
             engines=new Dictionary<string,InteractiveCapabilities>{["echarts"]=ChartCapabilities.For("echarts"),["plotly"]=ChartCapabilities.For("plotly"),["mermaid"]=ChartCapabilities.For("mermaid")},
             channels = new[]{"browser","iframe","mcp-apps","teams-link-card","whatsapp-link"},
             sharing=new{mode="expiring-anonymous-link",persistent=false,publicOriginConfigured=configuredOrigin is not null},
@@ -146,7 +146,13 @@ public static class InteractiveRoutes
         };
         if(ready && channel=="whatsapp")native=new{
             text="Abrir gráfico interativo: "+view, previewUrl=preview,
-            urlButton=new {title="Abrir gráfico",url=view},sendViaProviderRequired=true
+            urlButton=new {title="Abrir gráfico",url=view},sendViaProviderRequired=true,
+            cloudApiMessageTemplate=new {
+                messaging_product="whatsapp",recipient_type="individual",type="text",
+                text=new {preview_url=true,body="Visualize o gráfico interativo: "+view}
+            },
+            recipientRequired=true,
+            note="Before POST /{PHONE_NUMBER_ID}/messages, supply the authorized recipient as 'to', and use server-held Meta authorization. This response does not send messages."
         };
         if(ready && channel=="chatgpt")native=new {
             mcpEndpoint=origin+"/mcp",resourceUri="ui://plotarium/chart.html",tool="create_interactive_chart",

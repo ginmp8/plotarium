@@ -1,0 +1,1 @@
+{"engine":"plotly","width":800,"height":540,"format":"png","background":"#ffffff","spec":{"data":[{"type":"choroplethmap","locations":["BRA","USA","CHN","IND"],"z":[80,100,90,75],"colorscale":"Viridis"}],"layout":{"map":{"center":{"lat":10,"lon":0},"zoom":0.6},"margin":{"l":0,"r":0,"t":0,"b":0}}}}

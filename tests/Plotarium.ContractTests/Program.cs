@@ -43,7 +43,7 @@ foreach(var json in new[]{"null","[]","42","{\"Engine\":\"echarts\",\"spec\":{}}
     Test("shape "+json,()=>Reject(json));
 foreach(var field in new[]{"\"height\":0","\"scale\":0","\"scale\":4","\"theme\":\"custom\"","\"background\":\"red\"","\"background\":null","\"format\":\"jpeg\",\"background\":\"transparent\"","\"format\":\"svg\",\"scale\":2","\"arbitrary\":1"})
     Test("bad envelope "+field,()=>Reject(valid.Replace("\"spec\"",field+",\"spec\"")));
-foreach(var type in new[]{"custom","map","bar3D","nonexistent"})
+foreach(var type in new[]{"custom","nonexistent"})
     Test("excluded echarts "+type,()=>Reject(valid.Replace("\"bar\"","\""+type+"\"")));
 foreach(var extraProperty in new[]{"\"constructor\":{}","\"image\":\"https://example.invalid/a.png\"","\"symbol\":\"image://https://example.invalid/x\"","\"itemStyle\":{\"color\":\"url(https://example.invalid/x)\"}"})
     Test("active spec "+extraProperty,()=>Reject(valid.Replace("\"series\":",extraProperty+",\"series\":")));
@@ -128,9 +128,9 @@ Test("Plotly choropleth accepted",()=>Equal("plotly",Parse("{\"engine\":\"plotly
 Test("Plotly scattergeo accepted",()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattergeo\",\"lat\":[1],\"lon\":[2]}]}}").Engine));
 Test("Plotly scatter3d accepted",()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scatter3d\",\"x\":[1],\"y\":[2],\"z\":[3]}]}}").Engine));
 Test("Legacy Mapbox refused",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattermapbox\"}]}}"));
-Test("MapLibre requires external provider",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattermap\"}]}}"));
-Test("MapLibre density refused",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"densitymap\"}]}}"));
-Test("MapLibre choropleth refused",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"choroplethmap\"}]}}"));
+Test("MapLibre scattermap with local style",()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattermap\"}]}}" ).Engine));
+Test("MapLibre densitymap local accepted",()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"densitymap\"}]}}" ).Engine));
+Test("MapLibre choroplethmap local accepted",()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"choroplethmap\"}]}}" ).Engine));
 Test("remote spec resource refused",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattergeo\",\"source\":\"https://malicious.example/a\"}]}}"));
 Test("production asset digests",()=>{
     var catalog=new Plotarium.Infrastructure.AssetCatalog(Path.Combine(Directory.GetCurrentDirectory(),"assets"));
@@ -182,6 +182,18 @@ Test("engine capabilities disclose only real interactive support",()=>{
     Equal(true,ChartCapabilities.For("plotly").Interactive);
     Equal(false,ChartCapabilities.For("mermaid").SupportsPointSelection);
     Equal(false,ChartCapabilities.For("echarts").SupportsArbitraryCallbacks);
+});
+
+// 0.4.0 acceptance: exercise new types BEFORE implementing them.
+foreach(var t in new[]{"bar3D","scatter3D","line3D","surface","lines3D"})
+    Test("echarts GL allows "+t,()=>Equal("echarts",Parse("{\"engine\":\"echarts\",\"spec\":{\"series\":[{\"type\":\""+t+"\"}]}}").Engine));
+foreach(var t in new[]{"scattermap","densitymap","choroplethmap"})
+    Test("plotly offline map allows "+t,()=>Equal("plotly",Parse("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\""+t+"\"}]}}").Engine));
+Test("MapLibre untrusted styles blocked",()=>Reject("{\"engine\":\"plotly\",\"spec\":{\"data\":[{\"type\":\"scattermap\"}],\"layout\":{\"map\":{\"style\":{\"version\":8}}}}}"));
+Test("GL asset is locally hash verified",()=>{
+    var assets = new Plotarium.Infrastructure.AssetCatalog(Path.Combine(Directory.GetCurrentDirectory(),"assets"));
+    Equal(true,assets.TryRead(new Uri("https://plotarium.invalid/assets/echarts-gl/echarts-gl.min.js"),out var gl));
+    Equal(true,gl is {Length:>100_000});
 });
 
 Console.WriteLine(JsonSerializer.Serialize(new { failed, passed = results.Count-failed, results }, new JsonSerializerOptions{WriteIndented=true}));

@@ -1,0 +1,46 @@
+{
+  "release": "0.4.0",
+  "validatedAtUTC": "2026-10-22",
+  "checks": {
+    "contract": {
+      "passed": 103,
+      "failed": 0
+    },
+    "http": {
+      "passed": 35,
+      "failed": 0
+    },
+    "feature": {
+      "passed": 13,
+      "failed": 0
+    },
+    "build": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "visual": {
+      "observed": [
+        "echarts-bar3D PNG",
+        "plotly-scattermap PNG",
+        "plotly-choroplethmap PNG"
+      ],
+      "basis": "manual inspection of actual Chromium generated pixels + Pillow non-uniformity test"
+    },
+    "hostValidation": {
+      "teams": "not-run; requires tenant/app",
+      "whatsapp": "not-run; requires Meta Business credentials and consent",
+      "chatgpt": "not-run; requires user-installed MCP App host",
+      "nativeMapLibre": "blocked by Chromium navigation/worker policy in current sandbox"
+    },
+    "dependencies": {
+      "officialMcpSDK": "not integrated; offline package restore blocked by transitive dependencies",
+      "pmtiles": "not supplied; no street tile base"
+    },
+    "platform": {
+      "system": "Linux x64",
+      "dotnetSDK": "10.0.302",
+      "chromium": "operator installed"
+    }
+  },
+  "note": "Tests ran against exact bin/Debug/net10.0 Plotarium.Api.dll. Dev sandbox-only Chromium flags used."
+}

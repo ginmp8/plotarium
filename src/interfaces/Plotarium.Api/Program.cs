@@ -28,7 +28,7 @@ var shareCapacity=interactiveConfig.GetValue("MaxCharts",128);
 var shareMinutes=interactiveConfig.GetValue("TtlMinutes",15);
 builder.Services.AddSingleton(new ChartStore(shareCapacity,TimeSpan.FromMinutes(shareMinutes)));
 var app=builder.Build();
-using var meter=new Meter("Plotarium","0.3.0");
+using var meter=new Meter("Plotarium","0.4.0");
 var completed=meter.CreateCounter<long>("plotarium.render.completed");
 var failures=meter.CreateCounter<long>("plotarium.render.failed");
 var latency=meter.CreateHistogram<double>("plotarium.render.duration","ms");
@@ -66,8 +66,8 @@ app.MapGet("/v1/capabilities",()=>Results.Json(new
     schemaVersion="1",engines=new[]{new{name="echarts",version=Contract.EngineVersion("echarts")},new{name="plotly",version=Contract.EngineVersion("plotly")},new{name="mermaid",version=Contract.EngineVersion("mermaid")}},
     formats=new[]{"png","jpeg","webp","svg","json","pdf","html"},json="definition-envelope; structural-only",
     limits=new{bodyBytes=Contract.MaxBodyBytes,maxPixels=Contract.MaxPixels,outputBytes=Contract.MaxOutputBytes,concurrency,queueCapacity=queue},
-    profile="offline-static; packaged ECharts GeoJSON maps and Plotly TopoJSON geo; WebGL raster-in-SVG output; no arbitrary callbacks, CDN/tile providers or ECharts GL",
-    geography=new { echartsMaps=new[]{"world","world-50m","africa","asia","europe","north-america","south-america","oceania","usa"}, plotlyGeoTraces=new[]{"choropleth","scattergeo"}, mapLibreTiles=false },
+    profile="offline-static; packaged ECharts and ECharts GL; Plotly geographic fallback for scattermap/choroplethmap; no external tile providers or arbitrary callbacks",
+    geography=new { echartsMaps=new[]{"world","world-50m","africa","asia","europe","north-america","south-america","oceania","usa"}, plotlyGeoTraces=new[]{"choropleth","scattergeo"}, plotlyMapTypes=new[]{"scattermap","choroplethmap","densitymap"}, mapLibreTiles=false, staticMapFallback="scattergeo/choropleth; densitymap returns 422" },
     rasterizedSvg=new[]{"scattergl","scatterpolargl","scatter3d","mesh3d","surface","volume","isosurface","cone","streamtube","splom"},
     interactive=new{enabled=true,create="POST /v1/charts",view="GET /v1/charts/{id}/view",mcp="POST /mcp",shares=new[]{"teams","whatsapp","chatgpt"}},
     browser="operator-installed Chromium; no Node runtime"

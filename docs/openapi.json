@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Plotarium",
-    "version": "0.3.0",
-    "description": "Anonymous ASP.NET Core static and interactive chart API. Bundled ECharts 6.1, Plotly 4.1, Mermaid 12.1; browser views, expiring links and limited MCP Apps resource. Remote platform clients and origin policies require separate deployment."
+    "version": "0.4.0",
+    "description": "ASP.NET Core 10 static and interactive graphics API; ECharts 6.1.0, ECharts GL 2.1.0, Plotly.js 4.1.2, Mermaid 12.1.0. MapLibre trace types scattermap/choroplethmap use documented offline geographic fallback for static renders; densitymap static returns 422 offline_densitymap. User-provided MapLibre tiles/styles and arbitrary JavaScript are forbidden. Hosted views and limited MCP are not production integrations with chat platforms."
   },
   "security": [],
   "paths": {

@@ -40,7 +40,7 @@ public static class McpEndpoints
                     switch(command)
                     {
                         case "initialize":
-                            result=new {protocolVersion="2025-11-25",serverInfo=new{name="plotarium",version="0.3.0"},
+                            result=new {protocolVersion="2025-11-25",serverInfo=new{name="plotarium",version="0.4.0"},
                                 capabilities=new{tools=new{listChanged=false},resources=new{listChanged=false}}};break;
                         case "ping":result=new{};break;
                         case "tools/list":result=new{tools=new object[]{

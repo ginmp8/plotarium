@@ -3,9 +3,19 @@
   "engines": {
     "echarts": "6.1.0",
     "plotly": "4.1.2",
-    "mermaid": "12.1.0"
+    "mermaid": "12.1.0",
+    "echartsGl": "2.1.0"
   },
   "files": [
+    {
+      "path": "echarts-gl/echarts-gl.min.js",
+      "sha256": "d6d60f2165ce3eb1ea360ef62e8490835e0ae2c1e0c1788a772fff918e350842",
+      "bytes": 639846,
+      "sourceArchive": "echarts-gl-2.1.0.zip",
+      "sourceMember": "echarts-gl-2.1.0/dist/echarts-gl.min.js",
+      "version": "2.1.0",
+      "provenance": "provided archive; SHA256 verified against packaged bytes; GL WebGL rendering requires supported Chromium"
+    },
     {
       "path": "echarts/echarts.min.js",
       "sha256": "b66b25aeb4df84e33199dc21694014d336d222cbd9deb0e5a7c14bd6aa0d0fd0",
@@ -122,6 +132,14 @@
       "sourceMember": "echarts-master/NOTICE",
       "version": "6.1.0",
       "provenance": "supplied-archive; upstream byte identity not independently verified"
+    },
+    {
+      "path": "licenses/echarts-gl-LICENSE",
+      "sha256": "55ea01207028f76d844678511f29fc800f8a1e67a8a0fe80470128677847ad32",
+      "bytes": 1510,
+      "sourceArchive": "echarts-gl-2.1.0.zip",
+      "sourceMember": "echarts-gl-2.1.0/LICENSE",
+      "version": "2.1.0"
     },
     {
       "path": "licenses/mermaid-LICENSE",

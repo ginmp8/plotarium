@@ -50,11 +50,11 @@ public static class ChartCapabilities
     public static InteractiveCapabilities For(string engine) => engine switch
     {
         "echarts" => new(true,true,false,
-            ["zoom","pan","tooltip","legend","selection","dataZoom","export","resize","geo-offline"],
-            ["no-custom-javascript","no-echarts-gl","no-external-sources"]),
+            ["zoom","pan","tooltip","legend","selection","dataZoom","export","resize","geo-offline","webgl3d","globe"],
+            ["no-custom-javascript","gl-requires-webgl","no-external-sources"]),
         "plotly" => new(true,true,false,
-            ["zoom","pan","hover","selection","legend","3d","geo-offline","export","resize"],
-            ["webgl-host-dependent","no-maplibre-tiles","no-arbitrary-callbacks"]),
+            ["zoom","pan","hover","selection","legend","3d","geo-offline","maplibre-geojson-offline","export","resize"],
+            ["webgl-host-dependent","geojson-basemap-only-no-street-tiles","no-arbitrary-callbacks"]),
         "mermaid" => new(true,false,false,
             ["viewport-zoom","viewport-pan","export","resize"],
             ["no-diagram-callbacks","no-html-labels","strict-security"]),
