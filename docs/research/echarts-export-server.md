@@ -23,7 +23,7 @@ Dimensoes possuem defaults, mas o trecho lido nao demonstra teto de pixels. Nao 
 ### echarts-export-server-05 - `export-server/tests/server.test.js`
 Ha testes de varios tipos, incluindo boxplot, candlestick, sankey e sunburst. Eles foram lidos, nao executados.
 
-## Decisao para Plotarium
+## Decisao para Ploteus
 **Reutilizar:** Aceitar option nativa e devolver MIME binario; separar exportacao de contrato HTTP.
 **Nao transportar:** Nao copiar implementacao GPL; nao transportar headers proprietarios como unico contrato; controlar pixels e descarte explicitamente.
 

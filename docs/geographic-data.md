@@ -1,4 +1,4 @@
-# Dados geográficos offline — Plotarium 0.2.0
+# Dados geográficos offline — Ploteus 0.2.0
 
 A distribuição inclui arquivos cartográficos com SHA-256 em `assets/manifest.json`, carregados via `AssetCatalog` com verificação de integridade antes da API aceitar requisições.
 
@@ -6,7 +6,7 @@ A distribuição inclui arquivos cartográficos com SHA-256 em `assets/manifest.
 
 - **Fonte binária/arquivo**: `plotly.js-main.zip`, membros `plotly.js-main/dist/topojson/{world,usa,africa,asia,europe,north-america,south-america,oceania}_{110m|50m}.json` fornecidos com o projeto. Não inventar equivalência de identidade upstream: o hash original consta no manifesto.
 - **ECharts**: `scripts/generate_geodata.py <zip>` converte as geometrias `countries` ou `subunits` do TopoJSON para GeoJSON `FeatureCollection`, descompactando arcos delta (inclusive índices negativos), coordenadas e componentes Polygon/MultiPolygon. Atributos `properties.name` vêm de `topojson/dist/country_names_iso_codes.json`; as unidades dos EUA são traduzidas por uma tabela controlada de códigos de estados e DC. Cada feature também expõe `properties.iso3` com o identificador original (para os EUA é código de estado).
-- **Plotly**: TopoJSON original é servido exclusivamente pelo interceptador CDP `Fetch.fulfillRequest` para a origem sintética `https://plotarium.invalid/assets/topojson/`. O domínio `.invalid` nunca é acessado pela rede; o corpo é lido dos assets verificados. Qualquer URL de provedor externo ou tile é bloqueada.
+- **Plotly**: TopoJSON original é servido exclusivamente pelo interceptador CDP `Fetch.fulfillRequest` para a origem sintética `https://ploteus.invalid/assets/topojson/`. O domínio `.invalid` nunca é acessado pela rede; o corpo é lido dos assets verificados. Qualquer URL de provedor externo ou tile é bloqueada.
 - **Licenças**: MIT do Plotly original preservada em `assets/licenses/plotly-LICENSE`. Os dados do Plotly derivam de Natural Earth, e devem manter atribuição/proveniência da distribuição original. Não usar os mapas para definir fronteiras jurídicas oficiais.
 
 ## Mapas ECharts disponíveis

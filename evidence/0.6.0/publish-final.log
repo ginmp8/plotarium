@@ -1,0 +1,5 @@
+  Ploteus.Domain -> /mnt/data/ploteus-060-work/Ploteus/src/domain/Ploteus.Domain/bin/Any CPU/Release/net10.0/Ploteus.Domain.dll
+  Ploteus.Application -> /mnt/data/ploteus-060-work/Ploteus/src/application/Ploteus.Application/bin/Any CPU/Release/net10.0/Ploteus.Application.dll
+  Ploteus.Infrastructure -> /mnt/data/ploteus-060-work/Ploteus/src/infrastructure/Ploteus.Infrastructure/bin/Any CPU/Release/net10.0/Ploteus.Infrastructure.dll
+  Ploteus.Api -> /mnt/data/ploteus-060-work/Ploteus/src/interfaces/Ploteus.Api/bin/Any CPU/Release/net10.0/Ploteus.Api.dll
+  Ploteus.Api -> /mnt/data/ploteus-060-work/published/

@@ -1,12 +1,12 @@
-# Plotarium 0.3.0 - Mapa do projeto
+# Ploteus 0.6.0 - Mapa do projeto
 
-- `src/domain/Plotarium.Domain`: `RenderRequest`, tipos, formatos e limites.
-- `src/application/Plotarium.Application`: `RequestValidator`, `RenderService`, fila limitada e politica de XML/SVG.
-- `src/infrastructure/Plotarium.Infrastructure`: integridade dos assets, processo Chromium, CDP/WebSocket, carregamento local, render ECharts/Plotly/Mermaid e exportacao nos formatos de saida.
-- `src/interfaces/Plotarium.Api`: endpoints, configuracao, headers defensivos, ProblemDetails e metricas (sem autenticacao).
-- `tests/Plotarium.ContractTests`: regras de entrada, limites, outputs JSON e hash dos assets.
-- `tests/Plotarium.HttpTests`: endpoints publicos e matriz 3 motores x 6 formatos contra um processo real.
-- `assets/`: bibliotecas JavaScript versionadas e manifesto de integridade; `docs/research` e `evidence`: corpus/analise historica; `examples/`: corpos HTTP exemplificados.
+- `src/domain/Ploteus.Domain`: `RenderRequest`, tipos, formatos e limites.
+- `src/application/Ploteus.Application`: `RequestValidator`, `RenderService`, fila limitada e politica de XML/SVG.
+- `src/infrastructure/Ploteus.Infrastructure`: integridade dos assets, processo Chromium, CDP/WebSocket, carregamento local, render ECharts/Plotly/Mermaid e exportacao nos formatos de saida.
+- `src/interfaces/Ploteus.Api`: endpoints, configuracao, headers defensivos, ProblemDetails e metricas (sem autenticacao).
+- `tests/Ploteus.ContractTests`: regras de entrada, limites, outputs JSON e hash dos assets.
+- `tests/Ploteus.HttpTests`: endpoints publicos e matriz 3 motores x 6 formatos contra um processo real.
+- `assets/`: bibliotecas JavaScript versionadas e manifesto de integridade; `docs/research` e `evidence/0.6.0`: pesquisa de referência e validação atual; `examples/`: corpos HTTP exemplificados.
 
 Contrato base POST /v1/render; `spec` ECharts/Plotly; `source` Mermaid. Nao sao necessarios headers de autenticacao. API requer navegador para imagem; JSON funciona sem navegador. `docs/security.md` enumera riscos de servir clientes anonimos.
 
@@ -21,9 +21,19 @@ Contrato base POST /v1/render; `spec` ECharts/Plotly; `source` Mermaid. Nao sao 
 
 ## 0.3.0 - Interactive delivery
 
-- `src/application/Plotarium.Application/InteractiveCharts.cs`: `ChartStore` de links criptograficamente aleatorios, expiracao e limite de capacidade, com capacidades declaradas por engine. Sem persistencia de graficos em disco ou banco.
-- `src/interfaces/Plotarium.Api/Interactive/InteractiveRoutes.cs`: `POST /v1/charts`, visualizador, embed, preview e descritores Teams/WhatsApp/ChatGPT. O uso externo requer origem HTTPS configurada e gateway protegido.
-- `src/interfaces/Plotarium.Api/Interactive/viewer.js`, `viewer.css` e `adapters/*.js`: HTML servido pelo backend, com engines locais e sem scripts arbitrarios do usuario. Novas libs precisam ser aprovadas/registradas no servidor antes de incluir um adaptador.
-- `src/interfaces/Plotarium.Api/Interactive/McpEndpoints.cs`: subconjunto JSON-RPC/MCP Streamable HTTP com ferramenta de criacao e recurso de interface `ui://plotarium/chart.html`; sem certificacao de cliente ChatGPT real nem SSE.
+- `src/application/Ploteus.Application/InteractiveCharts.cs`: `ChartStore` de links criptograficamente aleatorios, expiracao e limite de capacidade, com capacidades declaradas por engine. Sem persistencia de graficos em disco ou banco.
+- `src/interfaces/Ploteus.Api/Interactive/InteractiveRoutes.cs`: `POST /v1/charts`, visualizador, embed, preview e descritores Teams/WhatsApp/ChatGPT. O uso externo requer origem HTTPS configurada e gateway protegido.
+- `src/interfaces/Ploteus.Api/Interactive/viewer.js`, `viewer.css` e `adapters/*.js`: HTML servido pelo backend, com engines locais e sem scripts arbitrarios do usuario. Novas libs precisam ser aprovadas/registradas no servidor antes de incluir um adaptador.
+- `src/interfaces/Ploteus.Api/Interactive/McpEndpoints.cs`: subconjunto JSON-RPC/MCP Streamable HTTP com ferramenta de criacao e recurso de interface `ui://ploteus/chart.html`; sem certificacao de cliente ChatGPT real nem SSE.
 - `docs/interactive.md`, `docs/release-notes-0.3.0.md`: contratos, importacao de cURL pelo Postman, integracoes e limites operacionais.
-- `tests/Plotarium.ContractTests` e `tests/Plotarium.HttpTests`: protecao do contrato original e novas rotas, recursos e MCP.
+- `tests/Ploteus.ContractTests` e `tests/Ploteus.HttpTests`: protecao do contrato original e novas rotas, recursos e MCP.
+
+
+## 0.6.0 - Identidade e API stateless
+
+- `src/interfaces/Ploteus.Api/Stateless/*`: consultas GET com JSON, Gzip/Base64URL, origem remota segura, provider configurado, HTML autocontido.
+- `src/application/Ploteus.Application/StatelessPayloadDecoder.cs`: normalização com o mesmo validador do POST.
+- `src/interfaces/Ploteus.Api/appsettings.json`: seção raiz `Ploteus`; telemetria `ploteus.render.*`.
+- `scripts/stateless_smoke.py`, `scripts/stateless_ui_smoke.py`, `scripts/run_http_regression.py`, `scripts/feature_gl_smoke.py`: suites executáveis.
+- `examples/postman/Ploteus-0.6.0.postman_collection.json`: requests para todas as formas de entrada.
+- `evidence/0.6.0`: logs e relatórios atuais; arquivos históricos de evidências não são reescritos artificialmente.

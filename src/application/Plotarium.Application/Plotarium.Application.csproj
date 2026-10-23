@@ -1,1 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="../../domain/Plotarium.Domain/Plotarium.Domain.csproj" /></ItemGroup></Project>

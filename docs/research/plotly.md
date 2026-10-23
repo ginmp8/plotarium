@@ -23,7 +23,7 @@ Validador do engine e usado no script do candidato antes de newPlot. Validacao e
 ### plotly-05 - `dist/README.md; dist/plotly-strict.min.js`
 Distribuicao pronta evita build npm. Bundle strict reduz necessidades de avaliacao dinamica; a compatibilidade CSP precisa ser testada em runtime.
 
-## Decisao para Plotarium
+## Decisao para Ploteus
 **Reutilizar:** Aceitar data/layout nativos; configuracao de browser e conexoes ficam sob autoridade do servidor. Esperar newPlot e fontes.
 **Nao transportar:** Nao usar Kaleido/Python apenas para controlar o browser quando a API ja e .NET. Nao misturar full-json com AST de Mermaid. Mapas remotos desabilitados.
 

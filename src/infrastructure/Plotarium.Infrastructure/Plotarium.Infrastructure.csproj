@@ -1,1 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="../../application/Plotarium.Application/Plotarium.Application.csproj" /></ItemGroup><ItemGroup><EmbeddedResource Include="render-bridge.js" /></ItemGroup></Project>

@@ -1,4 +1,4 @@
-# Plotarium 0.4.0 — execução observada
+# Ploteus 0.4.0 — execução observada
 
 ## Adições
 

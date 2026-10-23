@@ -23,7 +23,7 @@ Ha fases de ciclo de vida; tirar screenshot antes de concluir layout/animacao po
 ### echarts-05 - `dist/extension/`
 Extensoes e mapas nao sao implicitamente incluidos no core. ECharts GL e custom series com funcoes ficam fora do perfil inicial.
 
-## Decisao para Plotarium
+## Decisao para Ploteus
 **Reutilizar:** option nativa, renderizador SVG, animacao desativada e dimensoes explicitas; separar engine de transporte.
 **Nao transportar:** Nao afirmar que ClearScript/V8 ou SSR Node funcionam automaticamente dentro do CLR. Chromium e uma escolha da solucao conjunta, nao exigencia universal do ECharts.
 

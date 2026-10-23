@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Deterministically package Plotarium 0.5.0 source and current observed GET/stateless evidence.
+"""Deterministically package Ploteus 0.6.0 source and current observed GET/stateless evidence.
 
-Usage: python3 scripts/package_release.py /absolute/path/Plotarium-0.5.0.zip
+Usage: python3 scripts/package_release.py /absolute/path/Ploteus-0.6.0.zip
 Requires current build/contract/HTTP/GET/browser/publish receipts. No program execution.
 """
 import hashlib
@@ -12,7 +12,7 @@ import sys
 import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = '0.5.0'
+VERSION = '0.6.0'
 DATE = (2026, 10, 22, 0, 0, 0)
 IGNORED_DIRS = {'bin', 'obj', 'artifacts', '.git', '.vs', '.nuget', '.rhapsodia', '__pycache__'}
 IGNORED_FILES = {'.DS_Store', 'Thumbs.db'}
@@ -27,7 +27,7 @@ def source_files():
     for path in sorted(ROOT.rglob('*')):
         if set(path.relative_to(ROOT).parts).intersection(IGNORED_DIRS):
             continue
-        if path.name in IGNORED_FILES or (path.parent == ROOT and path.name.startswith('artifacts-050-')):
+        if path.name in IGNORED_FILES or (path.parent == ROOT and path.name.startswith('artifacts-060-')):
             continue
         if path.is_symlink():
             raise ValueError(f'Symlink not permitted in source release: {path}')
@@ -45,7 +45,12 @@ def check_evidence():
     http = json.loads((evidence / 'http-regression.json').read_text())
     stateless = json.loads((evidence / 'stateless-http.json').read_text())
     browser = json.loads((evidence / 'html-browser-tests.json').read_text())
-    required = [(contract, 113), (http, 35), (stateless, 26), (browser, 4)]
+    brand = json.loads((evidence / 'brand-verification.json').read_text())
+    if brand.get('passed') is not True or brand.get('obsolete_identity_occurrences') != 0:
+        raise ValueError('Brand identity verification gate failed')
+    feature = json.loads((evidence / 'feature-smokes.json').read_text())
+    interactive = json.loads((evidence / 'interactive-ui-component-tests.json').read_text())
+    required = [(contract, 116), (http, 35), (stateless, 26), (browser, 4), (feature, 13), (interactive, 3)]
     for result, count in required:
         if (result.get('passed'), result.get('failed')) != (count, 0):
             raise ValueError(f'Release gate failed; expected {count}/0 but got {result.get("passed")}/{result.get("failed")}')
@@ -53,7 +58,7 @@ def check_evidence():
     if '0 Error(s)' not in build or '0 Warning(s)' not in build:
         raise ValueError('Build gate lacks zero errors and warnings')
     publish = (evidence / 'publish-final.log').read_text()
-    if 'Plotarium.Api -> ' not in publish or 'Plotarium.Infrastructure ->' not in publish:
+    if 'Ploteus.Api -> ' not in publish or 'Ploteus.Infrastructure ->' not in publish:
         raise ValueError('Publish gate not observed')
     validation = json.loads((evidence / 'validation.json').read_text())
     if validation.get('release') != VERSION or validation.get('status') != 'passed':
@@ -61,7 +66,7 @@ def check_evidence():
     assets = json.loads((ROOT / 'assets' / 'manifest.json').read_text())
     if not (ROOT / 'assets' / 'echarts-gl' / 'echarts-gl.min.js').is_file():
         raise ValueError('ECharts GL runtime is not included')
-    return {'contract': 113, 'httpRegression': 35, 'statelessHttp': 26, 'browserHtml': 4,
+    return {'contract': 116, 'httpRegression': 35, 'statelessHttp': 26, 'browserHtml': 4, 'featureGlGeo': 13, 'interactiveUi': 3,
             'buildErrors': 0, 'buildWarnings': 0, 'publish': 'passed',
             'browserVisualCases': ['echarts', 'plotly', 'mermaid', 'echarts-gl-static-fallback'],
             'assetManifestPresent': isinstance(assets, dict),
@@ -71,12 +76,17 @@ def check_evidence():
 
 
 def main(dest: Path):
-    if not dest.is_absolute() or dest.name != f'Plotarium-{VERSION}.zip':
-        raise ValueError('Expected absolute output path ending in Plotarium-0.5.0.zip')
+    if not dest.is_absolute() or dest.name != f'Ploteus-{VERSION}.zip':
+        raise ValueError('Expected absolute output path ending in Ploteus-0.6.0.zip')
     if ROOT in dest.parents or dest.parent == ROOT:
         raise ValueError('Output must be outside the source tree')
     stats = check_evidence()
     entries = source_files()
+    banned = (b'plot' + b'arium')
+    for path in entries:
+        label = path.relative_to(ROOT).as_posix()
+        if banned in label.lower().encode('utf8') or banned in path.read_bytes().lower():
+            raise ValueError('Non-current product identity in release file: ' + label)
     if len(entries) < 300:
         raise ValueError(f'Unexpectedly short source release ({len(entries)} files)')
     # Preserve release identity without constructing a self-referential checksum.
@@ -92,7 +102,7 @@ def main(dest: Path):
         with zipfile.ZipFile(temporary, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
             for path in entries:
                 data = path.read_bytes()
-                info = zipfile.ZipInfo('Plotarium/' + path.relative_to(ROOT).as_posix(), DATE)
+                info = zipfile.ZipInfo('Ploteus/' + path.relative_to(ROOT).as_posix(), DATE)
                 info.create_system = 3
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
                 info.compress_type = zipfile.ZIP_DEFLATED
@@ -101,37 +111,46 @@ def main(dest: Path):
             names = archive.namelist()
             if archive.testzip() is not None:
                 raise ValueError('ZIP CRC mismatch')
+            if any(banned in name.lower().encode('utf8') for name in names):
+                raise ValueError('Non-current product identity in ZIP member name')
             if len(names) != len(entries) or len({name.casefold() for name in names}) != len(entries):
                 raise ValueError('ZIP entry duplication or incomplete archive')
             expected = [
-                'Plotarium/Directory.Build.props',
-                'Plotarium/assets/manifest.json',
-                'Plotarium/assets/echarts-gl/echarts-gl.min.js',
-                'Plotarium/src/application/Plotarium.Application/StatelessPayloadDecoder.cs',
-                'Plotarium/src/interfaces/Plotarium.Api/Stateless/RemotePayloadFetcher.cs',
-                'Plotarium/src/interfaces/Plotarium.Api/Stateless/StatelessQuery.cs',
-                'Plotarium/src/interfaces/Plotarium.Api/Stateless/StatelessHtmlBuilder.cs',
-                'Plotarium/docs/release-notes-0.5.0.md',
-                'Plotarium/docs/stateless-get.md',
-                'Plotarium/scripts/stateless_050_smoke.py',
-                'Plotarium/scripts/run_050_http_regression.py',
-                'Plotarium/scripts/stateless_050_ui_smoke.py',
-                'Plotarium/examples/postman/Plotarium-0.5.0.postman_collection.json',
-                'Plotarium/examples/rendered-0.5.0/echarts.png',
-                'Plotarium/examples/rendered-0.5.0/plotly.png',
-                'Plotarium/examples/rendered-0.5.0/mermaid.png',
-                'Plotarium/examples/rendered-0.5.0/echarts-gl.png',
-                'Plotarium/evidence/0.5.0/build-final.log',
-                'Plotarium/evidence/0.5.0/publish-final.log',
-                'Plotarium/evidence/0.5.0/contract-tests.json',
-                'Plotarium/evidence/0.5.0/http-regression.json',
-                'Plotarium/evidence/0.5.0/stateless-http.json',
-                'Plotarium/evidence/0.5.0/html-browser-tests.json',
+                'Ploteus/Directory.Build.props',
+                'Ploteus/assets/manifest.json',
+                'Ploteus/assets/echarts-gl/echarts-gl.min.js',
+                'Ploteus/src/application/Ploteus.Application/StatelessPayloadDecoder.cs',
+                'Ploteus/src/interfaces/Ploteus.Api/Stateless/RemotePayloadFetcher.cs',
+                'Ploteus/src/interfaces/Ploteus.Api/Stateless/StatelessQuery.cs',
+                'Ploteus/src/interfaces/Ploteus.Api/Stateless/StatelessHtmlBuilder.cs',
+                'Ploteus/docs/release-notes-0.6.0.md',
+                'Ploteus/docs/stateless-get.md',
+                'Ploteus/scripts/stateless_smoke.py',
+                'Ploteus/scripts/run_http_regression.py',
+                'Ploteus/scripts/stateless_ui_smoke.py',
+                'Ploteus/examples/postman/Ploteus-0.6.0.postman_collection.json',
+                'Ploteus/examples/rendered-0.6.0/echarts.png',
+                'Ploteus/examples/rendered-0.6.0/plotly.png',
+                'Ploteus/examples/rendered-0.6.0/mermaid.png',
+                'Ploteus/examples/rendered-0.6.0/echarts-gl.png',
+                'Ploteus/evidence/0.6.0/build-final.log',
+                'Ploteus/evidence/0.6.0/publish-final.log',
+                'Ploteus/evidence/0.6.0/contract-tests.json',
+                'Ploteus/evidence/0.6.0/http-regression.json',
+                'Ploteus/evidence/0.6.0/stateless-http.json',
+                'Ploteus/evidence/0.6.0/html-browser-tests.json',
+                'Ploteus/evidence/0.6.0/feature-smokes.json',
+                'Ploteus/evidence/0.6.0/interactive-ui-component-tests.json',
+                'Ploteus/evidence/0.6.0/brand-verification.json',
+                'Ploteus/scripts/verify_brand.py',
+                'Ploteus/examples/interactive/previews/echarts-interactive.png',
             ]
             if any(name not in names for name in expected):
-                raise ValueError('Missing required 0.5.0 source or evidence: ' + str([name for name in expected if name not in names]))
+                raise ValueError('Missing required 0.6.0 source or evidence: ' + str([name for name in expected if name not in names]))
             for m in manifest:
-                actual = archive.read('Plotarium/' + m['path'])
+                actual = archive.read('Ploteus/' + m['path'])
+                if banned in actual.lower():
+                    raise ValueError('Non-current product identity in ZIP member bytes: ' + m['path'])
                 if len(actual) != m['bytes'] or sha256(actual) != m['sha256']:
                     raise ValueError('Source bytes differ from manifest: ' + m['path'])
         temporary.replace(dest)
@@ -146,5 +165,5 @@ def main(dest: Path):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        raise SystemExit('Usage: python3 scripts/package_release.py /absolute/output/Plotarium-0.5.0.zip')
+        raise SystemExit('Usage: python3 scripts/package_release.py /absolute/output/Ploteus-0.6.0.zip')
     main(Path(sys.argv[1]))

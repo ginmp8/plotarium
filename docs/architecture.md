@@ -1,4 +1,4 @@
-# Arquitetura - Plotarium 0.3.0
+# Arquitetura - Ploteus 0.3.0
 
 `HTTP -> validacao de corpo -> RequestValidator -> RenderService -> [JSON envelope OU fila limitada -> ChromiumRenderer -> CDP loopback -> engine/assets locais -> SVG/PNG/JPEG/WebP/PDF] -> HTTP`.
 
@@ -28,7 +28,7 @@ Nuvem, desempenho, rendering fidedigno em todas as familias nativas, SO Windows/
 
 `GET /preview` reutiliza `RenderService` e o Chromium no backend para formatos estaticos; o HTML devolve especificacoes de dados validadas e scripts empacotados, sem avaliar codigo recebido do cliente. O visualizador generico nao conhece APIs das engines, que ficam isoladas nos adaptadores com contrato `mount/resize/reset/dispose`.
 
-`GET /share/teams|whatsapp|chatgpt` produz **descritores**, nao envia mensagens nem instala aplicativos. `/mcp` oferece um subconjunto MCP JSON sobre HTTP e um recurso `ui://plotarium/chart.html` que pode referenciar o visualizador HTTPS externo. Sem SSE/subscriptions. Integracoes de host dependem de registro, infraestrutura e validacao externa.
+`GET /share/teams|whatsapp|chatgpt` produz **descritores**, nao envia mensagens nem instala aplicativos. `/mcp` oferece um subconjunto MCP JSON sobre HTTP e um recurso `ui://ploteus/chart.html` que pode referenciar o visualizador HTTPS externo. Sem SSE/subscriptions. Integracoes de host dependem de registro, infraestrutura e validacao externa.
 
 IDs temporarios sao **capabilities bearer**: quem obtem a URL pode ler o grafico ate expirar. O desenho preserva o comportamento anônimo anterior, exigindo protecao por rede/gateway em deploy publico; nao equivale a autorizacao por usuario.
 

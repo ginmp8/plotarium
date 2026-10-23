@@ -1,10 +1,10 @@
-# Plotarium 0.2.0 — Release notes
+# Ploteus 0.2.0 — Release notes
 
 ## Novos recursos
 
 - Mapas ECharts `map` e `geo` usando mapas GeoJSON locais nomeados `world`, `world-50m`, seis continentes/regiões e `usa` (nomes completos dos estados); `chord` habilitado.
 - Gráficos geográficos Plotly `choropleth` e `scattergeo` com TopoJSON em memória, roteado por interceptação CDP sem rede externa.
-- Ampliação dos tipos ECharts e Plotly estáticos/2D/financeiros/hierárquicos/estatísticos/3D; 69 fixtures separados em `examples/coverage` e matriz HTTP em `evidence/0.2.0/coverage-results.json`.
+- Ampliação dos tipos ECharts e Plotly estáticos/2D/financeiros/hierárquicos/estatísticos/3D; 69 fixtures separados em `examples/coverage` e matriz HTTP em `scripts/coverage_smoke.py` (execute para uma matriz atual).
 - WebGL do Plotly exportado por `Plotly.toImage(png)` para preservar conteúdo 3D. Em SVG, PNG embutido em `<image>`: o formato é SVG autocontido **mas o gráfico não é vetorial**.
 - Assets locais geográficos integrados no manifesto SHA-256 e copiados pelo `dotnet publish`.
 - API continua **sem autenticação**, com único endpoint `POST /v1/render`. Interface, contrato (`spec` ou `source`) e demais 6 formatos preservados.
@@ -24,7 +24,7 @@
 - 24/24 testes HTTP de engines × formatos, erros e anonimato.
 - 69 cenários por tipo: **66 renderizados**, **3 rejeitados conforme contrato**, **0 falhas inesperadas**.
 - 6/6 casos crossformat geográficos/3D, inspeção visual manual de ECharts mapa-múndi, Plotly coroplético, Plotly 3D.
-- Proveniência e recibos: `docs/geographic-data.md`, `evidence/0.2.0/`, `assets/manifest.json`.
+- Proveniência e recibos: `docs/geographic-data.md`, `docs/validation.md` (evidência atual), `assets/manifest.json`.
 
 ## Segurança
 

@@ -1,0 +1,162 @@
+{
+  "release": "0.6.0",
+  "passed": 26,
+  "failed": 0,
+  "results": [
+    {
+      "name": "GET inline envelope",
+      "status": "pass",
+      "http": 200,
+      "bytes": 347
+    },
+    {
+      "name": "GET inline bare spec",
+      "status": "pass",
+      "http": 200,
+      "bytes": 347
+    },
+    {
+      "name": "GET gzip-base64url",
+      "status": "pass",
+      "http": 200,
+      "bytes": 347
+    },
+    {
+      "name": "GET gzip override",
+      "status": "pass",
+      "http": 200,
+      "bytes": 347
+    },
+    {
+      "name": "GET reject two payloads",
+      "status": "pass",
+      "http": 400,
+      "bytes": 194
+    },
+    {
+      "name": "GET invalid gzip",
+      "status": "pass",
+      "http": 400,
+      "bytes": 174
+    },
+    {
+      "name": "GET bad image format",
+      "status": "pass",
+      "http": 422,
+      "bytes": 153
+    },
+    {
+      "name": "GET duplicate query params",
+      "status": "pass",
+      "http": 400
+    },
+    {
+      "name": "GET sourceUrl external payload",
+      "status": "pass",
+      "http": 200,
+      "bytes": 347
+    },
+    {
+      "name": "GET sourceUrl output override",
+      "status": "pass",
+      "http": 200,
+      "bytes": 347
+    },
+    {
+      "name": "GET configured provider",
+      "status": "pass",
+      "http": 200,
+      "bytes": 347
+    },
+    {
+      "name": "GET reject unconfigured provider",
+      "status": "pass",
+      "http": 403,
+      "bytes": 185
+    },
+    {
+      "name": "GET reject traversal provider key",
+      "status": "pass",
+      "http": 400,
+      "bytes": 199
+    },
+    {
+      "name": "GET deny private origin without allowlist match",
+      "status": "pass",
+      "http": 403,
+      "bytes": 183
+    },
+    {
+      "name": "GET deny metadata address",
+      "status": "pass",
+      "http": 403,
+      "bytes": 183
+    },
+    {
+      "name": "GET deny file scheme",
+      "status": "pass",
+      "http": 400,
+      "bytes": 205
+    },
+    {
+      "name": "GET deny URL credentials",
+      "status": "pass",
+      "http": 400,
+      "bytes": 205
+    },
+    {
+      "name": "GET deny redirect",
+      "status": "pass",
+      "http": 502,
+      "bytes": 183
+    },
+    {
+      "name": "GET deny wrong mime",
+      "status": "pass",
+      "http": 502,
+      "bytes": 185
+    },
+    {
+      "name": "GET deny compressed upstream",
+      "status": "pass",
+      "http": 502,
+      "bytes": 191
+    },
+    {
+      "name": "GET reject too large remote",
+      "status": "pass",
+      "http": 413,
+      "bytes": 171
+    },
+    {
+      "name": "GET remote malformed JSON",
+      "status": "pass",
+      "http": 400,
+      "bytes": 179
+    },
+    {
+      "name": "GET timeout",
+      "status": "pass",
+      "http": 504,
+      "bytes": 177
+    },
+    {
+      "name": "GET raw rendered PNG",
+      "status": "pass",
+      "http": 200,
+      "bytes": 2490
+    },
+    {
+      "name": "GET standalone HTML",
+      "status": "pass",
+      "http": 200,
+      "bytes": 1128330
+    },
+    {
+      "name": "GET standalone HTML compressed",
+      "status": "pass",
+      "http": 200,
+      "bytes": 1128330
+    }
+  ]
+}

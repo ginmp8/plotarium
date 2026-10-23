@@ -1,11 +1,11 @@
-# Plotarium 0.3.0 — Release notes
+# Ploteus 0.3.0 — Release notes
 
 ## Novos recursos
 
-- Saida `html` para visualizador hospedado pelo Plotarium; API de criacao de charts temporarios (`POST /v1/charts`) com view, embed, preview, definition e TTL.
+- Saida `html` para visualizador hospedado pelo Ploteus; API de criacao de charts temporarios (`POST /v1/charts`) com view, embed, preview, definition e TTL.
 - Adaptadores de interface ECharts, Plotly e Mermaid empacotados, carregados por engine; controles de zoom, tema, restauracao, selecao quando suportada, exportacao PNG, acesso ao JSON e compartilhamento.
 - Descritores de compartilhamento para Teams (Adaptive Card de imagem e URL), WhatsApp (URL, imagem, descritor de botao) e ChatGPT (MCP tool/UI resource). Nenhum provider envia mensagem por conta do servidor.
-- MCP JSON-RPC HTTP com `initialize`, `ping`, `tools/list`, `tools/call`, `resources/list` e `resources/read`, associando ferramenta ao recurso `ui://plotarium/chart.html`.
+- MCP JSON-RPC HTTP com `initialize`, `ping`, `tools/list`, `tools/call`, `resources/list` e `resources/read`, associando ferramenta ao recurso `ui://ploteus/chart.html`.
 - Declaração de capacidades por engine e separação do visualizador generico em adaptadores independentes.
 - Collection Postman v2.1 com 12 requests, preview PNG e harness Playwright de componentes reproduzivel.
 
@@ -25,4 +25,4 @@
 
 ## Evidência
 
-Veja `evidence/0.3.0/validation.json` para o conjunto de testes executados, provas negativas, verificação de compilação e lacunas ambientais, e `docs/interactive.md` para comandos de uso.
+Veja `docs/validation.md` para o conjunto de testes executados, provas negativas, verificação de compilação e lacunas ambientais, e `docs/interactive.md` para comandos de uso.

@@ -1,0 +1,73 @@
+{
+  "release": "0.6.0",
+  "product": "Ploteus",
+  "status": "passed",
+  "sourceTree": "Ploteus/",
+  "runtime": "net10.0",
+  "dotnetSdk": "10.0.302",
+  "system": "Linux x86_64",
+  "chromium": "Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)",
+  "checks": {
+    "contract": {
+      "passed": 116,
+      "failed": 0,
+      "evidence": "evidence/0.6.0/contract-tests.json"
+    },
+    "httpRegression": {
+      "passed": 35,
+      "failed": 0,
+      "evidence": "evidence/0.6.0/http-regression.json"
+    },
+    "statelessHttp": {
+      "passed": 26,
+      "failed": 0,
+      "evidence": "evidence/0.6.0/stateless-http.json"
+    },
+    "browserHtml": {
+      "passed": 4,
+      "failed": 0,
+      "evidence": "evidence/0.6.0/html-browser-tests.json"
+    },
+    "featureGlGeo": {
+      "passed": 13,
+      "failed": 0,
+      "evidence": "evidence/0.6.0/feature-smokes.json"
+    },
+    "interactiveUi": {
+      "passed": 3,
+      "failed": 0,
+      "evidence": "evidence/0.6.0/interactive-ui-component-tests.json"
+    }
+  },
+  "testsPassed": 197,
+  "testsFailed": 0,
+  "build": {
+    "errors": 0,
+    "warnings": 0,
+    "receipt": "evidence/0.6.0/build-final.log"
+  },
+  "publish": {
+    "status": "passed",
+    "receipt": "evidence/0.6.0/publish-final.log"
+  },
+  "identity": {
+    "obsoleteOccurrences": 0,
+    "pathAndByteAudit": "evidence/0.6.0/brand-verification.json",
+    "csharpParity": "evidence/0.6.0/implementation-parity.json",
+    "unchangedApiRoutes": true,
+    "unchangedInteractiveRoutes": true,
+    "unchangedMcpTransportRoutes": true
+  },
+  "visualEvidence": {
+    "newScreenshots": 7,
+    "manualInspection": "checked against Ploteus identity and normal charts"
+  },
+  "limitations": [
+    "Tests run on Linux x64 .NET 10 and sandboxed Chromium; no Windows/macOS runtime execution",
+    "Native MapLibre worker and public remote tile source not certified",
+    "Teams/WhatsApp/ChatGPT live host/service certifications not executed",
+    "GL interactive requires WebGL browser; static fallback exists when unavailable",
+    "External HTTP source tests use development-only exact origin allowlist; public exposure needs gateway authorization",
+    "Changing MCP resource URI and configuration prefix requires clients/operators to configure Ploteus identity"
+  ]
+}

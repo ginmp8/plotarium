@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run every bundled Plotarium type specimen through the live HTTP endpoint.
+"""Run every bundled Ploteus type specimen through the live HTTP endpoint.
 Usage: python3 scripts/coverage_smoke.py http://127.0.0.1:55820 [output-dir] [workers]
 No credentials. Python 3.10+ stdlib only. Requires a running API and Chromium.
 """

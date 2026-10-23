@@ -3,7 +3,7 @@
   "manifestVersion": "1.17",
   "version": "0.4.0",
   "id": "REPLACE-WITH-REGISTERED-TEAMS-APP-UUID",
-  "packageName": "com.example.plotarium",
+  "packageName": "com.example.ploteus",
   "developer": {
     "name": "REPLACE_WITH_OPERATOR_NAME",
     "websiteUrl": "https://REPLACE_WITH_PUBLIC_HOST",
@@ -11,18 +11,18 @@
     "termsOfUseUrl": "https://REPLACE_WITH_PUBLIC_HOST/terms"
   },
   "name": {
-    "short": "Plotarium",
-    "full": "Plotarium Interactive Charts"
+    "short": "Ploteus",
+    "full": "Ploteus Interactive Charts"
   },
   "description": {
     "short": "Interact with visual charts.",
-    "full": "Open Plotarium charts in a secure Teams tab."
+    "full": "Open Ploteus charts in a secure Teams tab."
   },
   "accentColor": "#1B3B56",
   "staticTabs": [
     {
-      "entityId": "plotarium",
-      "name": "Plotarium",
+      "entityId": "ploteus",
+      "name": "Ploteus",
       "contentUrl": "https://REPLACE_WITH_PUBLIC_HOST/v1/teams",
       "websiteUrl": "https://REPLACE_WITH_PUBLIC_HOST",
       "scopes": [

@@ -24,7 +24,7 @@ Bloqueia alteracoes diretas de maxTextSize, maxEdges, securityLevel e outras pol
 Memoriza a promessa de launch para evitar multiplos browsers em corridas; redefine estado apos falha.
 
 ### kroki-06 - `lib/browser-instance/index.js:175-209`
-Intercepcao e aplicada antes de navegar; permite file/data/origens configuradas. Plotarium usa apenas assets interceptados conhecidos, sem file URLs.
+Intercepcao e aplicada antes de navegar; permite file/data/origens configuradas. Ploteus usa apenas assets interceptados conhecidos, sem file URLs.
 
 ### kroki-07 - `lib/browser-instance/index.js:11-66`
 Ha --no-sandbox e --disable-setuid-sandbox. Nao foram transportados para o candidato .NET.
@@ -32,7 +32,7 @@ Ha --no-sandbox e --disable-setuid-sandbox. Nao foram transportados para o candi
 ### kroki-08 - `mermaid/assets/mermaid/`
 Distribuicao ESM com 108 arquivos .mjs disponivel no ZIP; pode ser carregada sem instalar Node/npm na API.
 
-## Decisao para Plotarium
+## Decisao para Ploteus
 **Reutilizar:** Catalogo de engines, isolamento da conversao, limites, tratamento de timeout e controle de recursos antes da navegacao.
 **Nao transportar:** Nao portar dezenas de motores, gateway Java, companions Node, configuracao remota ou flags sem sandbox. Nao afirmar que abortar uma promise interrompe CPU.
 

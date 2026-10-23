@@ -23,7 +23,7 @@ Ha particularidades de flags em CI, reconexao e fechamento de browser/banco. Nao
 ### mermaid-ink-05 - `CLAUDE.md`
 Entrada de symlink no ZIP foi registrada e nao seguida; instrucoes de agentes nos repositorios nao comandaram esta analise.
 
-## Decisao para Plotarium
+## Decisao para Ploteus
 **Reutilizar:** Renderizar a partir de Mermaid fonte, esperar fontes e separar SVG de screenshot/PDF.
 **Nao transportar:** Nao usar securityLevel loose, callbacks ou HTML de usuario. Nao adotar PostgreSQL, pnpm/Node ou GET codificado sem necessidade.
 

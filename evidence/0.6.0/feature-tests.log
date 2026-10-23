@@ -1,0 +1,14 @@
+{'name': 'echarts-bar3D/png_visual_nonblank', 'status': 'pass', 'bytes': 24843, 'sha256': 'd7a188ec137af014036e8e3183a55184fd84713c44328ca79ffca55e6be87f24'}
+{'name': 'echarts-bar3D/svg_embeds_raster', 'status': 'pass', 'bytes': 33280, 'sha256': '570bbbcc913ed3ad6146423d6a2f87c64c45eb3e8b4f84e225ae0f5e1a24c681'}
+{'name': 'echarts-bar3D/pdf', 'status': 'pass', 'bytes': 24889, 'sha256': '78fe8cd150ab3df6936a8f1d9d07df718a7bfe239e0f1da1b65de5e324ab46d5'}
+{'name': 'plotly-choroplethmap/png_visual_nonblank', 'status': 'pass', 'bytes': 35586, 'sha256': 'ad80f13aa4f5e7d0fe7c0dbdc73bb56e2dea5734096d958b0ef36315eb3e5784'}
+{'name': 'plotly-choroplethmap/svg_embeds_raster', 'status': 'pass', 'bytes': 1298907, 'sha256': 'b15fb70b2535bce94d102b702f1760c52c0d2767a375940bbd7ffa3d00bf41a9'}
+{'name': 'plotly-choroplethmap/pdf', 'status': 'pass', 'bytes': 327757, 'sha256': '0222a1cfc8e8814f0020cc7f16e659390509abed229fcfc7a6082e5cde209927'}
+{'name': 'plotly-scattermap/png_visual_nonblank', 'status': 'pass', 'bytes': 73545, 'sha256': '07340fd934e06cf99ce1771dff67002b939251d1f617c1fb185408b8019ec51d'}
+{'name': 'plotly-scattermap/svg_embeds_raster', 'status': 'pass', 'bytes': 1221753, 'sha256': '4a4f5447c05c97fab432bf1085c1ba517a6e608033b7f15d4d6994825e934bc4'}
+{'name': 'plotly-scattermap/pdf', 'status': 'pass', 'bytes': 313922, 'sha256': 'c97605867a6f07bf47c6edad7cd731a067d6c80540f8cc39c82ce87d76031080'}
+{'name': 'densitymap_rejected_explicitly', 'status': 'pass', 'http': 422, 'code': 'offline_densitymap'}
+{'name': 'external_maplibre_style_rejected', 'status': 'pass', 'http': 422, 'code': 'map_style'}
+{'name': 'echarts_gl_interactive_view_and_asset', 'status': 'pass', 'viewer': 200, 'adapter': 200, 'glAssetBytes': 639846}
+{'name': 'capabilities_report_limits_honestly', 'status': 'pass', 'mapLibreTiles': False, 'interactive': True}
+{"passed": 13, "failed": 0}

@@ -35,7 +35,7 @@ Limites: 1MiB entrada, 16MiB saida, maxPixels 16.777.216, 100.000 nos JSON, 50.0
 - Plotly: `choropleth` and `scattergeo` work with bundled TopoJSON; supply ISO3 `locations` or `lat`/`lon`. Requires **no remote tiles**.
 - Plotly `scattermap`, `densitymap`, `choroplethmap` explicitly return `422 offline_maplibre`. Plotly v4 removed legacy `*mapbox` traces (422 `removed_mapbox`). ECharts GL and arbitrary user callbacks remain unsupported.
 - WebGL output `svg` can be self-contained raster-in-SVG (`<image href="data:image/png;base64,..."/>`). It is not always an editable vector chart. A Chromium build without GPU/WebGL support can fail with `422 engine_rejected_definition`.
-- The fixed `https://plotarium.invalid/assets/topojson/` address is a CDP-intercepted internal namespace and is **never fetched over the Internet**. All other browser-origin network requests remain blocked; user-supplied URLs and external providers are not allowed.
+- The fixed `https://ploteus.invalid/assets/topojson/` address is a CDP-intercepted internal namespace and is **never fetched over the Internet**. All other browser-origin network requests remain blocked; user-supplied URLs and external providers are not allowed.
 
 
 ## Interactive contract (0.3.0)

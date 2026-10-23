@@ -1,6 +1,6 @@
-# One-call, stateless GET transport (Plotarium 0.5.0)
+# One-call, stateless GET transport (Ploteus 0.6.0)
 
-All three GET modes produce the same validated `RenderRequest` used by `POST /v1/render`. No charts, remote JSON or image bytes are stored by these GET endpoints. Each request is independently renderable on any Plotarium instance with the same packaged assets and operator configuration.
+All three GET modes produce the same validated `RenderRequest` used by `POST /v1/render`. No charts, remote JSON or image bytes are stored by these GET endpoints. Each request is independently renderable on any Ploteus instance with the same packaged assets and operator configuration.
 
 ## Endpoints
 
@@ -73,7 +73,7 @@ curl.exe -G "https://localhost:55731/v1/render" `
 
 ```json
 {
-  "Plotarium": {
+  "Ploteus": {
     "Sources": {
       "TimeoutSeconds": 8,
       "AllowedOrigins": [],
@@ -88,7 +88,7 @@ Example for an **operator-owned HTTPS** payload service:
 
 ```json
 {
-  "Plotarium": {
+  "Ploteus": {
     "Sources": {
       "AllowedOrigins": ["https://charts.example.com"],
       "Providers": {"reports": "https://charts.example.com/definitions/"},
@@ -98,9 +98,9 @@ Example for an **operator-owned HTTPS** payload service:
 }
 ```
 
-Environment form: `Plotarium__Sources__AllowedOrigins__0=https://charts.example.com` and `Plotarium__Sources__Providers__reports=https://charts.example.com/definitions/`. Do not include the payload in server configuration.
+Environment form: `Ploteus__Sources__AllowedOrigins__0=https://charts.example.com` and `Ploteus__Sources__Providers__reports=https://charts.example.com/definitions/`. Do not include the payload in server configuration.
 
-Only for an isolated trusted development network, you can explicitly allow a private source such as `Plotarium__Sources__PrivateOrigins__0=http://127.0.0.1:6000`. Do not expose that permission to untrusted clients. Private origin configuration must be reviewed together with egress firewall rules.
+Only for an isolated trusted development network, you can explicitly allow a private source such as `Ploteus__Sources__PrivateOrigins__0=http://127.0.0.1:6000`. Do not expose that permission to untrusted clients. Private origin configuration must be reviewed together with egress firewall rules.
 
 ## Threat boundaries and expected errors
 
@@ -116,4 +116,4 @@ Only for an isolated trusted development network, you can explicitly allow a pri
 | Source timeout | 504 |
 | Browser missing / not available for PNG/PDF | 503 |
 
-URLs containing `c` or `sourceUrl` may be retained by reverse proxies, analytics, browser history and clients despite the application suppressing raw ASP.NET Core request logs. Do not transport confidential payloads or credentials by GET unless the whole deployment has been assessed; prefer POST for secret-bearing data. Disallow arbitrary external HTML/JavaScript; the remote payload is JSON only and still passes the strict Plotarium validator. No redirects, HTTP proxies or second DNS resolution are permitted by the outbound handler.
+URLs containing `c` or `sourceUrl` may be retained by reverse proxies, analytics, browser history and clients despite the application suppressing raw ASP.NET Core request logs. Do not transport confidential payloads or credentials by GET unless the whole deployment has been assessed; prefer POST for secret-bearing data. Disallow arbitrary external HTML/JavaScript; the remote payload is JSON only and still passes the strict Ploteus validator. No redirects, HTTP proxies or second DNS resolution are permitted by the outbound handler.

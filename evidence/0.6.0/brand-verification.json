@@ -1,0 +1,15 @@
+{
+  "release": "0.6.0",
+  "scanned_files": 347,
+  "obsolete_identity_occurrences": 0,
+  "violations": [],
+  "missing": [],
+  "invariants": {
+    "version_props": true,
+    "api_section": true,
+    "mcp_ui_resource": true,
+    "http_entrypoint": true,
+    "post_entrypoint": true
+  },
+  "passed": true
+}

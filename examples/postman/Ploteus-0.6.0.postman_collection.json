@@ -1,0 +1,429 @@
+{
+  "info": {
+    "name": "Ploteus 0.6.0 - Stateless GET and existing interactive API",
+    "description": "One GET with URL-encoded JSON, Gzip+Base64URL, remote source URL or configured provider. Remote source cases require operator allowlist. Previous 0.4 collection retained for backwards compatibility.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:55731"
+    },
+    {
+      "key": "chartId",
+      "value": "00000000000000000000000000000000"
+    },
+    {
+      "key": "remoteBaseUrl",
+      "value": "https://charts.example.com"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET stateless: JSON compact to PNG",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?c=%7B%22engine%22%3A%22echarts%22%2C%22spec%22%3A%7B%22xAxis%22%3A%7B%22type%22%3A%22category%22%2C%22data%22%3A%5B%22Jan%22%2C%22Feb%22%2C%22Mar%22%5D%7D%2C%22yAxis%22%3A%7B%22type%22%3A%22value%22%7D%2C%22series%22%3A%5B%7B%22type%22%3A%22bar%22%2C%22data%22%3A%5B4%2C9%2C6%5D%7D%5D%7D%7D&format=png",
+        "description": "One request, no chart ID or server persistence."
+      }
+    },
+    {
+      "name": "GET stateless: compressed Gzip Base64URL to SVG",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?c=H4sIAAAAAAAC_12MMQrDMBRD76LZYyjUW5cMhZ4gePhxRGoobrDdEhN89_wsGbIIiSdpA-McImFB_5ZUMgzyQg-7YX2sIR-m1OVoeCmcv6lqZZIisAOeEjX1HFVfkuCaQb3M_vL5EQoyU6CS4USjTs6zztzNzTXX2g5EN9SrlgAAAA&encoding=gzip-base64url&format=svg",
+        "description": "Example deterministically compressed from native JSON using gzip mtime=0."
+      }
+    },
+    {
+      "name": "GET stateless: inline native ECharts spec",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?engine=echarts&c=%7B%22xAxis%22%3A%7B%22type%22%3A%22category%22%2C%22data%22%3A%5B%22Jan%22%2C%22Feb%22%2C%22Mar%22%5D%7D%2C%22yAxis%22%3A%7B%22type%22%3A%22value%22%7D%2C%22series%22%3A%5B%7B%22type%22%3A%22bar%22%2C%22data%22%3A%5B4%2C9%2C6%5D%7D%5D%7D&format=png",
+        "description": "Bare engine spec needs engine query parameter."
+      }
+    },
+    {
+      "name": "GET stateless: Plotly definition",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?c=%7B%22engine%22%3A%22plotly%22%2C%22spec%22%3A%7B%22data%22%3A%5B%7B%22type%22%3A%22bar%22%2C%22x%22%3A%5B%22A%22%2C%22B%22%5D%2C%22y%22%3A%5B5%2C8%5D%7D%5D%7D%7D&format=png",
+        "description": "Full Plotly POST-compatible envelope."
+      }
+    },
+    {
+      "name": "GET stateless: Mermaid SVG",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?engine=mermaid&c=flowchart+LR%0AA%5BData%5D--%3EB%5BChart%5D&format=svg",
+        "description": "Mermaid source is plain text."
+      }
+    },
+    {
+      "name": "GET stateless: portable HTML",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?c=%7B%22engine%22%3A%22echarts%22%2C%22spec%22%3A%7B%22xAxis%22%3A%7B%22type%22%3A%22category%22%2C%22data%22%3A%5B%22Jan%22%2C%22Feb%22%2C%22Mar%22%5D%7D%2C%22yAxis%22%3A%7B%22type%22%3A%22value%22%7D%2C%22series%22%3A%5B%7B%22type%22%3A%22bar%22%2C%22data%22%3A%5B4%2C9%2C6%5D%7D%5D%7D%7D&format=html",
+        "description": "Single HTML response with all trusted ECharts scripts embedded."
+      }
+    },
+    {
+      "name": "GET stateless: remote JSON URL",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?sourceUrl=https%3A%2F%2Fcharts.example.com%2Fdefinitions%2Fmonthly&format=png",
+        "description": "Only works after allowing this exact HTTPS origin on the server. Source returns full render envelope."
+      }
+    },
+    {
+      "name": "GET stateless: configured provider",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?provider=reports&key=monthly&format=pdf",
+        "description": "Only works with an operator-configured reports provider."
+      }
+    },
+    {
+      "name": "GET stateless: reject metadata URL",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?sourceUrl=http%3A%2F%2F169.254.169.254%2Flatest%2Fmeta-data%2F",
+        "description": "Negative SSRF test: expected HTTP 403."
+      }
+    },
+    {
+      "name": "GET stateless: invalid gzip",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/render?c=invalid%21&encoding=gzip-base64url",
+        "description": "Negative validation: expected HTTP 400."
+      }
+    },
+    {
+      "name": "01 - Capacidades interativas",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/interactive/capabilities",
+        "description": ""
+      }
+    },
+    {
+      "name": "02 - Criar mapa-mundi ECharts",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"engine\": \"echarts\",\n  \"format\": \"png\",\n  \"width\": 1100,\n  \"height\": 660,\n  \"theme\": \"light\",\n  \"spec\": {\n    \"title\": {\n      \"text\": \"Distribuicao global\"\n    },\n    \"tooltip\": {\n      \"trigger\": \"item\"\n    },\n    \"visualMap\": {\n      \"min\": 0,\n      \"max\": 100,\n      \"left\": 15,\n      \"bottom\": 12\n    },\n    \"series\": [\n      {\n        \"type\": \"map\",\n        \"map\": \"world\",\n        \"roam\": true,\n        \"data\": [\n          {\n            \"name\": \"Brazil\",\n            \"value\": 85\n          },\n          {\n            \"name\": \"United States of America\",\n            \"value\": 45\n          },\n          {\n            \"name\": \"India\",\n            \"value\": 66\n          },\n          {\n            \"name\": \"China\",\n            \"value\": 75\n          }\n        ]\n      }\n    ]\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/v1/charts"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "const result = pm.response.json();",
+              "pm.collectionVariables.set(\"chartId\", result.id);",
+              "console.log(\"Abra este viewer:\", result.viewUrl);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Criar Plotly 3D",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"engine\": \"plotly\",\n  \"width\": 1100,\n  \"height\": 700,\n  \"theme\": \"light\",\n  \"spec\": {\n    \"data\": [\n      {\n        \"type\": \"scatter3d\",\n        \"mode\": \"markers+lines\",\n        \"x\": [\n          0,\n          1,\n          2,\n          3,\n          4,\n          5\n        ],\n        \"y\": [\n          2,\n          5,\n          1,\n          6,\n          3,\n          8\n        ],\n        \"z\": [\n          1,\n          4,\n          2,\n          6,\n          5,\n          9\n        ],\n        \"marker\": {\n          \"size\": 6,\n          \"color\": [\n            1,\n            2,\n            3,\n            4,\n            5,\n            6\n          ],\n          \"colorscale\": \"Viridis\"\n        }\n      }\n    ],\n    \"layout\": {\n      \"title\": {\n        \"text\": \"Evolucao espacial\"\n      },\n      \"scene\": {\n        \"xaxis\": {\n          \"title\": \"X\"\n        },\n        \"yaxis\": {\n          \"title\": \"Y\"\n        },\n        \"zaxis\": {\n          \"title\": \"Z\"\n        }\n      }\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/v1/charts"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "const result = pm.response.json();",
+              "pm.collectionVariables.set(\"chartId\", result.id);",
+              "console.log(\"Abra este viewer:\", result.viewUrl);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Criar diagrama Mermaid",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"engine\": \"mermaid\",\n  \"width\": 900,\n  \"height\": 560,\n  \"source\": \"flowchart LR\\nA[Solicitacao] --> B{Validacao}\\nB -->|Aprovada| C[Processamento]\\nB -->|Rejeitada| D[Devolutiva]\\nC --> E[Concluido]\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/v1/charts"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "const result = pm.response.json();",
+              "pm.collectionVariables.set(\"chartId\", result.id);",
+              "console.log(\"Abra este viewer:\", result.viewUrl);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Abrir gráfico interativo",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/charts/{{chartId}}/view",
+        "description": "Pagina HTML com scripts locais. Pode abrir a URL no navegador."
+      }
+    },
+    {
+      "name": "06 - Embed para Teams/browser",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/charts/{{chartId}}/embed",
+        "description": ""
+      }
+    },
+    {
+      "name": "07 - Preview PNG",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/charts/{{chartId}}/preview?format=png",
+        "description": ""
+      }
+    },
+    {
+      "name": "08 - Teams Adaptive Card",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/charts/{{chartId}}/share/teams",
+        "description": "Card com URL apenas se PublicBaseUrl HTTPS foi configurado."
+      }
+    },
+    {
+      "name": "09 - WhatsApp descriptor",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/v1/charts/{{chartId}}/share/whatsapp",
+        "description": "Descritor JSON, nao envia mensagens."
+      }
+    },
+    {
+      "name": "10 - HTML no render existente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"engine\": \"plotly\",\n  \"width\": 1100,\n  \"height\": 700,\n  \"theme\": \"light\",\n  \"spec\": {\n    \"data\": [\n      {\n        \"type\": \"scatter3d\",\n        \"mode\": \"markers+lines\",\n        \"x\": [\n          0,\n          1,\n          2,\n          3,\n          4,\n          5\n        ],\n        \"y\": [\n          2,\n          5,\n          1,\n          6,\n          3,\n          8\n        ],\n        \"z\": [\n          1,\n          4,\n          2,\n          6,\n          5,\n          9\n        ],\n        \"marker\": {\n          \"size\": 6,\n          \"color\": [\n            1,\n            2,\n            3,\n            4,\n            5,\n            6\n          ],\n          \"colorscale\": \"Viridis\"\n        }\n      }\n    ],\n    \"layout\": {\n      \"title\": {\n        \"text\": \"Evolucao espacial\"\n      },\n      \"scene\": {\n        \"xaxis\": {\n          \"title\": \"X\"\n        },\n        \"yaxis\": {\n          \"title\": \"Y\"\n        },\n        \"zaxis\": {\n          \"title\": \"Z\"\n        }\n      }\n    }\n  },\n  \"format\": \"html\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/v1/render"
+      }
+    },
+    {
+      "name": "11 - MCP initialize",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"initialize\",\n  \"params\": {\n    \"protocolVersion\": \"2025-11-25\",\n    \"capabilities\": {}\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/mcp"
+      }
+    },
+    {
+      "name": "12 - MCP tools/list",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 2,\n  \"method\": \"tools/list\",\n  \"params\": {}\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/mcp"
+      }
+    },
+    {
+      "name": "0.4 - ECharts GL bar3D (PNG)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"engine\": \"echarts\",\n  \"width\": 800,\n  \"height\": 540,\n  \"format\": \"png\",\n  \"background\": \"#ffffff\",\n  \"spec\": {\n    \"tooltip\": {},\n    \"visualMap\": {\n      \"max\": 12,\n      \"inRange\": {\n        \"color\": [\n          \"#a5c6ec\",\n          \"#154f96\"\n        ]\n      }\n    },\n    \"xAxis3D\": {\n      \"type\": \"category\",\n      \"data\": [\n        \"Q1\",\n        \"Q2\",\n        \"Q3\"\n      ]\n    },\n    \"yAxis3D\": {\n      \"type\": \"category\",\n      \"data\": [\n        \"2024\",\n        \"2025\",\n        \"2026\"\n      ]\n    },\n    \"zAxis3D\": {\n      \"type\": \"value\"\n    },\n    \"grid3D\": {\n      \"boxWidth\": 110,\n      \"boxDepth\": 70,\n      \"viewControl\": {\n        \"alpha\": 25,\n        \"beta\": 25\n      }\n    },\n    \"series\": [\n      {\n        \"type\": \"bar3D\",\n        \"shading\": \"lambert\",\n        \"data\": [\n          [\n            0,\n            0,\n            3\n          ],\n          [\n            1,\n            0,\n            8\n          ],\n          [\n            2,\n            0,\n            4\n          ],\n          [\n            0,\n            1,\n            5\n          ],\n          [\n            1,\n            1,\n            10\n          ],\n          [\n            2,\n            1,\n            7\n          ],\n          [\n            0,\n            2,\n            8\n          ],\n          [\n            1,\n            2,\n            11\n          ],\n          [\n            2,\n            2,\n            9\n          ]\n        ]\n      }\n    ]\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/v1/render",
+        "description": "Novo WebGL 3D"
+      }
+    },
+    {
+      "name": "0.4 - Plotly scattermap (PNG)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"engine\": \"plotly\",\n  \"width\": 800,\n  \"height\": 540,\n  \"format\": \"png\",\n  \"background\": \"#ffffff\",\n  \"spec\": {\n    \"data\": [\n      {\n        \"type\": \"scattermap\",\n        \"mode\": \"markers+text\",\n        \"lat\": [\n          -23.55,\n          40.71,\n          51.5,\n          35.68\n        ],\n        \"lon\": [\n          -46.63,\n          -74.0,\n          -0.13,\n          139.69\n        ],\n        \"text\": [\n          \"São Paulo\",\n          \"New York\",\n          \"London\",\n          \"Tokyo\"\n        ],\n        \"marker\": {\n          \"size\": 16,\n          \"color\": \"#d6534d\"\n        }\n      }\n    ],\n    \"layout\": {\n      \"map\": {\n        \"center\": {\n          \"lat\": 10,\n          \"lon\": 0\n        },\n        \"zoom\": 0.8\n      },\n      \"margin\": {\n        \"l\": 0,\n        \"r\": 0,\n        \"t\": 0,\n        \"b\": 0\n      }\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/v1/render",
+        "description": "Mapa de pontos com fallback geografico offline"
+      }
+    },
+    {
+      "name": "0.4 - Plotly choroplethmap (PNG)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"engine\": \"plotly\",\n  \"width\": 800,\n  \"height\": 540,\n  \"format\": \"png\",\n  \"background\": \"#ffffff\",\n  \"spec\": {\n    \"data\": [\n      {\n        \"type\": \"choroplethmap\",\n        \"locations\": [\n          \"BRA\",\n          \"USA\",\n          \"CHN\",\n          \"IND\"\n        ],\n        \"z\": [\n          80,\n          100,\n          90,\n          75\n        ],\n        \"colorscale\": \"Viridis\"\n      }\n    ],\n    \"layout\": {\n      \"map\": {\n        \"center\": {\n          \"lat\": 10,\n          \"lon\": 0\n        },\n        \"zoom\": 0.6\n      },\n      \"margin\": {\n        \"l\": 0,\n        \"r\": 0,\n        \"t\": 0,\n        \"b\": 0\n      }\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/v1/render",
+        "description": "Coroplético com fallback offline"
+      }
+    },
+    {
+      "name": "0.4 - densitymap devolve 422 offline_densitymap",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"engine\": \"plotly\",\n  \"format\": \"png\",\n  \"width\": 700,\n  \"height\": 450,\n  \"spec\": {\n    \"data\": [\n      {\n        \"type\": \"densitymap\",\n        \"lon\": [\n          -46.6,\n          -73.9,\n          116.4\n        ],\n        \"lat\": [\n          -23.5,\n          40.7,\n          39.9\n        ],\n        \"z\": [\n          1,\n          2,\n          3\n        ]\n      }\n    ],\n    \"layout\": {\n      \"map\": {\n        \"style\": \"white-bg\",\n        \"zoom\": 0.6\n      }\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/v1/render",
+        "description": "Uma densidade MapLibre requer worker e tiles e nao sera simulada como pontos."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 422\", () => pm.response.to.have.status(422));",
+              "pm.test(\"Codificacao\", () => pm.expect(pm.response.json().code).to.eql(\"offline_densitymap\"));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,0 @@
-{
-  "scope": "Only authored bridge syntax; no third-party engine executed",
-  "status": "pass",
-  "exitCode": 0,
-  "stderr": "",
-  "sourceSha256": "cc54f024ba43df07ff4e37be9a81f9d977c9b63c27ca7a91e331ea60371ede51"
-}

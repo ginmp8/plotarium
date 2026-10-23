@@ -15,7 +15,7 @@ O servico e Go; go-charts e go-chart fazem parte das dependencias. O nome go-ech
 Envelope de dados/titulo/tema/dimensoes; formato PNG/SVG. Cache longo deve ser reconsiderado para graficos privados.
 
 ### instachart-03 - `pkg/chart.go:93-108`
-Entrada pode referenciar URL de dados e tem allowlist configuravel; esse caminho remoto e desnecessario no perfil offline do Plotarium.
+Entrada pode referenciar URL de dados e tem allowlist configuravel; esse caminho remoto e desnecessario no perfil offline do Ploteus.
 
 ### instachart-04 - `pkg/routes.go`
 Rotas especializadas por familia tornam a API simples, mas tendem a restringir a variedade a handlers previamente implementados.
@@ -23,7 +23,7 @@ Rotas especializadas por familia tornam a API simples, mas tendem a restringir a
 ### instachart-05 - `pkg/bar_chart_handler_test.go`
 Exemplos de validacao e testes do handler sao referencia de contrato, sem execucao nesta analise.
 
-## Decisao para Plotarium
+## Decisao para Ploteus
 **Reutilizar:** Envelope pequeno, defaults explicitos e tipos MIME; evitar servicos de infraestrutura que nao participam da renderizacao.
 **Nao transportar:** Nao criar uma gramatica generica de todas as familias nem baixar dados de URLs fornecidas por clientes. Nao transportar Go como dependencia.
 

@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Plotarium",
-    "version": "0.5.0",
+    "title": "Ploteus",
+    "version": "0.6.0",
     "description": "Stateless GET and POST graphics renderer on .NET 10 with ECharts, ECharts GL, Plotly and Mermaid. GET accepts inline JSON, gzip-base64url, or remote JSON from operator allowlisted origins. New GET endpoints do not persist payloads or images. The legacy optional temporary viewer/MCP routes remain."
   },
   "security": [],
@@ -153,7 +153,7 @@
       "get": {
         "operationId": "renderStatelessGet",
         "summary": "Render in one GET from inline, compressed, or trusted remotely fetched JSON",
-        "description": "Exactly one source: c, sourceUrl or provider+key. c may be bare spec with engine or full POST envelope. sourceUrl and provider must return a full POST-compatible RenderRequest JSON. Remote HTTP requests are one-hop, origin-allowlisted, pinned-DNS, no redirects. Query output overrides are optional; payload engine cannot be changed. No Plotarium chart state is stored. GET format=html inlines all assets and definition.",
+        "description": "Exactly one source: c, sourceUrl or provider+key. c may be bare spec with engine or full POST envelope. sourceUrl and provider must return a full POST-compatible RenderRequest JSON. Remote HTTP requests are one-hop, origin-allowlisted, pinned-DNS, no redirects. Query output overrides are optional; payload engine cannot be changed. No Ploteus chart state is stored. GET format=html inlines all assets and definition.",
         "parameters": [
           {
             "name": "c",

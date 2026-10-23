@@ -1,0 +1,12 @@
+{
+  "release": "0.6.0",
+  "csharp_files_matching_after_identity_and_explicit_version_changes": 19,
+  "unexpected_implementation_differences": [],
+  "http_api_routes_unchanged": true,
+  "interactive_routes_unchanged": true,
+  "mcp_transport_routes_unchanged": true,
+  "http_api_route_count": 5,
+  "interactive_route_count": 9,
+  "mcp_route_count": 2,
+  "passed": true
+}

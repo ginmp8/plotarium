@@ -1,0 +1,12 @@
+  Ploteus.Domain -> /mnt/data/ploteus-060-work/Ploteus/src/domain/Ploteus.Domain/bin/Release/net10.0/Ploteus.Domain.dll
+  Ploteus.HttpTests -> /mnt/data/ploteus-060-work/Ploteus/tests/Ploteus.HttpTests/bin/Release/net10.0/Ploteus.HttpTests.dll
+  Ploteus.Application -> /mnt/data/ploteus-060-work/Ploteus/src/application/Ploteus.Application/bin/Release/net10.0/Ploteus.Application.dll
+  Ploteus.Infrastructure -> /mnt/data/ploteus-060-work/Ploteus/src/infrastructure/Ploteus.Infrastructure/bin/Release/net10.0/Ploteus.Infrastructure.dll
+  Ploteus.ContractTests -> /mnt/data/ploteus-060-work/Ploteus/tests/Ploteus.ContractTests/bin/Release/net10.0/Ploteus.ContractTests.dll
+  Ploteus.Api -> /mnt/data/ploteus-060-work/Ploteus/src/interfaces/Ploteus.Api/bin/Release/net10.0/Ploteus.Api.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.89

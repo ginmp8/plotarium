@@ -1,4 +1,4 @@
-# Frozen acceptance contract - Plotarium 0.1.0-alpha.1
+# Frozen acceptance contract - Ploteus 0.1.0-alpha.1
 
 Source reconstruction is independent; donor server compatibility is not promised.
 

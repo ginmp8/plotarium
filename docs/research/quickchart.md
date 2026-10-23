@@ -23,7 +23,7 @@ Cache de renderer possui chave formada por dimensoes, versao e formato; cardinal
 ### quickchart-05 - `lib/charts.js:425-433`
 SVG e buffers usam caminhos diferentes; o conversor de PDF e uma camada adicional.
 
-## Decisao para Plotarium
+## Decisao para Ploteus
 **Reutilizar:** Separar parametros de transporte, configuracao nativa, formatos e defaults; descrever erros HTTP e contratos de saida.
 **Nao transportar:** Nada de new Function/eval com dados do cliente, logs de payload ou cache global sem limite. Chart.js, QR Code, Graphviz e recursos comerciais nao entram no escopo.
 

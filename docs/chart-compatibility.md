@@ -1,6 +1,6 @@
-# Compatibilidade de tipos de gráficos — Plotarium 0.4.0
+# Compatibilidade de tipos de gráficos — Ploteus 0.4.0
 
-**O Plotarium não implementa todos os tipos e plugins do ECharts e Plotly.** Ele recebe a configuração `spec` original, usa os bundles ECharts 6.1.0 / Plotly.js strict 4.1.2 e entrega SVG ou raster/arquivo. O suporte deve ser medido por casos concretos executados, não inferido só pela lista de módulos de cada biblioteca.
+**O Ploteus não implementa todos os tipos e plugins do ECharts e Plotly.** Ele recebe a configuração `spec` original, usa os bundles ECharts 6.1.0 / Plotly.js strict 4.1.2 e entrega SVG ou raster/arquivo. O suporte deve ser medido por casos concretos executados, não inferido só pela lista de módulos de cada biblioteca.
 
 ## ECharts 6.1.0
 
@@ -15,7 +15,7 @@ Na versão 0.2.0, os casos para estes tipos foram executados em `scripts/coverag
 ## Plotly.js strict 4.1.2
 
 - **Geografia offline**: `choropleth`, `scattergeo` com TopoJSON `world_110m`, `world_50m`, EUA e continentes incluídos; nenhum pedido a CDN.
-- **Traces 2D, polares, financeiros, hierárquicos e especiais**: ver os testes individuais em `examples/coverage/plotly-*.json` e a matriz `evidence/0.2.0/coverage-results.json`.
+- **Traces 2D, polares, financeiros, hierárquicos e especiais**: ver os testes individuais em `examples/coverage/plotly-*.json` e a matriz `scripts/coverage_smoke.py` (matriz reproduzível).
 - **Traces WebGL 2D/3D**: `scattergl`, `scatterpolargl`, `scatter3d`, `cone`, `isosurface`, `mesh3d`, `parcoords`, `streamtube`, `surface`, `volume` foram executados com Chromium local + SwiftShader de teste. O PNG da própria Plotly é incorporado em SVG autocontido (não vetorial) para preservar renderização WebGL.
 - **Perfil geográfico atualizado na 0.4.0:** `scattermap` e `choroplethmap` são aceitos e renderizados estaticamente por fallback para `scattergeo`/`choropleth` com dados geográficos locais (não são gráficos MapLibre nativos). `densitymap` retorna HTTP 422 `offline_densitymap` ao exportar, pois a densidade não é equivalente a pontos. O cliente HTML configura MapLibre para usar GeoJSON local, mas ainda não foi homologado em navegador hospedado. `scattermapbox`, `choroplethmapbox`, `densitymapbox` continuam HTTP 422 `removed_mapbox`.
 
@@ -23,9 +23,9 @@ Na versão 0.2.0, os casos para estes tipos foram executados em `scripts/coverag
 
 ## Metodologia
 
-- `tests/Plotarium.ContractTests` valida parser e limites; `tests/Plotarium.HttpTests` verifica os 18 pares engine/formato e HTTP.
+- `tests/Ploteus.ContractTests` valida parser e limites; `tests/Ploteus.HttpTests` verifica os 18 pares engine/formato e HTTP.
 - `scripts/coverage_smoke.py` faz render SVG com **casos próprios por tipo**, verifica HTTP 200, MIME, XML SVG e tamanho; casos deliberadamente não suportados exigem HTTP 422 com código correto. Não prova equivalência perceptual. Artefatos com `<image data:image/png;base64>` são inspecionados também com Pillow **apenas na avaliação local**, não requisito em runtime.
-- Atestado vinculante: veja `evidence/0.2.0/`. Não confundir `format=json` (envelope estrutural) com renderização visual nem aceitar HTTP 200 com imagem em branco como prova de suporte.
+- Atestado vinculante: veja `evidence/0.6.0/`. Não confundir `format=json` (envelope estrutural) com renderização visual nem aceitar HTTP 200 com imagem em branco como prova de suporte.
 
 ## v0.4.0: ECharts GL / MapLibre
 
