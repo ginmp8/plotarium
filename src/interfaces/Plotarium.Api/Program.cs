@@ -1,4 +1,5 @@
 using Plotarium.Api.Interactive;
+using Plotarium.Api.Stateless;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Text.Json;
@@ -7,7 +8,9 @@ using Plotarium.Domain;
 using Plotarium.Infrastructure;
 
 var builder=WebApplication.CreateBuilder(args);
-builder.WebHost.ConfigureKestrel(o=>o.Limits.MaxRequestBodySize=Contract.MaxBodyBytes);
+builder.WebHost.ConfigureKestrel(o=>{o.Limits.MaxRequestBodySize=Contract.MaxBodyBytes; o.Limits.MaxRequestLineSize=32_768;});
+// GET chart definitions may contain user data; suppress ASP.NET access logs with raw query strings.
+builder.Logging.AddFilter("Microsoft.AspNetCore.Hosting.Diagnostics",LogLevel.Warning);
 var section=builder.Configuration.GetSection("Plotarium");
 var browserSettings=section.GetSection("Browser").Get<BrowserSettings>() ?? new BrowserSettings();
 if(string.IsNullOrWhiteSpace(browserSettings.AssetsDirectory)) throw new InvalidOperationException("AssetsDirectory is required.");
@@ -27,8 +30,11 @@ var interactiveConfig=section.GetSection("Interactive");
 var shareCapacity=interactiveConfig.GetValue("MaxCharts",128);
 var shareMinutes=interactiveConfig.GetValue("TtlMinutes",15);
 builder.Services.AddSingleton(new ChartStore(shareCapacity,TimeSpan.FromMinutes(shareMinutes)));
+var sources=section.GetSection("Sources").Get<RemotePayloadOptions>() ?? new RemotePayloadOptions();
+builder.Services.AddSingleton(new RemotePayloadFetcher(sources));
+builder.Services.AddSingleton<StatelessHtmlBuilder>();
 var app=builder.Build();
-using var meter=new Meter("Plotarium","0.4.0");
+using var meter=new Meter("Plotarium","0.5.0");
 var completed=meter.CreateCounter<long>("plotarium.render.completed");
 var failures=meter.CreateCounter<long>("plotarium.render.failed");
 var latency=meter.CreateHistogram<double>("plotarium.render.duration","ms");
@@ -66,12 +72,35 @@ app.MapGet("/v1/capabilities",()=>Results.Json(new
     schemaVersion="1",engines=new[]{new{name="echarts",version=Contract.EngineVersion("echarts")},new{name="plotly",version=Contract.EngineVersion("plotly")},new{name="mermaid",version=Contract.EngineVersion("mermaid")}},
     formats=new[]{"png","jpeg","webp","svg","json","pdf","html"},json="definition-envelope; structural-only",
     limits=new{bodyBytes=Contract.MaxBodyBytes,maxPixels=Contract.MaxPixels,outputBytes=Contract.MaxOutputBytes,concurrency,queueCapacity=queue},
-    profile="offline-static; packaged ECharts and ECharts GL; Plotly geographic fallback for scattermap/choroplethmap; no external tile providers or arbitrary callbacks",
+    profile="offline-static; ECharts GL; Plotly geographic fallback; GET inline, gzip-base64url or allowlisted external JSON; no arbitrary callbacks",
     geography=new { echartsMaps=new[]{"world","world-50m","africa","asia","europe","north-america","south-america","oceania","usa"}, plotlyGeoTraces=new[]{"choropleth","scattergeo"}, plotlyMapTypes=new[]{"scattermap","choroplethmap","densitymap"}, mapLibreTiles=false, staticMapFallback="scattergeo/choropleth; densitymap returns 422" },
     rasterizedSvg=new[]{"scattergl","scatterpolargl","scatter3d","mesh3d","surface","volume","isosurface","cone","streamtube","splom"},
+    stateless=new{post="POST /v1/render",get="GET /v1/render?c=...",encodings=new[]{"json","gzip-base64url"},remoteSourcesEnabled=sources.AllowedOrigins.Length+sources.PrivateOrigins.Length>0,sourceUrl="GET /v1/render?sourceUrl=...",providers="GET /v1/render?provider=...&key=...",html="single response, inline assets; Mermaid SVG image viewer",storage="none"},
     interactive=new{enabled=true,create="POST /v1/charts",view="GET /v1/charts/{id}/view",mcp="POST /mcp",shares=new[]{"teams","whatsapp","chatgpt"}},
     browser="operator-installed Chromium; no Node runtime"
 }));
+app.MapGet("/v1/render",async Task<IResult> (HttpContext context,RenderService service,RemotePayloadFetcher fetcher,StatelessHtmlBuilder html)=>
+{
+    context.Response.Headers["Referrer-Policy"]="no-referrer";
+    var request=await StatelessQuery.ResolveAsync(context,fetcher);
+    if(request.Format=="html")
+    {
+        var (page,csp)=await html.BuildAsync(request,context.RequestAborted);
+        context.Response.Headers.ContentSecurityPolicy=csp;
+        context.Response.Headers["Referrer-Policy"]="no-referrer";
+        context.Response.Headers["Permissions-Policy"]="camera=(), microphone=(), geolocation=()";
+        return Results.Content(page,"text/html; charset=utf-8");
+    }
+    var start=Stopwatch.GetTimestamp();
+    try
+    {
+        var artifact=await service.RenderAsync(request,context.RequestAborted);
+        completed.Add(1,new KeyValuePair<string,object?>("engine",request.Engine),new KeyValuePair<string,object?>("format",request.Format));
+        // No attachment disposition: GET output can be embedded as an image or iframe.
+        return Results.File(artifact.Bytes,artifact.ContentType);
+    }
+    finally {latency.Record(Stopwatch.GetElapsedTime(start).TotalMilliseconds,new KeyValuePair<string,object?>("engine",request.Engine));}
+});
 app.MapPost("/v1/render",async Task<IResult> (HttpContext context,RenderService service,ChartStore store)=>
 {
     var request=await InteractiveRoutes.ReadRequest(context);

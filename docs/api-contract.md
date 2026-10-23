@@ -1,4 +1,8 @@
-# Contrato HTTP v1 - Plotarium 0.3.0
+# API contract 0.5.0
+
+The new GET variant is documented in [stateless-get.md](stateless-get.md). POST and the existing interactive endpoints remain backward compatible. GET uses no in-memory chart store, while legacy `/v1/charts` is still a separate opt-in stateful route.
+
+# Legacy POST contract - 0.4.0
 
 **Sem autenticacao.** Nenhum header de identidade e necessario ou validado. `POST /v1/render`, Content-Type application/json, devolve arquivo com o MIME da representacao. Rotas publicas `GET /v1/capabilities`, `/health/live` e `/health/ready`.
 

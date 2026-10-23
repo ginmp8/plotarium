@@ -1,0 +1,1 @@
+{"engine":"echarts","format":"png","width":800,"height":480,"spec":{"xAxis":{"type":"category","data":["Jan","Feb","Mar"]},"yAxis":{"type":"value"},"series":[{"type":"bar","data":[4,9,6]}]}}

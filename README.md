@@ -1,8 +1,14 @@
-## Release 0.4.0
+# Plotarium 0.5.0
+
+**Stateless GET added.** One client GET sends an inline chart payload (`c=`), a Gzip/Base64URL payload (`encoding=gzip-base64url`), a trusted external URL (`sourceUrl=`), or a configured provider (`provider=...&key=...`). Plotarium responds with the requested artifact directly and never persists these GET definitions. Remote source URLs are disabled by default and require operator-controlled exact-origin allowlists. The previous `POST /v1/render` contract is unchanged.
+
+See [stateless GET guide](docs/stateless-get.md), [0.5.0 release notes](docs/release-notes-0.5.0.md), and [Postman collection](examples/postman/Plotarium-0.5.0.postman_collection.json).
+
+## Previous release 0.4.0
 
 Veja [Novidades da 0.4.0](docs/release-notes-0.4.0.md). ECharts GL 3D e mapas geográficos offline estão disponíveis para exportação e compartilhamento. O modo MapLibre nativo exige navegador compatível; o servidor estático usa fallback geo verificado. **MCP e integrações Teams/WhatsApp ainda requerem homologação nos clientes e credenciais próprias do operador**.
 
-# Plotarium 0.4.0
+# Plotarium 0.4.0 (historical)
 
 API ASP.NET Core 10 para gerar ECharts 6.1.0, Plotly.js 4.1.2 e Mermaid 12.1.0 em PNG, JPEG, WebP, SVG, PDF ou envelope JSON. **Sem qualquer autenticacao:** nao existe chave, token, usuario, middleware de auth nem cabecalho obrigatorio.
 
@@ -33,7 +39,7 @@ No Visual Studio, coloque `Plotarium__Browser__ExecutablePath` nas variaveis de 
 
 ## Contrato e exemplos diretos de curl
 
-**Rota unica:** `POST /v1/render`. Campos `engine`, `format`, `width`, `height`, `spec` (ECharts/Plotly) ou `source` (Mermaid). `definition` nao e um campo aceito pela API. Os exemplos a seguir usam curl (Bash/Git Bash) e HTTPS local com certificado de desenvolvimento (`-k` apenas para desenvolvimento).
+**Existing POST API:** `POST /v1/render` (GET alternatives added in 0.5.0). Campos `engine`, `format`, `width`, `height`, `spec` (ECharts/Plotly) ou `source` (Mermaid). `definition` nao e um campo aceito pela API. Os exemplos a seguir usam curl (Bash/Git Bash) e HTTPS local com certificado de desenvolvimento (`-k` apenas para desenvolvimento).
 
 ```bash
 curl -k -X POST 'https://localhost:55731/v1/render' -H 'Content-Type: application/json' -d '{"engine":"echarts","format":"svg","width":800,"height":450,"spec":{"xAxis":{"type":"category","data":["Jan","Fev","Mar"]},"yAxis":{"type":"value"},"series":[{"type":"bar","data":[10,20,15]}]}}' -o echarts.svg

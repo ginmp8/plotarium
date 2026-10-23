@@ -1,4 +1,10 @@
-# Operacao - Plotarium 0.2.0
+# Plotarium 0.5.0 - operation
+
+GET usage and source origin configuration: [stateless-get.md](stateless-get.md). Verify source allowlists before network exposure. For production use native Chromium sandbox and a gateway with authentication and egress policy. Do not enable software WebGL or disable the browser sandbox outside isolated Development tests.
+
+Run `python3 scripts/stateless_050_smoke.py <path-to-current-Plotarium.Api.dll>` for one-call GET/source tests (requires local loopback and .NET 10). The suite explicitly allows only its own local payload server, rejects other origins, and writes evidence to `evidence/0.5.0/stateless-http.json`. Run `python3 scripts/run_050_http_regression.py` for the existing full HTTP matrix. Set `PLOTARIUM_API_DLL` to the exact tested publish DLL when using a solution build with a non-default platform output path. `python3 scripts/stateless_050_ui_smoke.py` requires Python Playwright and a locally installed Chromium; it checks standalone page interactions without external HTTP fetches.
+
+# Historical operation instructions (0.2.0)
 
 Requisitos: .NET SDK 10 para compilar; ASP.NET Core Runtime 10 para executar publish framework-dependent; instalacao local de Chrome/Chromium; fontes locais. Nao precisa PuppeteerSharp, Node, npm ou qualquer PackageReference externo. Os assets sao redistribuidos junto ao projeto; nao ha downloads de bibliotecas na inicializacao.
 

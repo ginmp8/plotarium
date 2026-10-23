@@ -1,0 +1,44 @@
+{
+  "release": "0.5.0",
+  "passed": 4,
+  "failed": 0,
+  "results": [
+    {
+      "case": "echarts",
+      "status": "pass",
+      "errors": [],
+      "requests": [],
+      "state": "",
+      "bytes": 1127678,
+      "screenshot": "/mnt/data/plotarium-050-work/html-preview/echarts.png"
+    },
+    {
+      "case": "plotly",
+      "status": "pass",
+      "errors": [],
+      "requests": [],
+      "state": "",
+      "bytes": 5183123,
+      "screenshot": "/mnt/data/plotarium-050-work/html-preview/plotly.png"
+    },
+    {
+      "case": "mermaid",
+      "status": "pass",
+      "errors": [],
+      "requests": [],
+      "state": "",
+      "bytes": 21616,
+      "screenshot": "/mnt/data/plotarium-050-work/html-preview/mermaid.png"
+    },
+    {
+      "case": "echarts-gl",
+      "status": "pass",
+      "errors": [],
+      "requests": [],
+      "state": "WebGL unavailable in this browser; showing a static preview.",
+      "bytes": 1784453,
+      "screenshot": "/mnt/data/plotarium-050-work/html-preview/echarts-gl.png"
+    }
+  ],
+  "scope": "Chromium set_content with fully inlined assets; no HTTP navigation to live host"
+}

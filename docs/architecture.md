@@ -31,3 +31,10 @@ Nuvem, desempenho, rendering fidedigno em todas as familias nativas, SO Windows/
 `GET /share/teams|whatsapp|chatgpt` produz **descritores**, nao envia mensagens nem instala aplicativos. `/mcp` oferece um subconjunto MCP JSON sobre HTTP e um recurso `ui://plotarium/chart.html` que pode referenciar o visualizador HTTPS externo. Sem SSE/subscriptions. Integracoes de host dependem de registro, infraestrutura e validacao externa.
 
 IDs temporarios sao **capabilities bearer**: quem obtem a URL pode ler o grafico ate expirar. O desenho preserva o comportamento anônimo anterior, exigindo protecao por rede/gateway em deploy publico; nao equivale a autorizacao por usuario.
+
+
+## Stateless GET layer (0.5.0)
+
+`StatelessQuery` translates GET query modes into the same `RenderRequest` contract as POST; `StatelessPayloadDecoder` handles JSON and bounded Gzip/Base64URL, then always invokes `RequestValidator`. `RemotePayloadFetcher` is an outbound adapter, not a cache: exact operator allowlist, one DNS resolution, validated pinned socket, no proxy or redirects, JSON-only content, bounded bytes/time. `StatelessHtmlBuilder` constructs a self-contained presentation using only hashed local assets. The GET route bypasses `ChartStore` entirely. The process retains its existing bounded rendering gate and transient Chromium process per static render; neither is a chart/payload store.
+
+Future storage providers can be introduced separately from GET and POST input parsing without changing rendering or engines. The legacy `POST /v1/charts` stateful feature is preserved for backwards compatibility but is not used by any 0.5.0 GET flow.

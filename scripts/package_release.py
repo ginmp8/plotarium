@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Deterministically package Plotarium 0.4.0 source and 0.4-specific observed evidence.
+"""Deterministically package Plotarium 0.5.0 source and current observed GET/stateless evidence.
 
-Usage: python3 scripts/package_release.py /absolute/path/Plotarium-0.4.0.zip
-Requires successful, current build/contract/HTTP/feature/publish receipts. No program execution.
+Usage: python3 scripts/package_release.py /absolute/path/Plotarium-0.5.0.zip
+Requires current build/contract/HTTP/GET/browser/publish receipts. No program execution.
 """
 import hashlib
 import json
@@ -12,7 +12,7 @@ import sys
 import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
-VERSION = '0.4.0'
+VERSION = '0.5.0'
 DATE = (2026, 10, 22, 0, 0, 0)
 IGNORED_DIRS = {'bin', 'obj', 'artifacts', '.git', '.vs', '.nuget', '.rhapsodia', '__pycache__'}
 IGNORED_FILES = {'.DS_Store', 'Thumbs.db'}
@@ -27,7 +27,7 @@ def source_files():
     for path in sorted(ROOT.rglob('*')):
         if set(path.relative_to(ROOT).parts).intersection(IGNORED_DIRS):
             continue
-        if path.name in IGNORED_FILES:
+        if path.name in IGNORED_FILES or (path.parent == ROOT and path.name.startswith('artifacts-050-')):
             continue
         if path.is_symlink():
             raise ValueError(f'Symlink not permitted in source release: {path}')
@@ -42,34 +42,37 @@ def source_files():
 def check_evidence():
     evidence = ROOT / 'evidence' / VERSION
     contract = json.loads((evidence / 'contract-tests.json').read_text())
-    http = json.loads((evidence / 'http-tests.json').read_text())
-    feature = json.loads((evidence / 'feature-smokes.json').read_text())
-    required = [(contract, 103), (http, 35), (feature, 13)]
+    http = json.loads((evidence / 'http-regression.json').read_text())
+    stateless = json.loads((evidence / 'stateless-http.json').read_text())
+    browser = json.loads((evidence / 'html-browser-tests.json').read_text())
+    required = [(contract, 113), (http, 35), (stateless, 26), (browser, 4)]
     for result, count in required:
         if (result.get('passed'), result.get('failed')) != (count, 0):
-            raise ValueError(f'Release evidence gate failed; expected {count}/0 but got {result.get("passed")}/{result.get("failed")}')
+            raise ValueError(f'Release gate failed; expected {count}/0 but got {result.get("passed")}/{result.get("failed")}')
     build = (evidence / 'build-final.log').read_text()
     if '0 Error(s)' not in build or '0 Warning(s)' not in build:
-        raise ValueError('Build evidence does not prove zero errors and warnings')
+        raise ValueError('Build gate lacks zero errors and warnings')
     publish = (evidence / 'publish-final.log').read_text()
     if 'Plotarium.Api -> ' not in publish or 'Plotarium.Infrastructure ->' not in publish:
-        raise ValueError('Publish receipt not found')
-    val = json.loads((evidence / 'validation.json').read_text())
-    if val.get('release') != VERSION:
-        raise ValueError('Validation belongs to another release')
-    asset = json.loads((ROOT / 'assets' / 'manifest.json').read_text())
+        raise ValueError('Publish gate not observed')
+    validation = json.loads((evidence / 'validation.json').read_text())
+    if validation.get('release') != VERSION or validation.get('status') != 'passed':
+        raise ValueError('Validation receipt is missing or not final')
+    assets = json.loads((ROOT / 'assets' / 'manifest.json').read_text())
     if not (ROOT / 'assets' / 'echarts-gl' / 'echarts-gl.min.js').is_file():
-        raise ValueError('Missing ECharts GL runtime')
-    return {'contract': contract['passed'], 'http': http['passed'], 'feature': feature['passed'],
-            'buildErrors': 0, 'buildWarnings': 0, 'publish': 'observed',
-            'browserVisualCases': ['echarts-bar3D', 'plotly-scattermap', 'plotly-choroplethmap'],
-            'assetManifestPresent': isinstance(asset, dict),
-            'limit': 'Does not certify remote Teams, WhatsApp, ChatGPT or native MapLibre workers.'}
+        raise ValueError('ECharts GL runtime is not included')
+    return {'contract': 113, 'httpRegression': 35, 'statelessHttp': 26, 'browserHtml': 4,
+            'buildErrors': 0, 'buildWarnings': 0, 'publish': 'passed',
+            'browserVisualCases': ['echarts', 'plotly', 'mermaid', 'echarts-gl-static-fallback'],
+            'assetManifestPresent': isinstance(assets, dict),
+            'limitations': ['No remote public source, real Teams, WhatsApp, ChatGPT or native MapLibre worker certification',
+                            'GL interactive needs WebGL-capable browser',
+                            'Sources private-origin test uses explicit local development allowlist']}
 
 
 def main(dest: Path):
     if not dest.is_absolute() or dest.name != f'Plotarium-{VERSION}.zip':
-        raise ValueError('Expected absolute output path ending in Plotarium-0.4.0.zip')
+        raise ValueError('Expected absolute output path ending in Plotarium-0.5.0.zip')
     if ROOT in dest.parents or dest.parent == ROOT:
         raise ValueError('Output must be outside the source tree')
     stats = check_evidence()
@@ -104,19 +107,29 @@ def main(dest: Path):
                 'Plotarium/Directory.Build.props',
                 'Plotarium/assets/manifest.json',
                 'Plotarium/assets/echarts-gl/echarts-gl.min.js',
-                'Plotarium/docs/release-notes-0.4.0.md',
-                'Plotarium/scripts/feature_040_smoke.py',
-                'Plotarium/examples/postman/Plotarium-0.4.0.postman_collection.json',
-                'Plotarium/examples/rendered-0.4.0/echarts-bar3D.png',
-                'Plotarium/examples/rendered-0.4.0/plotly-scattermap.png',
-                'Plotarium/examples/rendered-0.4.0/plotly-choroplethmap.png',
-                'Plotarium/evidence/0.4.0/build-final.log',
-                'Plotarium/evidence/0.4.0/contract-tests.json',
-                'Plotarium/evidence/0.4.0/http-tests.json',
-                'Plotarium/evidence/0.4.0/feature-smokes.json',
+                'Plotarium/src/application/Plotarium.Application/StatelessPayloadDecoder.cs',
+                'Plotarium/src/interfaces/Plotarium.Api/Stateless/RemotePayloadFetcher.cs',
+                'Plotarium/src/interfaces/Plotarium.Api/Stateless/StatelessQuery.cs',
+                'Plotarium/src/interfaces/Plotarium.Api/Stateless/StatelessHtmlBuilder.cs',
+                'Plotarium/docs/release-notes-0.5.0.md',
+                'Plotarium/docs/stateless-get.md',
+                'Plotarium/scripts/stateless_050_smoke.py',
+                'Plotarium/scripts/run_050_http_regression.py',
+                'Plotarium/scripts/stateless_050_ui_smoke.py',
+                'Plotarium/examples/postman/Plotarium-0.5.0.postman_collection.json',
+                'Plotarium/examples/rendered-0.5.0/echarts.png',
+                'Plotarium/examples/rendered-0.5.0/plotly.png',
+                'Plotarium/examples/rendered-0.5.0/mermaid.png',
+                'Plotarium/examples/rendered-0.5.0/echarts-gl.png',
+                'Plotarium/evidence/0.5.0/build-final.log',
+                'Plotarium/evidence/0.5.0/publish-final.log',
+                'Plotarium/evidence/0.5.0/contract-tests.json',
+                'Plotarium/evidence/0.5.0/http-regression.json',
+                'Plotarium/evidence/0.5.0/stateless-http.json',
+                'Plotarium/evidence/0.5.0/html-browser-tests.json',
             ]
             if any(name not in names for name in expected):
-                raise ValueError('Missing required 0.4.0 source or evidence: ' + str([name for name in expected if name not in names]))
+                raise ValueError('Missing required 0.5.0 source or evidence: ' + str([name for name in expected if name not in names]))
             for m in manifest:
                 actual = archive.read('Plotarium/' + m['path'])
                 if len(actual) != m['bytes'] or sha256(actual) != m['sha256']:
@@ -133,5 +146,5 @@ def main(dest: Path):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        raise SystemExit('Usage: python3 scripts/package_release.py /absolute/output/Plotarium-0.4.0.zip')
+        raise SystemExit('Usage: python3 scripts/package_release.py /absolute/output/Plotarium-0.5.0.zip')
     main(Path(sys.argv[1]))

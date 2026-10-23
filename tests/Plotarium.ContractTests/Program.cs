@@ -196,6 +196,60 @@ Test("GL asset is locally hash verified",()=>{
     Equal(true,gl is {Length:>100_000});
 });
 
+// 0.5.0 red-green acceptance: each GET payload is equivalent to the POST envelope.
+Test("GET inline spec reuses POST validation",()=>{
+    var value=StatelessPayloadDecoder.FromInline("{\"series\":[{\"type\":\"bar\",\"data\":[10,20]}]}",null,
+        new Dictionary<string,string>{{"engine","echarts"},{"format","svg"},{"width","640"}});
+    Equal("echarts",value.Engine);Equal("svg",value.Format);Equal(640,value.Width);
+    Equal(2,value.Spec!.Value.GetProperty("series")[0].GetProperty("data").GetArrayLength());
+});
+Test("GET full envelope overrides output only",()=>{
+    var value=StatelessPayloadDecoder.FromInline(valid,null,new Dictionary<string,string>{{"format","json"},{"height","400"}});
+    Equal("json",value.Format);Equal(400,value.Height);Equal("echarts",value.Engine);
+});
+Test("GET compressed envelope matches original",()=>{
+    using var buffer=new MemoryStream();
+    using(var zipper=new System.IO.Compression.GZipStream(buffer,System.IO.Compression.CompressionLevel.SmallestSize,true)){
+        var original=Encoding.UTF8.GetBytes(valid);zipper.Write(original);
+    }
+    var c=Convert.ToBase64String(buffer.ToArray()).TrimEnd('=').Replace('+','-').Replace('/','_');
+    var value=StatelessPayloadDecoder.FromInline(c,"gzip-base64url",new Dictionary<string,string>{{"format","png"}});
+    Equal("echarts",value.Engine);Equal(2,value.Spec!.Value.GetProperty("series")[0].GetProperty("data").GetArrayLength());
+});
+Test("GET plain mermaid source",()=>{
+    var value=StatelessPayloadDecoder.FromInline("flowchart LR\nA-->B",null,new Dictionary<string,string>{{"engine","mermaid"}});
+    Equal("mermaid",value.Engine);Equal("flowchart LR\nA-->B",value.Source);
+});
+Test("GET rejects invalid compressed input",()=>{
+    try{StatelessPayloadDecoder.FromInline("!!!","gzip-base64url",new Dictionary<string,string>());throw new Exception("bad base64 accepted");}
+    catch(RenderFailure ex){Equal(400,ex.Status);}
+});
+Test("GET blocks gzip bomb",()=>{
+    using var buffer=new MemoryStream();
+    using(var zipper=new System.IO.Compression.GZipStream(buffer,System.IO.Compression.CompressionLevel.SmallestSize,true)){
+        var large=new byte[Contract.MaxBodyBytes+100];Array.Fill(large,(byte)' ');zipper.Write(large);
+    }
+    var c=Convert.ToBase64String(buffer.ToArray()).TrimEnd('=').Replace('+','-').Replace('/','_');
+    try{StatelessPayloadDecoder.FromInline(c,"gzip-base64url",new Dictionary<string,string>{{"engine","echarts"}});throw new Exception("bomb accepted");}
+    catch(RenderFailure ex){Equal(413,ex.Status);}
+});
+Test("GET rejects duplicate native spec keys",()=>{
+    try{StatelessPayloadDecoder.FromInline("{\"series\":[{\"type\":\"bar\"}],\"series\":[]}",null,new Dictionary<string,string>{{"engine","echarts"}});throw new Exception("duplicate accepted");}
+    catch(RenderFailure ex){Equal("duplicate",ex.Code);}
+});
+Test("GET remote response validates same envelope",()=>{
+    var value=StatelessPayloadDecoder.FromRemote(Encoding.UTF8.GetBytes(valid),new Dictionary<string,string>{{"format","json"}});
+    Equal("echarts",value.Engine);Equal("json",value.Format);
+});
+Test("GET overrides cannot change remote engine",()=>{
+    try{StatelessPayloadDecoder.FromRemote(Encoding.UTF8.GetBytes(valid),new Dictionary<string,string>{{"engine","plotly"}});throw new Exception("engine changed");}
+    catch(RenderFailure ex){Equal(400,ex.Status);}
+});
+Test("GET rejects invalid query override",()=>{
+    try{StatelessPayloadDecoder.FromInline(valid,null,new Dictionary<string,string>{{"width","invalid"}});throw new Exception("bad width accepted");}
+    catch(RenderFailure ex){Equal(400,ex.Status);}
+});
+
 Console.WriteLine(JsonSerializer.Serialize(new { failed, passed = results.Count-failed, results }, new JsonSerializerOptions{WriteIndented=true}));
 return failed == 0 ? 0 : 1;
 

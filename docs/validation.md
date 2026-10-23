@@ -44,3 +44,8 @@ O histórico `evidence/` da 0.1.0-alpha.1 preserva limitações e receipts daque
 - `GET /v1/charts/{id}/view` and `format:html` return hosted HTML; they are not self-contained offline HTML downloads.
 - **Not tested:** Windows, public-host registration, actual Teams/WhatsApp/ChatGPT host interaction, and the Mermaid ESM interactive viewer in a browser on a fully navigable origin. The managed Chromium policy prohibited localhost navigation in the test environment; only component tests circumvented the need for navigating, without modifying policy.
 - See `evidence/0.3.0/validation.json` for executable evidence and hashes.
+
+
+## 0.5.0 validation evidence
+
+See `evidence/0.5.0/contract-tests.json`, `http-regression.json`, `stateless-http.json`, and `html-browser-tests.json`. The new browser suite injects the server's CSP as a meta policy to check embedded scripts without navigating to an external origin; this is evidence for rendered local content, not a deployment-specific CSP header test. Browser WebGL unavailable cases are explicitly served with the server-generated PNG fallback. New upstream fetch tests use a localhost fixture with an exact, temporary private origin allowlist; no public source or live Teams/WhatsApp/ChatGPT application was exercised.

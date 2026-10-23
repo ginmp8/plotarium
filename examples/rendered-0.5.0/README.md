@@ -1,0 +1,1 @@
+0.5.0 standalone GET HTML Chromium screenshots. ECharts GL falls back to a real server-rendered static PNG in this test browser without WebGL. The 4 screenshots are verification artifacts, not mocks. No network requests from the rendered document were observed. See evidence/0.5.0/html-browser-tests.json.

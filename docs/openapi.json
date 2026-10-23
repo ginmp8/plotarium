@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Plotarium",
-    "version": "0.4.0",
-    "description": "ASP.NET Core 10 static and interactive graphics API; ECharts 6.1.0, ECharts GL 2.1.0, Plotly.js 4.1.2, Mermaid 12.1.0. MapLibre trace types scattermap/choroplethmap use documented offline geographic fallback for static renders; densitymap static returns 422 offline_densitymap. User-provided MapLibre tiles/styles and arbitrary JavaScript are forbidden. Hosted views and limited MCP are not production integrations with chat platforms."
+    "version": "0.5.0",
+    "description": "Stateless GET and POST graphics renderer on .NET 10 with ECharts, ECharts GL, Plotly and Mermaid. GET accepts inline JSON, gzip-base64url, or remote JSON from operator allowlisted origins. New GET endpoints do not persist payloads or images. The legacy optional temporary viewer/MCP routes remain."
   },
   "security": [],
   "paths": {
@@ -146,6 +146,220 @@
                 }
               }
             }
+          }
+        },
+        "summary": "Render directly from JSON body (one request, no artifact storage); legacy POST format=html uses temporary chart store."
+      },
+      "get": {
+        "operationId": "renderStatelessGet",
+        "summary": "Render in one GET from inline, compressed, or trusted remotely fetched JSON",
+        "description": "Exactly one source: c, sourceUrl or provider+key. c may be bare spec with engine or full POST envelope. sourceUrl and provider must return a full POST-compatible RenderRequest JSON. Remote HTTP requests are one-hop, origin-allowlisted, pinned-DNS, no redirects. Query output overrides are optional; payload engine cannot be changed. No Plotarium chart state is stored. GET format=html inlines all assets and definition.",
+        "parameters": [
+          {
+            "name": "c",
+            "in": "query",
+            "required": false,
+            "description": "URL-encoded JSON (or gzip-base64url) payload; mutually exclusive with sourceUrl/provider.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "encoding",
+            "in": "query",
+            "required": false,
+            "description": "Compression for c only.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "gzip-base64url"
+              ],
+              "default": "json"
+            }
+          },
+          {
+            "name": "sourceUrl",
+            "in": "query",
+            "required": false,
+            "description": "Absolute HTTP(S) URL to a JSON RenderRequest; disabled unless exact source origin is operator-allowed.",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "provider",
+            "in": "query",
+            "required": false,
+            "description": "Configured source provider name; requires key.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "required": false,
+            "description": "Safe single-segment provider key, [A-Za-z0-9_-]{1,128}.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "engine",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "echarts",
+                "plotly",
+                "mermaid"
+              ]
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "png",
+                "jpeg",
+                "webp",
+                "svg",
+                "json",
+                "pdf",
+                "html"
+              ]
+            }
+          },
+          {
+            "name": "width",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 64,
+              "maximum": 4096
+            }
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 64,
+              "maximum": 4096
+            }
+          },
+          {
+            "name": "scale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            }
+          },
+          {
+            "name": "theme",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "light",
+                "dark"
+              ]
+            }
+          },
+          {
+            "name": "background",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rendered bytes inline without download-only disposition; GET format=html is a standalone page with packaged assets, no chart ID. Mermaid HTML is a zoomable SVG preview; GL may fall back to a server-rendered snapshot.",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/webp": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/svg+xml": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Definition"
+                }
+              },
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "description": "Hosted interactive viewer document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid/ambiguous query, payload or encoding"
+          },
+          "403": {
+            "description": "Source/provider not allowlisted or DNS scope prohibited"
+          },
+          "413": {
+            "description": "Input/decompression/remote response limit"
+          },
+          "414": {
+            "description": "URL exceeds GET transport budget"
+          },
+          "422": {
+            "description": "Rejected chart definition or unsupported format"
+          },
+          "429": {
+            "description": "Render gate at capacity"
+          },
+          "502": {
+            "description": "Remote upstream status, redirect, MIME, encoding, or network error"
+          },
+          "503": {
+            "description": "Browser not available"
+          },
+          "504": {
+            "description": "Render or upstream deadline exceeded"
           }
         }
       }
